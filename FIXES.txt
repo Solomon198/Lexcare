@@ -1,0 +1,56 @@
+Environment
+
+Node Version = v14.5.0;
+Realm Version 6.0.3;
+
+
+
+ISSUE 1
+-----------------------------
+unable to finde msvs_version
+node gyp for some reason always use 2012 even if you set other versions. to  solve this issue follow  the below steps
+
+//follow the directory below to the file  find-visualstudio.js
+
+C:\Users\USER\Documents\Dixre\clients\electron-react-boilerplate\node_modules\node-gyp\lib\find-visualstudio.js
+
+// then replace the below line. you might find it at line 17
+this.configMsvsVersion = "2017"
+
+
+//ISSUE 2
+=======================================
+// when you get issues like
+
+err => LINK : fatal error LNK1181: cannot open input file 'libeay32.lib'. which point to realm.vcxproj
+
+1. Follow the following
+
+git clone https://github.com/Microsoft/vcpkg
+cd vcpkg
+git checkout tags/2019.12 -b 2019.12
+
+reference
+===============================
+https://github.com/realm/realm-js/issues/2796#issuecomment-610144118
+
+2 Then do the following
+bootstrap-vcpkg.bat
+vcpkg install openssl:x64-windows-static
+mkdir C:\src\vcpkg\installed\x64-windows-static\lib
+
+//this line
+copy .\packages\openssl-windows_x64-windows-static\lib\libeay32.lib C:\src\vcpkg\installed\x64-windows-static\lib\
+
+//this line
+copy .\packages\openssl-windows_x64-windows-static\lib\ssleay32.lib C:\src\vcpkg\installed\x64-windows-static\lib
+
+reference
+================================
+https://github.com/realm/realm-js#building-for-nodejs
+
+ISSUE 3
+=================================================
+realm global fetch faulty follow this repo to solve issue
+
+https://github.com/realm/realm-js/issues/3005#issuecomment-650595714

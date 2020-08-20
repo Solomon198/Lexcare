@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="./public/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Web site created using create-react-app"
+    />
+    <link rel="apple-touch-icon" href="./public/logo192.png" />
+    <!--
+      manifest.json provides metadata used when your web app is installed on a
+      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+    -->
+    <link rel="manifest" href="./public/manifest.json" />
+    <link href="./public/css/one-page-wonder.css" rel="stylesheet">
+    <link href="./public/css/sb-admin-2.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="./public/css/util.css">
+    <link rel="stylesheet" type="text/css" href="./public/css/main.css">
+    <!--
+      Notice the use of ./public in the tags above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
+
+      Unlike "/favicon.ico" or "favicon.ico", "./public/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+    <title>Lexcare</title>
+
+
+
+    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+
+    <link href="./public/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
+
+    <script src="./public/assets/bower_components/jquery/dist/jquery-ui.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="./public/vendor/animate/animate.css">
+
+    <link rel="stylesheet" type="text/css" href="./public/vendor/select2/select2.min.css">
+
+    <link rel="stylesheet" type="text/css" href="./public/vendor/perfect-scrollbar/perfect-scrollbar.css">
+
+    <link href="./public/assets/favicon.png" rel="shortcut icon">
+    <link href="./public/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="./public/apple-touch-icon.png" rel="apple-touch-icon">
+    <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500" rel="stylesheet" type="text/css">
+
+     <link href="./public/assets/bower_components/select2/dist/css/select2.min.css" rel="stylesheet">
+     <script src="./public/assets/bower_components/select2/dist/js/select2.full.min.js"></script>
+
+    <link href="./public/assets/bower_components/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+    <link href="./public/assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="./public/assets/bower_components/fullcalendar/dist/fullcalendar.min.css" rel="stylesheet">
+    <link href="./public/assets/bower_components/perfect-scrollbar/css/perfect-scrollbar.min.css" rel="stylesheet">
+    <link href="./public/assets/bower_components/slick-carousel/slick/slick.css" rel="stylesheet">
+    <link href="./public/assets/css/main.css?version=4.4.0" rel="stylesheet">
+
+    <link href="./public/assets/air_datepicker/datepicker.css" rel="stylesheet">
+    <script src="./public/assets/air_datepicker/datepicker.js"></script>
+    <script src="./public/assets/air_datepicker/i18n/datepicker.en.js"></script>
+
+    <link rel="stylesheet" href="./public/assets/bootstrap_select/bootstrap-select.min.css">
+
+     <script src="./public/assets/js/cleave.js"></script>
+
+     <link href="./public/assets/css/custom.css" rel="stylesheet">
+
+    <style rel="stylesheet" type="text/css">
+      canvas{
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+      }
+    </style>
+  </head>
+  <body class="menu-position-side menu-side-left full-screen with-content-panel text">
+
+    <div id="root"></div>
+
+
+
+
+  </body>
+
+  <script>
+    if (typeof process === 'object') {
+      const scripts = [];
+
+      if (process.env.NODE_ENV === 'development') {
+        // Dynamically insert the DLL script in development env in the
+        // renderer process
+        scripts.push('../dll/renderer.dev.dll.js');
+      }
+      if (process.env.START_HOT) {
+        // Dynamically insert the bundled app script in the renderer process
+        const port = process.env.PORT || 1212;
+        scripts.push(`http://localhost:${port}/dist/renderer.dev.js`);
+      } else {
+        scripts.push('./dist/renderer.prod.js');
+      }
+
+      if (scripts.length) {
+        document.write(
+          scripts
+            .map(script => `<script defer src="${script}"><\/script>`)
+            .join('')
+        );
+      }
+    }
+  </script>
+
+
+    <script src="./public/assets/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="./public/assets/bower_components/popper.js/dist/umd/popper.min.js"></script>
+    <script src="./public/assets/bower_components/select2/dist/js/select2.full.min.js"></script>
+    <script src="./public/assets/bower_components/jquery-bar-rating/dist/jquery.barrating.min.js"></script>
+    <script src="./public/assets/bower_components/bootstrap-validator/dist/validator.min.js"></script>
+    <script src="./public/assets/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <script src="./public/assets/bower_components/ion.rangeSlider/js/ion.rangeSlider.min.js"></script>
+    <script src="./public/assets/bower_components/editable-table/mindmup-editabletable.js"></script>
+    <script src="./public/assets/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="./public/assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="./public/assets/bower_components/fullcalendar/dist/fullcalendar.min.js"></script>
+    <script src="./public/assets/bower_components/perfect-scrollbar/js/perfect-scrollbar.jquery.min.js"></script>
+    <script src="./public/assets/bower_components/tether/dist/js/tether.min.js"></script>
+    <script src="./public/assets/bower_components/slick-carousel/slick/slick.min.js"></script>
+    <script src="./public/assets/bower_components/bootstrap/js/dist/util.js"></script>
+    <script src="./public/assets/bower_components/bootstrap/js/dist/alert.js"></script>
+    <script src="./public/assets/bower_components/bootstrap/js/dist/button.js"></script>
+    <script src="./public/assets/bower_components/bootstrap/js/dist/carousel.js"></script>
+    <script src="./public/assets/bower_components/bootstrap/js/dist/collapse.js"></script>
+    <script src="./public/assets/bower_components/bootstrap/js/dist/dropdown.js"></script>
+    <script src="./public/assets/bower_components/bootstrap/js/dist/modal.js"></script>
+    <script src="./public/assets/bower_components/bootstrap/js/dist/tab.js"></script>
+    <script src="./public/assets/bower_components/bootstrap/js/dist/tooltip.js"></script>
+    <script src="./public/assets/bower_components/bootstrap/js/dist/popover.js"></script>
+    <script src="./public/assets/js/demo_customizer.js?version=4.4.0"></script>
+    <script src="./public/assets/js/main.js?version=4.4.0"></script>
+    <script src="./public/assets/bootstrap_select/bootstrap-select.min.js"></script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-XXXXXXX-9', 'auto');
+      ga('send', 'pageview');
+    </script>
+<!--
+<script type="text/javascript" src="./public/assets/custom/js/step_form.js"></script>
+
+<script type="text/javascript" src="./public/assets/custom/js/chartjs_utils.js"></script>
+
+<script type="text/javascript" src="./public/assets/custom/js/dashboard_chart.js"></script> -->
+
+<script type="text/javascript">
+  $(document).ready(function(){
+
+    $(".date_filter").datepicker({
+      language: 'en'
+    });
+
+  });
+
+  function numberOnly(id) {
+      // Get element by id which passed as parameter within HTML element event
+      var element = document.getElementById(id);
+      // Use numbers only pattern, from 0 to 9
+      var regex = /[^0-9]/gi;
+      // This removes any other character but numbers as entered by user
+      element.value = element.value.replace(regex, "");
+   }
+
+</script>
+</html>
