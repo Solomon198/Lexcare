@@ -80,7 +80,7 @@ Unable to finde msvs_version node gyp for some reason always use 2012 even if yo
 
 - C:\Users\USER\Documents\Dixre\clients\electron-react-boilerplate\node_modules\node-gyp\lib\find-visualstudio.js
 
-- Then replace the below line. you might find it at line 17 => this.configMsvsVersion = "2017"
+- Then replace the below line. you might find it at line 17 => this.configMsvsVersion = "2019"
 
 
 
