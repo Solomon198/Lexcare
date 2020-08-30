@@ -15,6 +15,22 @@ git clone https://github.com/dixre-products/lexcare-desktop.git
 ```
 
 
+<<<<<<< HEAD
+=======
+From root directory
+
+```bash
+cd app 
+yarn install
+```
+back to root directory 
+
+```bash
+
+ Yarn install
+
+```
+>>>>>>> 73c9f109de50f510ecde341d9fefe4c1555acac4
 
 **Install windows-build-tools node package:**
 
