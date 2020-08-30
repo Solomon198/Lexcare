@@ -14,13 +14,7 @@
 git clone https://github.com/dixre-products/lexcare-desktop.git
 ```
 
-- install dependencies
 
-```bash
-yarn install
-cd app 
-yarn install
-```
 
 **Install windows-build-tools node package:**
 
@@ -45,6 +39,14 @@ bootstrap-vcpkg.bat
 vcpkg install openssl:x64-windows-static
 mkdir C:\src\vcpkg\installed\x64-windows-static\lib
 copy .\packages\openssl-windows_x64-windows-static\lib\libeay32.lib C:\src\vcpkg\installed\x64-windows-static\lib\
+```
+
+- install dependencies
+
+```bash
+yarn install
+cd app 
+yarn install
 ```
 
 ## Building Realm from source
