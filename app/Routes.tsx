@@ -19,9 +19,9 @@ export const app_connect = "demo-lexcare-ijdjy";
 export const partition  = "1"
 
 
-setInterval(()=>{
-    checkActiveConnection(app_connect,partition)
-},3000)
+// setInterval(()=>{
+//     checkActiveConnection(app_connect,partition)
+// },3000)
 
 
 export default class Routes extends React.Component {
@@ -38,7 +38,7 @@ export default class Routes extends React.Component {
 
     componentDidMount(){
 
-        reInitializApplicationConfigs(app_connect,partition);
+        // reInitializApplicationConfigs(app_connect,partition);
         // this.props.history.push('/dashboard');
 
     }
@@ -55,6 +55,9 @@ export default class Routes extends React.Component {
     }
 
     login(){
+
+
+         return false;
 
          this.setState({error:"",login:"started"},()=>{
 
@@ -95,7 +98,7 @@ export default class Routes extends React.Component {
           <Switch>
 
 
-              {
+              {/* {
                    !Auth.getCurrentUser(app_connect) ?
                      <Login
 
@@ -110,9 +113,11 @@ export default class Routes extends React.Component {
                    <Dashboard
                       logout={()=>this.logout()}
                    />
-              }
+              } */}
 
-
+                   <Dashboard
+                      logout={()=>this.logout()}
+                   />
           </Switch>
         </AppDefault>
       )

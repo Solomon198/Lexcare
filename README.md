@@ -14,9 +14,6 @@
 git clone https://github.com/dixre-products/lexcare-desktop.git
 ```
 
-
-<<<<<<< HEAD
-=======
 From root directory
 
 ```bash
@@ -61,8 +58,7 @@ copy .\packages\openssl-windows_x64-windows-static\lib\libeay32.lib C:\src\vcpkg
 
 ```bash
 yarn install
-cd app 
-yarn install
+
 ```
 
 ## Building Realm from source

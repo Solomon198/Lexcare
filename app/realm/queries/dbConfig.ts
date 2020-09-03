@@ -69,7 +69,7 @@ export function openSyncronizedRealm(partition:string){
 
     //check if a valid user exist before making attempts to open Database
 
-    if(_APP_INSTANCE_.currentUser){
+    // if(_APP_INSTANCE_.currentUser){
 
 
 
@@ -78,20 +78,20 @@ export function openSyncronizedRealm(partition:string){
 
             schema:[DailyAttendanceSchema],
 
-            sync:{
+            // sync:{
 
-              partitionValue:partition,
+            //   partitionValue:partition,
 
-              user:_APP_INSTANCE_.currentUser,
+            //   user:_APP_INSTANCE_.currentUser,
 
-              error:(error)=>{
+            //   error:(error)=>{
 
-                console.log(error)
+            //     console.log(error)
 
-              },
+            //   },
 
 
-            }
+            // }
           })
 
 
@@ -101,5 +101,5 @@ export function openSyncronizedRealm(partition:string){
 
 
 
-    }
+    // }
 }
