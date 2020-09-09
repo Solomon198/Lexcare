@@ -144,20 +144,7 @@ export default class DailyAttendance extends React.Component<props> {
 
                           )
                         }
-                    </tbody>
-                    {/* <tfoot>
-                      <tr>
-                        <th>#</th>
-                        <th>Date</th>
-                        <th>Client Name</th>
-                        <th>Client Card No.</th>
-                        <th>Date of Birth</th>
-                        <th>Sex</th>
-                        <th>First Contact With Facility</th>
-                        <th>Action</th>
-                      </tr>
-                    </tfoot> */}
-                  </table>
+                    </tbody>                  </table>
                 </div>
               </div>
             </div>
