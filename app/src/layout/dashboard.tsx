@@ -28,7 +28,8 @@ import electron from 'electron';
 // FORMS FOR INTERVENITONS
 
 import DailyAttendanceForm from '../Forms/dailyAttendance'
-// import DailyAttendanceForm from '../Forms/dailyAttendance'
+import BirthRegisterForm from '../Forms/birthRegister'
+import PhcStaffForm from '../Forms/phcStaff'
 
 
 export default class Dashboard extends React.Component {
@@ -65,41 +66,44 @@ export default class Dashboard extends React.Component {
               <Route path="/dashboard">
                 <DashboardDefault />
               </Route>
-              <Route path="/birth-register" component={BirthRegister} />
-              <Route path="/clients" component={Clients} />
-              <Route path="/phc-staff" component={PhcStaff} />
-              <Route path="/referal-out" component={ReferalOut} />
-              <Route path="/daily-attendance" component={DailyAttendance} />
+              <Route exact path="/birth-register" component={BirthRegister} />
+              <Route exact path="/clients" component={Clients} />
+              <Route exact path="/phc-staff" component={PhcStaff} />
+              <Route exact path="/referal-out" component={ReferalOut} />
+              <Route exact path="/daily-attendance" component={DailyAttendance} />
               {/* INTERVENTIONS ROUTES */}
 
-              <Route path="/antenatal-care" component={Antenatal} />
-              <Route path="/child-immunization" component={ChildImunization} />
-              <Route path="/out-patient" component={OutPatient} />
-              <Route path="/in-patient" component={InPatient} />
-              <Route
+              <Route exact path="/antenatal-care" component={Antenatal} />
+              <Route exact path="/child-immunization" component={ChildImunization} />
+              <Route exact path="/out-patient" component={OutPatient} />
+              <Route exact path="/in-patient" component={InPatient} />
+              <Route exact
                 path="/labour-and-delivery"
                 component={LabourAndDelivery}
               />
-              <Route
+              <Route exact
                 path="/tetanus-diphtherial"
                 component={TetanusDiphtherial}
               />
-              <Route path="/post-natal" component={PostNatal} />
-              <Route path="/family-planing" component={FamilyPlaning} />
-              <Route path="/nutrition" component={Nutrition} />
+              <Route exact path="/post-natal" component={PostNatal} />
+              <Route exact path="/family-planing" component={FamilyPlaning} />
+              <Route exact path="/nutrition" component={Nutrition} />
 
-              {/* OTHER ROUTES */}
+              {/* OTHER ROUTE exactS */}
 
-              <Route path="/all-users" component={AllUsers} />
-              <Route path="/covid-19" component={COVID19} />
-              <Route path="/community-leaders" component={COMMUNITYLEADERS} />
-              <Route path="/facility-services" component={FACILITYSERVICES} />
+              <Route exact path="/all-users" component={AllUsers} />
+              <Route exact path="/covid-19" component={COVID19} />
+              <Route exact path="/community-leaders" component={COMMUNITYLEADERS} />
+              <Route exact path="/facility-services" component={FACILITYSERVICES} />
 
 
               {/* FORMS ROUTES */}
 
               <Route path="/daily-attendance-register" component={DailyAttendanceForm}/>
 
+              <Route path="/add-birth-register" component={BirthRegisterForm}/>
+
+              <Route path="/add-phc-staff" component={PhcStaffForm}/>
 
 
             </Switch>

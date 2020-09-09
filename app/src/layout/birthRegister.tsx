@@ -1,6 +1,15 @@
 import React from "react";
 
-export default class BirthRegister extends React.Component {
+type props = {
+  history : any
+}
+
+export default class BirthRegister extends React.Component<props> {
+
+  addRecord(){
+    this.props.history.push("/add-birth-register");
+  }
+
   render() {
     return (
       <div className="content-w">
@@ -54,9 +63,9 @@ export default class BirthRegister extends React.Component {
                               value="Search Records"
                             />
                             &nbsp;
-                            <a href="#" className="btn btn-success">
+                            <button onClick={()=>this.addRecord()}  className="btn btn-success">
                               <i className="fa fa-plus" /> &nbsp; Add Record
-                            </a>
+                            </button>
                           </td>
                         </tr>
                       </tbody>
