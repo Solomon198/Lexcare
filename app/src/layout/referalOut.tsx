@@ -1,6 +1,15 @@
 import React from "react";
 
-export default class ReferalOut extends React.Component {
+type props = {
+  history : any
+}
+
+export default class ReferalOut extends React.Component<props> {
+
+  addRecord(){
+    this.props.history.push("/add-referal-out");
+  }
+
   render() {
     return (
       <div className="content-w">
@@ -43,9 +52,9 @@ export default class ReferalOut extends React.Component {
                               value="Search Records"
                             />
                             &nbsp;
-                            <a href="#" className="btn btn-danger">
+                            <button onClick={()=>this.addRecord()}  className="btn btn-success">
                               <i className="fa fa-plus" /> &nbsp; Add Record
-                            </a>
+                            </button>
                           </td>
                         </tr>
                       </tbody>

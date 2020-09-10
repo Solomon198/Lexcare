@@ -30,6 +30,7 @@ import electron from 'electron';
 import DailyAttendanceForm from '../Forms/dailyAttendance'
 import BirthRegisterForm from '../Forms/birthRegister'
 import PhcStaffForm from '../Forms/phcStaff'
+import ReferalOutForm from '../Forms/referalOut'
 
 
 export default class Dashboard extends React.Component {
@@ -104,6 +105,8 @@ export default class Dashboard extends React.Component {
               <Route path="/add-birth-register" component={BirthRegisterForm}/>
 
               <Route path="/add-phc-staff" component={PhcStaffForm}/>
+
+              <Route path="/add-referal-out" component={ReferalOutForm}/>
 
 
             </Switch>
