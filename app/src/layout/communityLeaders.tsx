@@ -1,6 +1,15 @@
 import React from "react";
 
-export default class COMMUNITYLEADERS extends React.Component {
+type props = {
+  history : any
+}
+
+export default class CommunityLeaders extends React.Component<props> {
+
+  addRecord(){
+    this.props.history.push("/add-community-leader");
+  }
+
   render() {
     return (
       <div className="content-w">
@@ -11,13 +20,9 @@ export default class COMMUNITYLEADERS extends React.Component {
               <div className="element-box">
                 <h5 className="form-header">All Commuunity Leaders</h5>
                 <div className="form-desc">
-                  <a
-                    href="#"
-                    className="btn btn-success"
-                    style={{ float: "right", marginTop: "-20px" }}
-                  >
-                    <i className="fa fa-plus" /> &nbsp; Add Record
-                  </a>
+                <button onClick={()=>this.addRecord()}  className="btn btn-success">
+                              <i className="fa fa-plus" /> &nbsp; Add Record
+                            </button>
                 </div>
                 <div className="table-responsive">
                   <table className="table table-striped table-lightfont">

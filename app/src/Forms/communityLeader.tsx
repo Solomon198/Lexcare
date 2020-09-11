@@ -11,7 +11,7 @@ type Props = {
     history: any
 }
 
-class BirthRegister extends React.Component<Props> {
+class CommunityLeader extends React.Component<Props> {
 
     state = {
 
@@ -21,12 +21,31 @@ class BirthRegister extends React.Component<Props> {
         days:[],
         months:[],
         years:[],
-        
+
         formValue: {
-          full_name: "",
-          phone_number: "",
-          role: ""
+          mothers_card_no:"",
+          child_reg_date: "",
+          dob: "",
+          sex: "",
+          childs_surname: "",
+          childs_firstname: "",
+          childs_other_name: "",
+          fathers_fullname: "",
+          mothers_fullname: "",
+          mothers_age: "",
+          fathers_state_of_origin: "",
+          parents_phone_number: "",
+          parent_residential_address: "",
+          date_b_certificate_issued: "",
+          certificate_no: "",
+          certificate_collection_date: "",
+          certificate_collector_name: "",
+          responsible_officer: ""
         },
+        
+        day:"",
+        month:"",
+        year:""
 
     }
 
@@ -83,7 +102,7 @@ class BirthRegister extends React.Component<Props> {
     render() {
         return (
             <StepFormWrapper
-            title="Add Birth Register"
+            title="Add Community Leaders"
             jumpToIndex={(index)=>this.setFormPosition(index)}//jumps to a step automatically
             active={this.state.active} // pass the active step so that
             steps={this.state.steps } // holds total number of steps required
@@ -92,7 +111,7 @@ class BirthRegister extends React.Component<Props> {
                 <StepWrapper
                 active={this.state.active} // pass the active step
                 position={1} // the current step position
-                title="Add Staff" // title of the step
+                title="Information" // title of the step
                 >
 
                     <Input
@@ -103,7 +122,6 @@ class BirthRegister extends React.Component<Props> {
                     title="Full Name"
                     />
 
-                    {/* Use a date picker here */}
                     <Input
                     onChangeText={(text)=> this.setFormValue("phone_number",text)}
                     type="text"
@@ -112,13 +130,21 @@ class BirthRegister extends React.Component<Props> {
                     title="Phone Number"
                     />
 
-                    <SelectComponent
+                    <Input
+                    onChangeText={(text)=> this.setFormValue("email",text)}
+                    type="text"
+                    placeholder="Enter email"
+                    name="email"
+                    title="Email"
+                    />
 
-                    name="role"
-                    onChangeText={(text)=>this.setFormValue("sex",text)}
-                    options={["Officer in Charge","Routine Immunization in Charge", "Antenatal Care in Charge", "Chew 1"]}
-                    title="Role"
-                    placeholder="Select Role"
+                    <TextArea
+
+                    onChangeText={(text)=>this.setFormValue("home_address",text)}
+                    name="home_address"
+                    placeholder="Enter home address"
+                    id="home_address"
+                    title="Home Address"
 
                     />
                     
@@ -132,4 +158,4 @@ class BirthRegister extends React.Component<Props> {
 
 }
 
-export default BirthRegister;
+export default CommunityLeader;

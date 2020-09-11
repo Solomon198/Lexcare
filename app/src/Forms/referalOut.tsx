@@ -16,7 +16,7 @@ class ReferalOut extends React.Component<Props> {
     state = {
 
         active:1,
-        steps:4,
+        steps:5,
 
         days:[],
         months:[],
@@ -62,7 +62,26 @@ class ReferalOut extends React.Component<Props> {
         ],
 
         formValue: {
-          mothers_card_no:"",
+            refered_by_name: "",
+            refered_by_designation: "",
+            referal_date: "",
+            initiating_facility_name: "",
+            initiating_facility_address: "",
+            initiating_facility_telephone_used: "",
+            initiating_facility_transportation_arrangement: "",
+            refered_to_facility_name: "",
+            refered_to_facility_address: "",
+            client_name: "",
+            identity_number: "",
+            client_address: "",
+            age: "",
+            sex: "",
+            clinical_history: "",
+            findings_diagnosis: "",
+            treatment_given: "",
+            reason_for_referal: "",
+            any_referal_documents: "",
+            initiating_facility_oic_name: "",
         },
         
         day:"",
@@ -133,17 +152,33 @@ class ReferalOut extends React.Component<Props> {
                 <StepWrapper
                 active={this.state.active} // pass the active step
                 position={1} // the current step position
-                title="Patient / Client" // title of the step
+                title="Refered By" // title of the step
                 >
 
                     <Input
-                    onChangeText={(text)=> this.setFormValue("mothers_card_no",text)}
+                    onChangeText={(text)=> this.setFormValue("refered_by_name",text)}
                     type="text"
-                    placeholder="Enter Mother's Hospital Card No."
-                    name="mothers_card_no"
-                    title="Mother's Hospital Card No."
+                    placeholder="Enter referal name"
+                    name="refered_by_name"
+                    title="Name"
                     />
 
+                    <Input
+                    onChangeText={(text)=> this.setFormValue("refered_by_designation",text)}
+                    type="text"
+                    placeholder="Enter referal designation"
+                    name="refered_by_designation"
+                    title="Designation"
+                    />
+
+                    {/* Use date picker here... */}
+                    <Input
+                    onChangeText={(text)=> this.setFormValue("referal_date",text)}
+                    type="text"
+                    placeholder="Enter referal date"
+                    name="referal_date"
+                    title="Date of Birth"
+                    />
 
                     <button onClick={()=>this.goNext()} className="btn btn-primary nextBtn btn-lg pull-right" type="button">Next</button>
 
@@ -152,10 +187,43 @@ class ReferalOut extends React.Component<Props> {
                 <StepWrapper
                 active={this.state.active} // pass the active step
                 position={2} // the current step position
-                title="Child's Name" // title of the step
+                title="Initiating Facility" // title of the step
                 >
 
-                    
+                    <Input
+                    onChangeText={(text)=> this.setFormValue("initiating_facility_name",text)}
+                    type="text"
+                    placeholder="Enter initiating facility name"
+                    name="initiating_facility_name"
+                    title="Name"
+                    />
+
+                    <Input
+                    onChangeText={(text)=> this.setFormValue("initiating_facility_address",text)}
+                    type="text"
+                    placeholder="Enter initiating facility name"
+                    name="initiating_facility_address"
+                    title="Address"
+                    />
+
+                    {/* Create a component to be replaced with these radio buttons  */}
+
+{/* <div class="form-group">
+							  <label for="">Any telephone arrangements made by initiating facility?</label><br>
+							  <input type="radio" name="initiating_facility_telephone_used" value="Yes"> Yes
+
+							  <input type="radio" name="initiating_facility_telephone_used" value="No"> No
+							 <div class="help-block form-text with-errors form-control-feedback"></div>
+							</div>
+
+							<div class="form-group">
+							  <label for="">Any transportation arrangements made by initiating facility? </label><br>
+							  <input type="radio" name="initiating_facility_transportation_arrangement" value="Yes"> Yes
+
+							  <input type="radio" name="initiating_facility_transportation_arrangement" value="No"> No
+							 <div class="help-block form-text with-errors form-control-feedback"></div>
+							</div> */}
+
 
                     <button onClick={()=>this.goNext()} className="btn btn-primary nextBtn btn-lg pull-right" type="button">Next</button>
 
@@ -164,9 +232,24 @@ class ReferalOut extends React.Component<Props> {
                 <StepWrapper
                 active={this.state.active} // pass the active step
                 position={3} // the current step position
-                title="Parent's Information" // title of the step
+                title="Refered to Facility" // title of the step
                 >
                     
+                    <Input
+                    onChangeText={(text)=> this.setFormValue("refered_to_facility_name",text)}
+                    type="text"
+                    placeholder="Enter refered facility name"
+                    name="refered_to_facility_name"
+                    title="Name"
+                    />
+
+                    <Input
+                    onChangeText={(text)=> this.setFormValue("refered_to_facility_address",text)}
+                    type="text"
+                    placeholder="Enter refered facility address"
+                    name="refered_to_facility_address"
+                    title="Address"
+                    />
 
                     <button onClick={()=>this.goNext()} className="btn btn-primary nextBtn btn-lg pull-right" type="button">Next</button>
 
@@ -176,10 +259,119 @@ class ReferalOut extends React.Component<Props> {
                 <StepWrapper
                 active={this.state.active} // pass the active step
                 position={4} // the current step position
+                title="Client Details" // title of the step
+                >
+
+                    <Input
+                    onChangeText={(text)=> this.setFormValue("client_name",text)}
+                    type="text"
+                    placeholder="Enter client name"
+                    name="client_name"
+                    title="Client Name"
+                    />
+
+                    <Input
+                    onChangeText={(text)=> this.setFormValue("identity_number",text)}
+                    type="text"
+                    placeholder="Enter identity number"
+                    name="identity_number"
+                    title="Identity Number"
+                    />
+
+                    <Input
+                    onChangeText={(text)=> this.setFormValue("client_address",text)}
+                    type="text"
+                    placeholder="Enter client address"
+                    name="client_address"
+                    title="Client Address"
+                    />
+
+                    <Input
+                    onChangeText={(text)=> this.setFormValue("age",text)}
+                    type="text"
+                    placeholder="Enter age"
+                    name="age"
+                    title="Age"
+                    />
+
+{/* Convert this to a radio component */}
+
+{/* <div class="form-group">
+							  <label for="">Sex</label><br>
+							  <input type="radio" name="sex" value="Male"> Male
+
+							  <input type="radio" name="sex" value="Female"> Female
+							 <div class="help-block form-text with-errors form-control-feedback"></div>
+							</div> */}
+
+                    <TextArea
+
+                    onChangeText={(text)=>this.setFormValue("clinical_history",text)}
+                    name="clinical_history"
+                    placeholder="Enter clinical history"
+                    id="clinical_history"
+                    title="Clinical History"
+
+                    />
+
+                    <TextArea
+
+                    onChangeText={(text)=>this.setFormValue("findings_diagnosis",text)}
+                    name="findings_diagnosis"
+                    placeholder="Enter findings / diagnosis"
+                    id="findings_diagnosis"
+                    title="Findings / Diagnosis"
+
+                    />
+
+                    <TextArea
+
+                    onChangeText={(text)=>this.setFormValue("treatment_given",text)}
+                    name="treatment_given"
+                    placeholder="Enter treatment given (if any)"
+                    id="treatment_given"
+                    title="Treatment given (if any)"
+
+                    />
+
+                    <TextArea
+
+                    onChangeText={(text)=>this.setFormValue("reason_for_referal",text)}
+                    name="reason_for_referal"
+                    placeholder="Enter reason for referal"
+                    id="reason_for_referal"
+                    title="Reason for referal"
+
+                    />
+
+{/* Create a component for this radio button */}
+
+{/* <div class="form-group">
+							  <label for="">Any other documents accompanying referal from initiating faciliting? </label><br>
+							  <input type="radio" name="any_referal_documents" value="Yes"> Yes
+
+							  <input type="radio" name="any_referal_documents" value="No"> No
+							 <div class="help-block form-text with-errors form-control-feedback"></div>
+							</div>	 */}
+
+                    <button onClick={()=>this.goNext()} className="btn btn-primary nextBtn btn-lg pull-right" type="button">Next</button>
+
+
+                </StepWrapper>
+
+                <StepWrapper
+                active={this.state.active} // pass the active step
+                position={5} // the current step position
                 title="Parent's Information" // title of the step
                 >
 
-                   
+                <Input
+                onChangeText={(text)=> this.setFormValue("initiating_facility_oic_name",text)}
+                type="text"
+                placeholder="Enter OIC name"
+                name="initiating_facility_oic_name"
+                title="Name"
+                />
                     
                 <button type="button" className="btn btn-primary btn-lg ">Submit</button>
 

@@ -18,7 +18,7 @@ import ChildImunization from "./interventions/immunization";
 import FamilyPlaning from "./interventions/familyPlaning";
 import AllUsers from "./allUsers";
 import COVID19 from "./covid19";
-import COMMUNITYLEADERS from "./communityLeaders";
+import CommunityLeaders from "./communityLeaders";
 import FACILITYSERVICES from "./facilityServices";
 import Login from '../layout/login'
 import Realm from 'realm'
@@ -31,6 +31,7 @@ import DailyAttendanceForm from '../Forms/dailyAttendance'
 import BirthRegisterForm from '../Forms/birthRegister'
 import PhcStaffForm from '../Forms/phcStaff'
 import ReferalOutForm from '../Forms/referalOut'
+import CommunityLeaderForm from '../Forms/communityLeader'
 
 
 export default class Dashboard extends React.Component {
@@ -94,7 +95,7 @@ export default class Dashboard extends React.Component {
 
               <Route exact path="/all-users" component={AllUsers} />
               <Route exact path="/covid-19" component={COVID19} />
-              <Route exact path="/community-leaders" component={COMMUNITYLEADERS} />
+              <Route exact path="/community-leaders" component={CommunityLeaders} />
               <Route exact path="/facility-services" component={FACILITYSERVICES} />
 
 
@@ -107,6 +108,8 @@ export default class Dashboard extends React.Component {
               <Route path="/add-phc-staff" component={PhcStaffForm}/>
 
               <Route path="/add-referal-out" component={ReferalOutForm}/>
+
+              <Route path="/add-community-leader" component={CommunityLeaderForm}/>
 
 
             </Switch>
