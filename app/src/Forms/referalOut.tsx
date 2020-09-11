@@ -1,11 +1,12 @@
 import React from 'react';
 import Input from '../components/input'
-import DatePicker from '../components/datePicker';
+import DatePicker from '../components/datePicker'
 import SelectComponent from '../components/select'
-import TextArea from '../components/textArea';
+import TextArea from '../components/textArea'
 import CustomDatePicker from '../components/customDatePicker';
 import StepWrapper from '../components/stepWrapper'
-import StepFormWrapper from '../components/stepFormWrapper';
+import StepFormWrapper from '../components/stepFormWrapper'
+import RadioButton from '../components/radioButtons'
 
 type Props = {
     history: any
@@ -206,24 +207,9 @@ class ReferalOut extends React.Component<Props> {
                     title="Address"
                     />
 
-                    {/* Create a component to be replaced with these radio buttons  */}
+                    <RadioButton name="initiating_facility_telephone_used" title="Any telephone arrangements made by initiating facility?" options={["Yes", "No"]} onChangeText ={(initiating_facility_telephone_used) => this.setState({initiating_facility_telephone_used: initiating_facility_telephone_used})} />
 
-{/* <div class="form-group">
-							  <label for="">Any telephone arrangements made by initiating facility?</label><br>
-							  <input type="radio" name="initiating_facility_telephone_used" value="Yes"> Yes
-
-							  <input type="radio" name="initiating_facility_telephone_used" value="No"> No
-							 <div class="help-block form-text with-errors form-control-feedback"></div>
-							</div>
-
-							<div class="form-group">
-							  <label for="">Any transportation arrangements made by initiating facility? </label><br>
-							  <input type="radio" name="initiating_facility_transportation_arrangement" value="Yes"> Yes
-
-							  <input type="radio" name="initiating_facility_transportation_arrangement" value="No"> No
-							 <div class="help-block form-text with-errors form-control-feedback"></div>
-							</div> */}
-
+                    <RadioButton name="initiating_facility_transportation_arrangement" title="Any transportation arrangements made by initiating facility?" options={["Yes", "No"]} onChangeText ={(initiating_facility_transportation_arrangement) => this.setState({initiating_facility_transportation_arrangement: initiating_facility_transportation_arrangement})} />
 
                     <button onClick={()=>this.goNext()} className="btn btn-primary nextBtn btn-lg pull-right" type="button">Next</button>
 
