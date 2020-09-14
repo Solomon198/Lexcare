@@ -1,32 +1,66 @@
 import React from 'react';
-
+import {useField} from '@formiz/core'
 
 type TextAreaProps = {
-     id : string,
-     title : string,
-     name : string,
-     placeholder : string,
-     onChangeText:(text:string)=>void
+
+      name : string,
+      required?:any,
+      title:string,
+      type?:any,
+      placeholder:string,
+
 }
 
-const TextArea  = (props:TextAreaProps)=> (
+const TextArea  = (props:TextAreaProps)=> {
+
+  const {
+    errorMessage,
+    id,
+    isValid,
+    isSubmitted,
+    setValue,
+    value,
+  } = useField(props);
+
+
+
+  const { title, type, required } = props
+  const [isTouched, setIsTouched] = React.useState(false)
+  const showError = !isValid && (isTouched || isSubmitted);
+
+  return (
     <div className="form-group">
-        <label htmlFor={props.id} className="col-sm-12 control-label">{props.title}</label>
-        <div className="col-sm-12">
-        <textarea
-           onChange={(e)=>props.onChangeText(e.target.value)}
-           name={props.name}
-           cols={40}
-           rows={5}
-           className="form-control"
-           id={props.id}
-           placeholder={props.placeholder}
-           defaultValue={""} />
+        <label htmlFor="field-ta" className="col-sm-12 control-label">
+       {title}
+        {!!required && ' *'}
+      </label>
+     <div className="col-sm-12">
+
+          <textarea
+
+              cols={40}
+              rows={5}
+              className={`demo-input form-control ${showError && "border-danger"}`}
+              defaultValue={""}
+              onChange={(e)=>setValue(e.target.value)}
+              value={value ?? ""}
+              name={props.name}
+              id={props.name}
+              style={{borderWidth:1}}
+              placeholder={props.placeholder}
+              onBlur={() => setIsTouched(true)}
+
+           />
+
         </div>
-        <div className="help-block form-text with-errors form-control-feedback" />
+        {showError && (
+        <div style={{marginLeft:10,fontSize:13}} id={`${id}-error`} className="demo-form-feedback text-danger">
+          { errorMessage }
+        </div>
+      )}
   </div>
 
-)
+)}
 
 
 export default TextArea

@@ -1,35 +1,62 @@
 import React from 'react';
-
-
+import {useField} from '@formiz/core'
 
 type InputComponentProps = {
 
-      title : string,
       name : string,
-      placeholder: string,
-      type:string,
-      onChangeText:(text:string)=>void,
+      required?:any,
+      title:string,
+      type:any,
+      placeholder:string,
 
 }
 
-const InputComponent  = (props:InputComponentProps)=> (
+
+const InputComponent  = (props:InputComponentProps)=> {
+
+  const {
+    errorMessage,
+    id,
+    isValid,
+    isSubmitted,
+    setValue,
+    value,
+  } = useField(props);
+
+
+
+  const { title, type, required } = props
+  const [isTouched, setIsTouched] = React.useState(false)
+  const showError = !isValid && (isTouched || isSubmitted);
+
+  return (
     <div className="form-group">
-    <label htmlFor="field-ta" className="col-sm-12 control-label">{props.title}</label>
+    <label htmlFor="field-ta" className="col-sm-12 control-label">
+       {title}
+        {!!required && ' *'}
+      </label>
     <div className="col-sm-12">
       <input
-          onChange={(e)=>props.onChangeText(e.target.value)}
-          type={props.type}
+          onChange={(e)=>setValue(e.target.value)}
+          type={type ?? "text"}
+          value={value ?? ""}
           name={props.name}
           id={props.name}
-          className="form-control"
+          style={{borderWidth:1}}
           placeholder={props.placeholder}
           autoComplete="off"
-
+          className={`demo-input form-control ${showError && "border-danger"}`}
+          onBlur={() => setIsTouched(true)}
       />
     </div>
-    <div className="help-block form-text with-errors form-control-feedback" />
+    {showError && (
+        <div style={{marginLeft:10,fontSize:13}} id={`${id}-error`} className="demo-form-feedback text-danger">
+          { errorMessage }
+        </div>
+      )}
   </div>
 )
+}
 
 
 export default InputComponent

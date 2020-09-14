@@ -1,33 +1,67 @@
 
 import React from 'react';
+import {useField} from '@formiz/core'
+import DatePicker from 'react-date-picker';
+
 
 type DatePickerComponentProps = {
      name : string,
      title : string,
      placeholder : string,
      type :string,
-     onChangeText:(date:string)=>void
+     required:string,
 }
 
-const DatePickerComponent   = (props:DatePickerComponentProps)=> (
+
+
+const DatePickerComponent   = (props:DatePickerComponentProps)=> {
+  const {
+    errorMessage,
+    id,
+    isValid,
+    isSubmitted,
+    setValue,
+    value,
+  } = useField(props);
+
+
+
+  const { title, type, required,name,placeholder} = props
+  const [isTouched, setIsTouched] = React.useState(false)
+  const showError = !isValid && (isTouched || isSubmitted);
+
+
+  return(
 
     <div className="form-group ">
 
-            <label htmlFor="field-ta" className="col-sm-12 control-label">{props.title}</label>
-            <div className="col-sm-12">
-                 <input
-                  onChange={(e)=>props.onChangeText(e.target.value)}
-                  type={props.type} name={props.name}  id={props.name} className="form-control"
+            <label htmlFor="field-ta" className="col-sm-12 control-label">
+            {title}
+              {!!required && ' *'}
+            </label>
 
-                 autoComplete="off" placeholder={props.placeholder} />
-                {/* <div className="help-block form-text with-errors form-control-feedback">
-                    <ul className="list-unstyled">
-                        <li>{props.dataError}</li>
-                    </ul>
-                </div> */}
+            <div className="col-sm-12">
+
+                 <input
+                  onChange={(e)=>setValue(e.target.value)}
+                  type={type}
+                  name={name}
+                  id={name}
+                  value={value}
+                  style={{borderWidth:1}}
+                  className={`demo-input form-control ${showError && "border-danger"}`}
+                  autoComplete="off"
+                  onBlur={() => setIsTouched(true)}
+                  placeholder={placeholder} />
+
                </div>
+               {showError && (
+                  <div style={{marginLeft:10,fontSize:13}} id={`${id}-error`} className="demo-form-feedback text-danger">
+                    { errorMessage }
+                  </div>
+                )}
     </div>
-)
+)}
 
 
 export default DatePickerComponent

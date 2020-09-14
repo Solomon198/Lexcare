@@ -1,9 +1,7 @@
 import React from 'react';
-
-
+import {FormizStep} from '@formiz/core'
 
 type  StepProps = {
-     active : number,
      position : number,
      title : string,
      children : any
@@ -11,9 +9,10 @@ type  StepProps = {
 export default function Step (props:StepProps){
 
      return (
+      <FormizStep name={"step"+props.position}>
       <div
          className="row setup-content"
-         style={{display:props.active == props.position ? 'block' : "none"}}>
+         >
         <div className="col-sm-12">
           <div className="col-md-12">
 
@@ -23,6 +22,7 @@ export default function Step (props:StepProps){
            </div>
          </div>
       </div>
+      </FormizStep>
 
      )
 }

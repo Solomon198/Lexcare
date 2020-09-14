@@ -272,6 +272,8 @@
     "webpack-merge": "^4.2.2"
   },
   "dependencies": {
+    "@formiz/core": "^1.0.0-rc.20",
+    "@formiz/validations": "^1.0.0-rc.14",
     "@fortawesome/fontawesome-free": "^5.13.1",
     "@hot-loader/react-dom": "^16.13.0",
     "@reduxjs/toolkit": "^1.4.0",
@@ -285,6 +287,7 @@
     "history": "4.7.2",
     "moment": "^2.27.0",
     "react": "^16.13.1",
+    "react-date-picker": "^8.0.2",
     "react-dom": "^16.12.0",
     "react-google-charts": "^3.0.15",
     "react-hot-loader": "^4.12.21",
@@ -297,7 +300,7 @@
     "redux-thunk": "^2.3.0",
     "source-map-support": "^0.5.19",
     "toasted-notes": "^3.2.0",
-    "yup": "^0.29.2"
+    "yup": "^0.29.3"
   },
   "devEngines": {
     "node": ">=7.x",

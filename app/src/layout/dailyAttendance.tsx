@@ -144,7 +144,8 @@ export default class DailyAttendance extends React.Component<props> {
 
                           )
                         }
-                    </tbody>                  </table>
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>

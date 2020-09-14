@@ -1,21 +1,45 @@
 import React from 'react';
 import StepIndicatorComponent from '../components/stepIndicator';
-
+import {Formiz,useForm} from '@formiz/core'
+import Step from './stepWrapper';
 
 type StepFormWrapperProps = {
 
     title:string,
     steps : number,
-    active : number,
-    jumpToIndex:(param:number)=>void,
     children : any,
 
 }
 
  function   StepFormWrapper  (props:StepFormWrapperProps) {
 
+          const MyForm = useForm();
+
+
+          const handleSubmit = (values) => {
+
+            console.log(values) // Retrieves values after submit;
+
+          }
+
+          const  goNext = ()=> {
+
+
+            window.scrollTo(0, 0)
+
+
+          }
+
+          const gotoStep = (step:string)=>{
+               if(MyForm.isStepValid){
+                  MyForm.goToStep(step);
+               }
+          }
+
+
 
               return (
+                <Formiz onValidSubmit={handleSubmit}  onInvalidSubmit={handleSubmit} connect={MyForm}>
                 <div className="content-w">
                   <div className="element-wrapper">
                     <div className="content-i">
@@ -34,14 +58,33 @@ type StepFormWrapperProps = {
                                       </h5>
 
                                         <StepIndicatorComponent
-                                          jumpToIndex={(index:number)=> props.jumpToIndex(index)}
+                                          jumpToIndex={(step:string)=> gotoStep(step)}
                                           stepNumber={props.steps}
-                                          active = {props.active}
+                                          active = {MyForm.currentStep.index}
                                         />
 
-
+                                           <form // create an html form
+                                              noValidate // Disable native html validation
+                                              onSubmit={MyForm.submitStep} // Pass the Formiz submit to the onSubmit
+                                            >
 
                                             {props.children}
+                                            {MyForm.isLastStep ? (
+                                              <button
+                                                type="submit" // Create a submit button
+                                                disabled={!MyForm.isValid} // Disable the button if the form is not valid
+                                                className="btn btn-primary btn-lg ">Submit</button>
+                                            ) : (
+                                              <button
+                                              type="submit" // Create a submit button
+                                              onClick={goNext}
+                                              disabled={!MyForm.isStepValid} // Disable the button if the form is not valid
+                                              className="btn btn-primary btn-lg ">Next</button>
+
+                                            )}
+
+
+                                           </form>
 
 
                                     </div>
@@ -53,6 +96,7 @@ type StepFormWrapperProps = {
                        </div>
                       </div>
                     </div>
+                    </Formiz>
                       )
 
 
