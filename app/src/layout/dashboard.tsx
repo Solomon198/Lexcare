@@ -32,6 +32,7 @@ import BirthRegisterForm from '../Forms/birthRegister'
 import PhcStaffForm from '../Forms/phcStaff'
 import ReferalOutForm from '../Forms/referalOut'
 import CommunityLeaderForm from '../Forms/communityLeader'
+import AntenatalForm from '../Forms/antenatal'
 
 
 export default class Dashboard extends React.Component {
@@ -110,6 +111,8 @@ export default class Dashboard extends React.Component {
               <Route path="/add-referal-out" component={ReferalOutForm}/>
 
               <Route path="/add-community-leader" component={CommunityLeaderForm}/>
+
+              <Route path="/add-antenatal" component={AntenatalForm}/>
 
 
             </Switch>
