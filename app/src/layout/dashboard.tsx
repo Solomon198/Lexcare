@@ -33,6 +33,10 @@ import PhcStaffForm from '../Forms/phcStaff'
 import ReferalOutForm from '../Forms/referalOut'
 import CommunityLeaderForm from '../Forms/communityLeader'
 import AntenatalForm from '../Forms/antenatal'
+import FamilyPlanningForm from '../Forms/familyPlanning'
+import InPatientForm from '../Forms/inPatient'
+import LabourAndDeliveryForm from '../Forms/labourAndDelivery'
+import PostNatalForm from '../Forms/postNatal'
 
 
 export default class Dashboard extends React.Component {
@@ -113,6 +117,14 @@ export default class Dashboard extends React.Component {
               <Route path="/add-community-leader" component={CommunityLeaderForm}/>
 
               <Route path="/add-antenatal" component={AntenatalForm}/>
+
+              <Route path="/add-family-planning" component={FamilyPlanningForm}/>
+
+              <Route path="/add-in-patient" component={InPatientForm}/>
+
+              <Route path="/add-labour-delivery" component={LabourAndDeliveryForm}/>
+
+              <Route path="/add-post-natal" component={PostNatalForm}/>
 
 
             </Switch>
