@@ -37,6 +37,7 @@ import FamilyPlanningForm from '../Forms/familyPlanning'
 import InPatientForm from '../Forms/inPatient'
 import LabourAndDeliveryForm from '../Forms/labourAndDelivery'
 import PostNatalForm from '../Forms/postNatal'
+import ImmunizationForm from '../Forms/immunization'
 
 
 export default class Dashboard extends React.Component {
@@ -125,6 +126,8 @@ export default class Dashboard extends React.Component {
               <Route path="/add-labour-delivery" component={LabourAndDeliveryForm}/>
 
               <Route path="/add-post-natal" component={PostNatalForm}/>
+
+              <Route path="/add-immunization" component={ImmunizationForm}/>
 
 
             </Switch>

@@ -20,7 +20,7 @@ import CheckBox from '../components/checkBox'
 type Props = {
   history: any
 }
-class PostNatal extends React.Component<Props> {
+class  PostNatal extends React.Component<Props> {
 
    state = {
 
@@ -173,69 +173,46 @@ class PostNatal extends React.Component<Props> {
 
 
                        <StepFormWrapper
-                            title="Post Natal Care"
-                            steps={4} // holds total number of steps required
+                            title="Child Immunization Reister "
+                            steps={2} // holds total number of steps required
                         >
 
                            <StepWrapper
                               position={1} // the current step position
-                              title="Patient / Client" // title of the step
+                              title="" // title of the step
                            >
 
                               <DatePicker
                                 type="date"
-                                placeholder="Please select a date"
+                                placeholder="Select registration date"
                                 name="date"
-                                title="Select registration date"
-                                required="Please select a date"
+                                title="Date of Child Visit"
+                                required="please select date"
                               />
 
                                 <SelectComponent
 
-                                name="client_names"
+                                name="child_name"
                                 options={["preloaded names here..."]}
-                                title="Name of Client"
+                                title="Child's Names"
                                 placeholder="Search Clients"
                                 required="Please select a client"
                                 />
 
                               <Input
                                 type="text"
-                                placeholder="Enter client card number..."
-                                name="client_card_number"
-                                title="Client / Patient Card Number"
-                                required="Please enter client card number"
+                                placeholder="Enter card number..."
+                                name="child_card_no"
+                                title="Child's Card Number"
+                                required="Please select child card number."
                               />
 
                             <SelectComponent
 
-                            name="age"
-                            options={["0 - 28 Days", "29 days - 11 Months", "12 - 59 Months", "5 - 9 Years", "10 - 19 Years", "> 20 Years"]}
-                            title="Age"
+                            name="sex"
+                            options={["Male", "Female"]}
+                            title="Sex (M/F)"
                             placeholder="Select Gender"
-                            /> 
-
-                            <Input
-                                type="text"
-                                placeholder="Enter the exact age of client"
-                                name="exact_age"
-                                title="Write Exact Age"
-                              />   
-
-                              <Input
-                                type="text"
-                                placeholder="Record the number of times the woman has carried pregnancies to 28 weeks and above."
-                                name="parity"
-                                title="Parity"
-                              />
-
-                            <RadioButton name="pnc_clinic_attendance" title="Postnatal Clinic Attendance<" options={["10 - 14 years", "15 - 19 years", "20 - 24 years", "25 - 49 years", "≥ 50 years"]} onChangeText ={(pnc_clinic_attendance) => this.setState({pnc_clinic_attendance: pnc_clinic_attendance})} />   
-                              
-                            <TextArea
-
-                                name="associated_problems"
-                                placeholder="Enter associated problems"
-                                title="Enter associated problems"
                             />
                              
                         </StepWrapper>
@@ -246,51 +223,38 @@ class PostNatal extends React.Component<Props> {
 
                        <StepWrapper
                        position={2}
-                       title="Postnatal Care">
-
-                            <RadioButton name="mother" title="Mother" options={["1 Day", "2 - 3 Days", "4 - 7 Days", "> 7 Days"]} onChangeText ={(mother) => this.setState({mother: mother})} />
-
-                            <RadioButton name="newborn" title="Newborn" options={["1 Day", "2 - 3 Days", "4 - 7 Days", "> 7 Days"]} onChangeText ={(newborn) => this.setState({newborn: newborn})} />
-                            
-                            <RadioButton name="sex_of_child" title="Sex of Child" options={["Male", "Female"]} onChangeText ={(sex_of_child) => this.setState({sex_of_child: sex_of_child})} />
-
-                            <p>Checkbox for maternal care here.</p>
-
-                            <p>Checkbox for services here.</p>
-
-                        </StepWrapper>
-
-
-
-                        <StepWrapper
-                        position={3}
-                        title="Newborn Care">
-
-                            <p>Checkbox for Neonatal Complications here.</p>
-
-                            <RadioButton name="kmc" title="KMC" options={["A", "DS"]} onChangeText ={(kmc) => this.setState({kmc: kmc})} />
-
-                        </StepWrapper>
-
-
-
-                          <StepWrapper
-                          position={4}
-                          title="">  
-
-                            <RadioButton name="outcome_of_visit" title="Outcome of Visit (for mother and newborn)" options={["NT", "T", "A", "RO"]} onChangeText ={(outcome_of_visit) => this.setState({outcome_of_visit: outcome_of_visit})} />
+                       title="">
 
                             <TextArea
 
-                                name="ro_reason"
-                                placeholder="Please state reason for referral"
-                                title="Reason for Referral"
+                            name="followup_address"
+                            placeholder="Enter Follow Up Address"
+                            title="Follow Up Address"
+                            required="Please enter the childs follow up address."
                             />
 
-                            <RadioButton name="transportation_out" title="Transportation Out" options={["Ambulance", "Others"]} onChangeText ={(transportation_out) => this.setState({transportation_out: transportation_out})} />   
+                              <Input
+                                type="text"
+                                placeholder="Enter phone no."
+                                name="phone"
+                                title="Phone No."
+                              />
+                              
+                              <DatePicker
+                              type="date"
+                              placeholder="Enter child's date of birth"
+                              name="dob"
+                              title="Date of Birth(DD/MM/YY)"
+                            />
 
-                          </StepWrapper>
+                            <TextArea
 
+                            name="comment"
+                            placeholder="Enter comments"
+                            title="Comments"
+                            />
+
+                        </StepWrapper>
 
                     </StepFormWrapper>
 
