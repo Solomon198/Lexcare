@@ -1,6 +1,13 @@
 import React from "react";
+type OutPatientProps = {
+  history:any
+}
+export default class OutPatient extends React.Component<OutPatientProps>{
 
-export default class OutPatient extends React.Component {
+  addRecord(){
+    this.props.history.push("/add-outpatient")
+  }
+
   render() {
     return (
       <div className="content-w">
@@ -54,9 +61,9 @@ export default class OutPatient extends React.Component {
                               value="Search Records"
                             />
                             &nbsp;
-                            <a href="#" className="btn btn-success">
+                            <button onClick={()=>this.addRecord()} className="btn btn-success">
                               <i className="fa fa-plus" /> &nbsp; Add Record
-                            </a>
+                            </button>
                           </td>
                         </tr>
                       </tbody>

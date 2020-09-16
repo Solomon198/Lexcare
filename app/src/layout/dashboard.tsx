@@ -33,6 +33,9 @@ import PhcStaffForm from '../Forms/phcStaff'
 import ReferalOutForm from '../Forms/referalOut'
 import CommunityLeaderForm from '../Forms/communityLeader'
 import AntenatalForm from '../Forms/antenatal'
+import TetanusDiphtherialForm from '../Forms/tetanus';
+import NutritionForm from '../Forms/nutrition'
+import OutPatientForm from '../Forms/out-patient'
 
 
 export default class Dashboard extends React.Component {
@@ -66,7 +69,7 @@ export default class Dashboard extends React.Component {
               <Route exact path="/">
                 <DashboardDefault />
               </Route>
-              <Route path="/dashboard">
+              <Route exact path="/dashboard">
                 <DashboardDefault />
               </Route>
               <Route exact path="/birth-register" component={BirthRegister} />
@@ -102,17 +105,23 @@ export default class Dashboard extends React.Component {
 
               {/* FORMS ROUTES */}
 
-              <Route path="/daily-attendance-register" component={DailyAttendanceForm}/>
+              <Route exact path="/daily-attendance-register" component={DailyAttendanceForm}/>
 
-              <Route path="/add-birth-register" component={BirthRegisterForm}/>
+              <Route exact path="/add-birth-register" component={BirthRegisterForm}/>
 
-              <Route path="/add-phc-staff" component={PhcStaffForm}/>
+              <Route exact path="/add-phc-staff" component={PhcStaffForm}/>
 
-              <Route path="/add-referal-out" component={ReferalOutForm}/>
+              <Route exact path="/add-referal-out" component={ReferalOutForm}/>
 
-              <Route path="/add-community-leader" component={CommunityLeaderForm}/>
+              <Route exact path="/add-community-leader" component={CommunityLeaderForm}/>
 
-              <Route path="/add-antenatal" component={AntenatalForm}/>
+              <Route exact path="/add-antenatal" component={AntenatalForm}/>
+
+              <Route  exact path="/add-tetanus" component={TetanusDiphtherialForm}/>
+
+              <Route exact path="/add-nutrition" component={NutritionForm}/>
+
+              <Route exact path="/add-outpatient" component={OutPatientForm}/>
 
 
             </Switch>

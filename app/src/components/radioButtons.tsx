@@ -6,8 +6,6 @@ type RadioButtonsComponentProps = {
       name : string,
       required?:any,
       title:string,
-      type:any,
-      placeholder:string,
       options:any[]
 
 }
@@ -26,7 +24,7 @@ const RadioButtonsComponent = (props:RadioButtonsComponentProps)=>{
 
 
 
-  const { title, type, required } = props
+  const { title, type, required, name } = props
   const [isTouched, setIsTouched] = React.useState(false)
   const showError = !isValid && (isTouched || isSubmitted);
 
@@ -41,17 +39,20 @@ const RadioButtonsComponent = (props:RadioButtonsComponentProps)=>{
         <div className="col-sm-12">
         {
             props.options.map((val:string)=>
-                <>
-                    <label className="radio-inline">
+                <div style={{flexDirection:'row',display:"flex",alignContent:'center',alignItems:'center'}}>
+
                     <input
                        onChange={(e)=>setValue(e.target.value)}
                        name={name}
                        onBlur={()=>setIsTouched(true)}
                        type="radio"
 
-                      /> {val}
-                    </label><br />
-                </>
+                      />
+                      <label style={{marginTop:4,marginLeft:10}}>
+                       {val}
+                    </label>
+                    <br />
+                </div>
             )
         }
         </div>

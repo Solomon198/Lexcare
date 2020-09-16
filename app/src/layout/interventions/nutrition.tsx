@@ -1,6 +1,12 @@
 import React from "react";
+type props = {
+  history:any
+}
+export default class Nutrition extends React.Component<props> {
 
-export default class Nutrition extends React.Component {
+  addRecord(){
+    this.props.history.push("/add-nutrition")
+  }
   render() {
     return (
       <div className="content-w">
@@ -54,9 +60,9 @@ export default class Nutrition extends React.Component {
                               value="Search Records"
                             />
                             &nbsp;
-                            <a href="#" className="btn btn-success">
+                            <button onClick={()=>this.addRecord()} className="btn btn-success">
                               <i className="fa fa-plus" /> &nbsp; Add Record
-                            </a>
+                            </button>
                           </td>
                         </tr>
                       </tbody>

@@ -3,14 +3,9 @@ import Input from '../components/input'
 import DatePicker from '../components/datePicker';
 import SelectComponent from '../components/select'
 import TextArea from '../components/textArea';
-import CustomDatePicker from '../components/customDatePicker';
 import StepWrapper from '../components/stepWrapper'
 import StepFormWrapper from '../components/stepFormWrapper';
-import toast from 'toasted-notes'
 import 'toasted-notes/src/styles.css';
-import {Formik} from 'formik'
-import {createDailyAttendance} from '../../realm/queries/writeQueries';
-import { CheckCurrentUser, LoginRealm } from '../../realm/queries/sync';
 
 
 
@@ -23,9 +18,6 @@ class  DailyAttendance extends React.Component<Props> {
 
    state = {
 
-          days:[],
-          months:[],
-          years:[],
           states:[
             "Abia",
             "Adamawa",
@@ -91,76 +83,14 @@ class  DailyAttendance extends React.Component<Props> {
    }
 
 
-   setFormValue(fieldName:string,value:any){
-      // let formValues:any = this.state.formValue;
-      // formValues[fieldName] = value;
-      // this.setState({formValue:formValues});
-   }
-
 
    componentDidMount(){
 
-      // CheckCurrentUser().then((val)=>{
-      //     console.log("curent use...............")
-      //     console.log(val)
-      // }).catch((e)=>{
-      //   console.log(e)
-      // })
-
-      // LoginRealm().then((cred)=>{
-      //   console.log(cred)
-      // }).catch((e)=>{
-      //   console.log(e)
-      // })
-
-
-      //  let ask =  window.confirm("Do you want to run auth");
-
-      //  if(ask){
-      //       run().then((val)=>{
-      //         console.log(val)
-      //       }).catch((e)=>{
-      //         console.log(e)
-      //       })
-      //  }
-
-       let days = [];
-       let months = [];
-       let years = [];
-
-       for(let i = 1; i <= 31; i++){
-           let day = (i + '').length < 2 ? "0" + i : ""+i;
-           days.push(day)
-       }
-
-       for(let i = 1; i <= 12; i++){
-        let month = (i + '').length < 2 ? "0" + i : ""+i;
-         months.push(month)
-      }
-
-      let thisYear = new Date().getFullYear();
-
-      for(let i = 1970; i <= thisYear; i++){
-        let year = (i + '').length < 2 ? "0" + i : ""+i;
-         years.push(year)
-      }
-
-      this.setState({months:months,years:years,days:days})
-
 
    }
 
 
 
-
-   setFormPosition(index:number){
-
-       this.setState({active:index},()=>{
-        window.scrollTo(0, 0)
-       })
-
-
-   }
 
 
 
