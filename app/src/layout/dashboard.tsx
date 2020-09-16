@@ -33,9 +33,17 @@ import PhcStaffForm from '../Forms/phcStaff'
 import ReferalOutForm from '../Forms/referalOut'
 import CommunityLeaderForm from '../Forms/communityLeader'
 import AntenatalForm from '../Forms/antenatal'
+<<<<<<< HEAD
 import TetanusDiphtherialForm from '../Forms/tetanus';
 import NutritionForm from '../Forms/nutrition'
 import OutPatientForm from '../Forms/out-patient'
+=======
+import FamilyPlanningForm from '../Forms/familyPlanning'
+import InPatientForm from '../Forms/inPatient'
+import LabourAndDeliveryForm from '../Forms/labourAndDelivery'
+import PostNatalForm from '../Forms/postNatal'
+import ImmunizationForm from '../Forms/immunization'
+>>>>>>> 1f637f37488e76c50b454d328208db4596fa8a91
 
 
 export default class Dashboard extends React.Component {
@@ -122,6 +130,16 @@ export default class Dashboard extends React.Component {
               <Route exact path="/add-nutrition" component={NutritionForm}/>
 
               <Route exact path="/add-outpatient" component={OutPatientForm}/>
+
+              <Route path="/add-family-planning" component={FamilyPlanningForm}/>
+
+              <Route path="/add-in-patient" component={InPatientForm}/>
+
+              <Route path="/add-labour-delivery" component={LabourAndDeliveryForm}/>
+
+              <Route path="/add-post-natal" component={PostNatalForm}/>
+
+              <Route path="/add-immunization" component={ImmunizationForm}/>
 
 
             </Switch>
