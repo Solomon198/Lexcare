@@ -1,6 +1,7 @@
 import React from 'react';
 import Input from '../components/input'
 import SelectComponent from '../components/select'
+import {createPHC_Staff} from '../../realm/queries/writeQueries';
 import StepWrapper from '../components/stepWrapper'
 import StepFormWrapper from '../components/stepFormWrapper';
 
@@ -31,17 +32,31 @@ class BirthRegister extends React.Component<Props> {
 
     }
 
+    async createAdmin(info:any){
+      createPHC_Staff(info).then((val)=>{
+
+        this.props.history.push("/phc-staff");
+
+      }).catch(e=>{
+
+       console.log(e);
+
+      })
+ }
     render() {
         return (
             <StepFormWrapper
-            title="Add Birth Register"
+            title="Add Staff"
+            onSubmit={(values)=>this.createAdmin(values)}
             steps={1} // holds total number of steps required
             >
 
                 <StepWrapper
                   position={1} // the current step position
-                  title="Add Staff" // title of the step
+                  title=" " // title of the step
                 >
+
+                  <div style={{marginTop:50}}></div>
 
                     <Input
                     type="text"
@@ -58,6 +73,14 @@ class BirthRegister extends React.Component<Props> {
                     name="phone_number"
                     title="Phone Number"
                     required="Please enter phone number"
+                    />
+
+                   <Input
+                    type="password"
+                    placeholder="Enter Password"
+                    name="password"
+                    title="Password"
+                    required="Please Enter Password"
                     />
 
                     <SelectComponent

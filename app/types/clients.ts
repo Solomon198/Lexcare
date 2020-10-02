@@ -1,57 +1,75 @@
 /* eslint-disable prettier/prettier */
-type Clients = {
+import Bson from 'bson'
 
-        name :  string,
+export type ClientProperties = {
 
-        properties : {
+  health_facility_id: string,
 
-              health_facility_id: string,
+  _id : string,
 
-              healthCareFacility : unknown,
+  // healthCareFacility: unknown,
 
-              client_id: string,
+  // client_id: string,
 
-              date:  string,
+  // client : unknown,
 
-              client_name: string,
+  date: any,
 
-              client_card_number: string,
+  client_name: string,
 
-              date_of_birth:  string,
+  client_card_number: string,
 
-              sex: string,
+  date_of_birth: string,
 
-              age: string,
+  sex: string,
 
-              exact_age: string,
+  age: string,
 
-              contact_address: string,
+  exact_age: string,
 
-              state_of_origin: string,
+  contact_address: string,
 
-              telephone_no: string,
+  state_of_origin: string,
 
-              first_contact_with_facility: string,
+  telephone_no: string,
 
-              reference_in: string,
+  first_contact_with_facility: string,
 
-              next_of_kin_name: string,
+  reference_in: string,
 
-              kin_relationship_with_client: string,
+  next_of_kin_name: string,
 
-              kin_address: string,
+  kin_relationship_with_client: string,
 
-              kin_phone: string,
+  kin_address: string,
 
-              created_at: string,
+  kin_phone: string,
 
-              updated_at: string,
+  createdBy:string
 
-              created_by: unknown,
 
-              updated_by: unknown,
 
-        }
- }
+  // created_at: string,
 
- export default Clients;
+  // updated_at: string,
+
+  // created_by: unknown,
+
+  // updated_by: unknown,
+
+}
+
+
+export type ClientTypes = {
+
+     name : string,
+
+     primaryKey : string,
+
+     partitionKey: string,
+
+
+     properties : ClientProperties
+
+}
+

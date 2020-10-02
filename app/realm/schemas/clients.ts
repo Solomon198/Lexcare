@@ -1,64 +1,65 @@
 /* eslint-disable prettier/prettier */
 
-import ClientTypes from '../../types/clients'; // typescript types validation for client
 
-const Clients : ClientTypes = {
+import {ClientTypes} from '../../types/clients'; // typescript type validation for daily attendance
 
-     name : "Client",
 
-     properties : {
+const Client : ClientTypes = {
 
-      health_facility_id: "string",
+  name : "clients",
 
-      healthCareFacility : {type: 'linkingObjects', objectType: 'HealthCareFacility',property:"healthFacilityId"},
+  primaryKey: '_id',
 
-      client_id: "string",
+  partitionKey:"health_facility_id",
 
-      date:  "date",
+  properties : {
 
-      client_name: "string",
+      _id : 'objectId',
 
-      client_card_number: "string",
+       health_facility_id: "string",
 
-      date_of_birth:  "date",
+       date: "date",
 
-      sex: "string",
+       client_name: "string",
 
-      age: "int",
+       client_card_number: "string",
 
-      exact_age: "int",
+       date_of_birth: "date",
 
-      contact_address: "string",
+       sex: "string",
 
-      state_of_origin: "string",
+       age: "string",
 
-      telephone_no: "string",
+       exact_age: "int",
 
-      first_contact_with_facility: "bool",
+       contact_address: "string",
 
-      reference_in: "string",
+       state_of_origin: "string",
 
-      next_of_kin_name: "string",
+       telephone_no: "string",
 
-      kin_relationship_with_client: "string",
+       first_contact_with_facility: "string",
 
-      kin_address: "string",
+       reference_in: "string",
 
-      kin_phone: "string",
+       next_of_kin_name: "string",
 
-      created_at: "date",
+       kin_relationship_with_client: "string",
 
-      updated_at: "date",
+       kin_address: "string",
 
-      created_by: {type: 'linkingObjects', objectType: 'Users',property:"user_id"},
+       kin_phone: "string",
 
-      updated_by: {type: 'linkingObjects', objectType: 'Users',property:"user_id"},
+       createdBy : "string"
 
-     }
+
+
+  }
 
 }
 
 
-// array of date for client to reduce daily attendance redundancy ;
 
-export default Clients;
+export default Client;
+
+

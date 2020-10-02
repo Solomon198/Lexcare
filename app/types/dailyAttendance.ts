@@ -45,6 +45,8 @@ export type dailyAttendanceProperties = {
 
   kin_phone: string,
 
+  createdBy : string,
+
   // created_at: string,
 
   // updated_at: string,
@@ -61,6 +63,8 @@ export type DailyAttendanceTypes = {
      name : string,
 
      primaryKey : string,
+
+     partitionKey :string,
 
      properties : dailyAttendanceProperties
 

@@ -42,7 +42,7 @@ const RadioButtonsComponent = (props:RadioButtonsComponentProps)=>{
                 <div style={{flexDirection:'row',display:"flex",alignContent:'center',alignItems:'center'}}>
 
                     <input
-                       onChange={(e)=>setValue(e.target.value)}
+                       onChange={()=>setValue(val)}
                        name={name}
                        onBlur={()=>setIsTouched(true)}
                        type="radio"

@@ -3,7 +3,14 @@
 
 import Realm from 'realm';
 
-import DailyAttendanceSchema from '../schemas/dailyAttendance'
+
+
+import Schemas from '../schemas/index';
+
+import Auth from './auth'
+import { getPHC_configSettings } from './readQueries';
+
+
 
 //export app instance for global usage;
 export let  _APP_INSTANCE_ : Realm.App;
@@ -12,33 +19,37 @@ export let  _APP_INSTANCE_ : Realm.App;
 
 export let _DATA_BASE_INSTACE_ : Realm;
 
-//initializes the app
-export function initializeApplication(appName:string){
 
-     _APP_INSTANCE_ = new Realm.App({ id: appName });
+//initializes the app
+export function initializeApplication(appName?:string){
+
+     _APP_INSTANCE_ = new Realm.App({ id: getPHC_configSettings()?.realm ?? appName });
 
 
 }
 
-export function reInitializApplicationConfigs(appName : string,partition:string){
+export function reInitializApplicationConfigs(){
+
       // renitialize app
-      initializeApplication(appName);
+      initializeApplication();
 
       // openSync connection;
 
-      openSyncronizedRealm(partition)
+      openSyncronizedRealm()
 }
 
-export function checkActiveConnection(appName : string,partition:string){
+export function checkActiveConnection(){
 
   if(!_APP_INSTANCE_){
      // renitialize app
-     initializeApplication(appName);
+     initializeApplication();
   }else if(!_DATA_BASE_INSTACE_){
 
      // openSync connection;
-      openSyncronizedRealm(partition)
+      openSyncronizedRealm()
   }else{
+
+
 
       let syncStatus = _DATA_BASE_INSTACE_.syncSession?.state;
 
@@ -46,7 +57,7 @@ export function checkActiveConnection(appName : string,partition:string){
 
       if(syncStatus != "active"){
 
-           reInitializApplicationConfigs(appName,partition);
+           reInitializApplicationConfigs();
 
            console.log("connction not active just fired reniti")
 
@@ -54,7 +65,7 @@ export function checkActiveConnection(appName : string,partition:string){
 
           console.log("connction disconnected just fired reniti")
 
-          reInitializApplicationConfigs(appName,partition);
+          reInitializApplicationConfigs();
 
       }else{
         console.log("everything ok no need for re-initializing")
@@ -65,33 +76,68 @@ export function checkActiveConnection(appName : string,partition:string){
 
 }
 
-export function openSyncronizedRealm(partition:string){
+
+export function openSyncronizedRealm(){
 
     //check if a valid user exist before making attempts to open Database
 
-    // if(_APP_INSTANCE_.currentUser){
+     if(_APP_INSTANCE_.currentUser){
 
 
 
 
             _DATA_BASE_INSTACE_ = new  Realm({
 
-            schema:[DailyAttendanceSchema],
+            schema:[
 
-            // sync:{
+                  Schemas.BirthRegister,
 
-            //   partitionValue:partition,
+                  Schemas.DailyAttendanceSchema,
 
-            //   user:_APP_INSTANCE_.currentUser,
+                  Schemas.StaffSchema,
 
-            //   error:(error)=>{
+                  Schemas.ClientSchema,
 
-            //     console.log(error)
+                  Schemas.CommunityLeaders,
 
-            //   },
+                  Schemas.ReferalOut,
+
+                  Schemas.Antenatal,
+
+                  Schemas.FamilyPlaning,
+
+                  Schemas.Inpatient,
+
+                  Schemas.LabourAndDelivery,
+
+                  Schemas.PostNatal,
+
+                  Schemas.Immunization,
+
+                  Schemas.OutPatient,
+
+                  Schemas.Nutrition,
+
+                  Schemas.Tetanus,
 
 
-            // }
+                ],
+
+             sync:{
+
+               partitionValue:getPHC_configSettings().phc_id,
+
+               user:_APP_INSTANCE_.currentUser,
+
+               error:(error)=>{
+
+                 console.log(error)
+
+               },
+
+
+             }
+
           })
 
 
@@ -101,5 +147,8 @@ export function openSyncronizedRealm(partition:string){
 
 
 
-    // }
+
+     }else{
+        Auth.login(getPHC_configSettings().phc_realm_api_key);
+     }
 }

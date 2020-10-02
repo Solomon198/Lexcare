@@ -33,22 +33,33 @@ import PhcStaffForm from '../Forms/phcStaff'
 import ReferalOutForm from '../Forms/referalOut'
 import CommunityLeaderForm from '../Forms/communityLeader'
 import AntenatalForm from '../Forms/antenatal'
-<<<<<<< HEAD
 import TetanusDiphtherialForm from '../Forms/tetanus';
 import NutritionForm from '../Forms/nutrition'
 import OutPatientForm from '../Forms/out-patient'
-=======
 import FamilyPlanningForm from '../Forms/familyPlanning'
 import InPatientForm from '../Forms/inPatient'
 import LabourAndDeliveryForm from '../Forms/labourAndDelivery'
 import PostNatalForm from '../Forms/postNatal'
-import ImmunizationForm from '../Forms/immunization'
->>>>>>> 1f637f37488e76c50b454d328208db4596fa8a91
+import Auth from '../../realm/queries/auth';
+import ImmunizationForm from '../Forms/immunization';
+import {getPHC_configSettings} from "../../realm/queries/readQueries";
 
 
 export default class Dashboard extends React.Component {
 
+  state = {
+    isAdmin :false,
+    phc_name: ""
+  }
+
   componentDidMount(){
+
+
+    const {phc_name} = getPHC_configSettings();
+    const user = Auth.getCurrentUser();
+    const isAdmin = user.role == "Officer in Charge" ? true : false;
+    this.setState({isAdmin:isAdmin,phc_name:phc_name});
+
 
   }
 
@@ -65,7 +76,11 @@ export default class Dashboard extends React.Component {
                  DASHBOARD SIDEBAR
                 ------------------*/}
 
-          <SideBar logout={()=>this.props.logout()}/>
+          <SideBar
+            isAdmin={this.state.isAdmin}
+            logout={()=>this.props.logout()}
+            phc_name={this.state.phc_name}
+            />
 
           {/*------------------
                   MAIN CONTENT VIEW

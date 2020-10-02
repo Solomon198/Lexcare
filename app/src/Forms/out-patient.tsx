@@ -3,12 +3,15 @@ import Input from '../components/input'
 import DatePicker from '../components/datePicker';
 import SelectComponent from '../components/select'
 import TextArea from '../components/textArea';
-import CustomDatePicker from '../components/customDatePicker';
 import CheckBox from '../components/checkBox'
 import StepWrapper from '../components/stepWrapper'
 import StepFormWrapper from '../components/stepFormWrapper';
 import RadioButton from '../components/radioButtons'
 import MultiSelectAndSearch from "../components/multiSelectAndSearch"
+import SelectClient from '../components/selectClient';
+import {createOutpatient} from '../../realm/queries/writeQueries'
+import schemas from '../../realm/schemas';
+import Diseases from '../data/diseases'
 type Props = {
     history: any
 }
@@ -17,10 +20,24 @@ class OutPatient extends React.Component<Props> {
 
     state = {
 
-      diseases:["Add New Disease", "Cholera", "Diarrhea with blood", "Measles", "Meningitis", "Kidney stones", "Viral hemorrhagic fevers", "Human influenza caused by a new subtype", "Yellow fever", "Severe acute respiratory syndrome", "Smallpox", "Dengue fever", "Anthrax", "Severe acute respiratory illness", "Acute flaccid paralysis", "Dracunculiasis", "Leprosy", "Neonatal tetanus", "Lymphatic filariasis", "Tuberculosis", "Diarrhea in children less than 5 years of age", "HIV / AIDS", "Malaria", "Onchocerciasis", "Sexually transmitted infections", "Trypanosomiasis", "Buruliulcers", "Asthma", "Diabetes","mellitus", "Epilepsy", "High blood pressure", "Sickle cell disease", "Malnutrition", "Plague", "Trachoma", "Typhoid", "Hepatitis-B", "Pertussis", "Human rabies", "Schistosomiasis", "Noma", "fever", "malaria", "Typhoid", "nil", "Malaria and Typhoid", "Antenatal Care", "Cough and Catter", "Fever", "Cough and Catarrh", "diarrhea", "RTA", "body pain", "catarrh and fever", "vomiting", "vomiting", "STILL BIRTH", "stoillong and abdominal pain", "OEDEMA", "rashes and catarrh", "Chicken Pox", "Infection", "Pregnancy", "accident", "Delivery", "Ulcer", "accident", "stomache and fever", "rashes and body pain", "chest pain", "Infection"," back pain and fever", "fever", "cough", "VCG", "Fever / catarrh", "Fever", "chicken pox", "Diarrhea/Vomiting", "Pregnancy", "Abdominal Pain", "Tuberculosis (TB) vaccine", "Family Planning", "fever and vomiting", "rashe", "stomachache", "headache and stomachache", "boil on his body", "Circumcision", "Circumcision", "Penta", "fever and abdominal pain", "diarrhoea and body pain", "stooling", "Dysentry"]
 
 
     }
+
+    async createOutPatient(info:any){
+
+      createOutpatient(info).then((val)=>{
+
+      if(val == "success") this.props.history.push("/out-patient");
+
+
+   }).catch(e=>{
+
+       console.log(e);
+
+   })
+
+  }
 
 
 
@@ -28,6 +45,7 @@ class OutPatient extends React.Component<Props> {
 
         return (
             <StepFormWrapper
+            onSubmit={(records)=>this.createOutPatient(records)}
             title="Add Daily Out-Patient (OPD) Register"
             steps={6} // holds total number of steps required
             >
@@ -39,57 +57,42 @@ class OutPatient extends React.Component<Props> {
 
 
                     {/* Use a date picker here */}
-                    <DatePicker
-                        type="text"
-                        placeholder="Select registration date..."
-                        name="date"
-                        title="Client Date of Visit"
-                        required="Please select a date"
-                    />
-
-                    <Input
-
-                        type="text"
-                        placeholder="Enter client's client name"
-                        name="client_name"
-                        title="Name of Client"
-                        required="Please provide a client name"
-                    />
-
-                  <Input
-
-                      type="text"
-                      placeholder="Enter  card number"
-                      name="card_number"
-                      title="Card Number"
-                      required="Please provide a client number"
-
-                  />
 
 
-
-
-                    <RadioButton
-                        name="sex"
-                        title="Sex"
-                        options={["Male","Female"]}
-                        required="Please select a sex"
+                         <SelectClient
+                              name="client_name"
+                              name2="card_number"
+                              title="Select Client"
+                              required="please select client"
+                              date_name="date"
+                              date_title="Client Date of Visit"
+                              date_required="Please select a date"
+                              intervention={schemas.OutPatient.name}
                          />
 
 
-                     <RadioButton
-                        name="age"
-                        title="Age"
-                        options={["0 - 28 Days","29 - 11 months", "12 - 29 months","5 - 9 years"]}
-                        required="Please select age"
-                    />
+                        <RadioButton
+                            name="sex"
+                            title="Sex"
+                            options={["Male","Female"]}
+                            required="Please select a sex"
+                            />
 
-                    <DatePicker
-                       type="date"
-                       name="date_of_birth"
-                       title="Date of Birth"
-                       placeholder=""
-                    />
+
+                        <RadioButton
+                            name="age"
+                            title="Age"
+                            options={["0 - 28 Days","29 - 11 months", "12 - 29 months","5 - 9 years"]}
+                            required="Please select age"
+                        />
+
+                        <DatePicker
+                          type="date"
+                          name="date_of_birth"
+                          title="Date of Birth"
+                          placeholder=""
+                          required="Please select client date of birth"
+                        />
 
 
                 </StepWrapper>
@@ -116,7 +119,7 @@ class OutPatient extends React.Component<Props> {
 
                         <Input
 
-                          type="text"
+                          type="number"
                           placeholder=""
                           name="weight"
                           title="Weight (Kg)"
@@ -126,7 +129,7 @@ class OutPatient extends React.Component<Props> {
 
                         <Input
 
-                          type="text"
+                          type="number"
                           placeholder=""
                           name="height"
                           title="Height (CM for children < 12 years) and (M for persons > 12 Years )"
@@ -137,7 +140,7 @@ class OutPatient extends React.Component<Props> {
 
                           <Input
 
-                              type="text"
+                              type="number"
                               placeholder=""
                               name="bmi_weight"
                               title="BMI [Weight (Kg) / Height² (M²)]"
@@ -169,10 +172,8 @@ class OutPatient extends React.Component<Props> {
 
                        name="diagnosis"
                        title="Diagnosis"
-                       options={this.state.diseases}
+                       options={Diseases}
                        required='Please select an option'
-                       placeholder=""
-                       type=""
                     />
 
                     <SelectComponent

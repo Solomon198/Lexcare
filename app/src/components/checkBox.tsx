@@ -29,51 +29,28 @@ const CheckBox = (props:CheckBoxProps)=>{
 
   const options = ["red","blue","white","yellow","Fanta","Mirror","whitish","Fans"]
 
-  const handleChange = (item:string)=> {
-      let _data = value ? value : [];
-      let search = value.indexOf(item);
-      if(search == -1){
-        _data.push(item);
-      }else{
-        _data.splice(search,1);
-      }
 
-      setValue(_data);
-  }
-
-  const checked = (item)=>{
-      let _data = value ? value : [];
-      let search = _data.indexOf(item);
-      if(search == - 1) return false;
-      return true;
-  }
 
 
   return (
 
     <div className="form-group">
 
-       <label htmlFor="field-ta" className="col-sm-12 control-label">
-       {title}
-        {!!required && ' *'}
-      </label>
-       {
-         options.forEach((item)=>
+
+
          <div style={{display:'flex'}} >
             <input
               name={name}
               type="checkbox"
-              checked={checked(item)}
               style={{marginTop:5,marginRight:10}}
-              onChange={(e)=>handleChange(e.target.value)}
+              onChange={(e)=> e.target.checked?setValue(title):setValue("")}
               onBlur={()=>setIsTouched(true)}
 
             />
 
-            {item}
+            {title}
        </div>
-         )
-       }
+
      {showError && (
         <div style={{marginLeft:10,fontSize:13}} id={`${id}-error`} className="demo-form-feedback text-danger">
           { errorMessage }

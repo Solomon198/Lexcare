@@ -1,12 +1,11 @@
 import React from 'react';
 import Input from '../components/input'
 import DatePicker from '../components/datePicker'
-import SelectComponent from '../components/select'
 import TextArea from '../components/textArea'
-import CustomDatePicker from '../components/customDatePicker';
 import StepWrapper from '../components/stepWrapper'
 import StepFormWrapper from '../components/stepFormWrapper'
-import RadioButton from '../components/radioButtons'
+import RadioButton from '../components/radioButtons';
+import {createReferalOut} from '../../realm/queries/writeQueries'
 
 type Props = {
     history: any
@@ -28,6 +27,24 @@ class ReferalOut extends React.Component<Props> {
 
     }
 
+    async createReferalOutRecord(info:any){
+
+
+      createReferalOut(info).then((val)=>{
+
+      if(val == "success") this.props.history.push("/referal-out");
+
+
+    }).catch(e=>{
+
+     console.log(e);
+
+    })
+
+  }
+
+
+
 
 
 
@@ -35,6 +52,7 @@ class ReferalOut extends React.Component<Props> {
         return (
             <StepFormWrapper
             title="Add Referal Out"
+            onSubmit={(record)=>this.createReferalOutRecord(record)}
             steps={5} // holds total number of steps required
             >
 
@@ -63,7 +81,7 @@ class ReferalOut extends React.Component<Props> {
                        type="text"
                        placeholder="Enter referal date"
                        name="referal_date"
-                       title="Date of Birth"
+                       title="Referal Date"
                        required="Please enter referal date"
 
                     />
@@ -164,7 +182,7 @@ class ReferalOut extends React.Component<Props> {
 
                     <Input
 
-                        type="text"
+                        type="number"
                         placeholder="Enter age"
                         name="age"
                         title="Age"

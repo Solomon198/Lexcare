@@ -3,6 +3,7 @@ import Input from '../components/input'
 import TextArea from '../components/textArea';
 import StepWrapper from '../components/stepWrapper'
 import StepFormWrapper from '../components/stepFormWrapper';
+import {createCommunityLeader} from '../../realm/queries/writeQueries'
 
 type Props = {
     history: any
@@ -12,6 +13,21 @@ class CommunityLeader extends React.Component<Props> {
 
     state = {
 
+
+    }
+
+    async CreateCommunityLieader(info:any){
+
+      createCommunityLeader(info).then((val)=>{
+
+        if(val == "success") this.props.history.push("/community-leaders");
+
+
+      }).catch(e=>{
+
+       console.log(e);
+
+      })
 
     }
 
@@ -27,6 +43,7 @@ class CommunityLeader extends React.Component<Props> {
     render() {
         return (
             <StepFormWrapper
+              onSubmit={(values)=>this.CreateCommunityLieader(values)}
               title="Add Community Leaders"
               steps={1} // holds total number of steps required
             >

@@ -2,11 +2,12 @@ import React from 'react';
 import Input from '../components/input'
 import DatePicker from '../components/datePicker';
 import SelectComponent from '../components/select'
-import TextArea from '../components/textArea';
-import CustomDatePicker from '../components/customDatePicker';
 import StepWrapper from '../components/stepWrapper'
 import StepFormWrapper from '../components/stepFormWrapper';
-import RadioButton from '../components/radioButtons'
+import RadioButton from '../components/radioButtons';
+import SelectClient from '../components/selectClient'
+import {createAntenatal} from '../../realm/queries/writeQueries'
+import schemas from '../../realm/schemas';
 
 type Props = {
     history: any
@@ -16,15 +17,30 @@ class Antenatal extends React.Component<Props> {
 
     state = {
 
-
-
     }
+
+    async createAntenatalRecord(info:any){
+
+      createAntenatal(info).then((val)=>{
+
+      if(val == "success") this.props.history.push("/antenatal-care");
+
+
+    }).catch(e=>{
+
+     console.log(e);
+
+    })
+
+  }
+
 
 
 
     render() {
         return (
             <StepFormWrapper
+            onSubmit={(v)=>this.createAntenatalRecord(v)}
             title="Ante Natal Clinic Attendance Register"
             steps={6} // holds total number of steps required
             >
@@ -34,54 +50,28 @@ class Antenatal extends React.Component<Props> {
                     title="Client's Basic Details" // title of the step
                 >
 
-                    {/* Use a date picker here */}
-                    <DatePicker
-                        type="text"
-                        placeholder="Select registration date..."
-                        name="date"
-                        title="Client Date of Visit"
-                        required="Please select reg date"
+
+                    <SelectClient
+                      name="client_names"
+                      name2="mothers_card_no"
+                      title="Select Client"
+                      required="please select client"
+                      date_name="date"
+                      date_title="Client Date of Visit"
+                      date_required="Please select reg date"
+                      intervention={schemas.Antenatal.name}
                     />
 
-                    {/* This select is supposed to be autopopulated based on the date selected above. */}
-                    <SelectComponent
-
-                        name="client_names"
-                        options={["Client 1","Client 2"]}
-                        title="Name of Client"
-                        placeholder=""
-                        required="Please select client"
-
-
-                    />
-
-                    <Input
-
-                        type="text"
-                        placeholder="Enter client's card number"
-                        name="mothers_card_no"
-                        title="Client's Card Number"
-                        required="Please enter card number"
-                    />
-
-                    {/* Use a date picker here */}
-                    <DatePicker
-                        type=""
-                        placeholder="Select date of birth"
-                        name="dob"
-                        title="Date of Birth(DD/MM/YY)"
-                        required="Please select date of birth"
-                    />
 
                     <RadioButton
                         name="age"
                         title="Age Range"
                         options={["10 - 14 years", "15 - 19 years", "20 - 24 years", "25 - 49 years", "≥ 50 years"]}
                         required="Please select date range"
-                         />
+                     />
 
                     <Input
-                        type="text"
+                        type="number"
                         placeholder="Enter actual age"
                         name="actual_age"
                         title="Actual Age"
@@ -97,7 +87,7 @@ class Antenatal extends React.Component<Props> {
                 >
 
                     <SelectComponent
-
+                        type="number"
                         name="parity"
                         options={["1","2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"]}
                         title="Parity"
@@ -115,7 +105,7 @@ class Antenatal extends React.Component<Props> {
                     />
 
                     <Input
-                        type="text"
+                        type="number"
                         placeholder="Enter age of pregnancy (in weeks)"
                         name="pregnancy_age"
                         title="Age of Preganancy (in weeks)"
@@ -123,7 +113,7 @@ class Antenatal extends React.Component<Props> {
                     />
 
                     <Input
-                          type="text"
+                          type="number"
                           placeholder="Enter weight in kg"
                           name="weight"
                           title="Weight (in kg)"
@@ -139,7 +129,7 @@ class Antenatal extends React.Component<Props> {
                     />
 
                     <Input
-                        type="text"
+                        type="number"
                         placeholder="Enter client number of visits"
                         name="visits"
                         title="No. of Antenatal clinic Visits to date"
@@ -366,7 +356,6 @@ class Antenatal extends React.Component<Props> {
                     />
 
                     <SelectComponent
-
                         name="transportation"
                         required="Please select an option"
                         options={["Ambulance","Others"]}

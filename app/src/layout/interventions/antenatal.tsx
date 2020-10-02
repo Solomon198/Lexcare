@@ -1,4 +1,6 @@
 import React from "react";
+import schemas from "../../../realm/schemas";
+import RenderData from '../../components/pagination';
 
 type props = {
   history : any
@@ -10,6 +12,9 @@ export default class Antenatal extends React.Component<props> {
     this.props.history.push("/add-antenatal");
   }
 
+
+
+
   render() {
     return (
       <div className="content-w">
@@ -19,106 +24,34 @@ export default class Antenatal extends React.Component<props> {
               <h6 className="element-header">Antenatal</h6>
               <div className="element-box">
                 <h5 className="form-header">All Antenatal Records</h5>
-                <div className="form-desc">
-                  <form
-                    role="form"
-                    encType="multipart/form-data"
-                    className="form-horizontal form-groups"
-                    action="#"
-                    method="post"
-                  >
-                    <table
-                      border={0}
-                      cellSpacing={0}
-                      cellPadding={0}
-                      className="table"
-                    >
-                      <tbody>
-                        <tr>
-                          <td>
-                            <input
-                              type="text"
-                              name="from"
-                              className="form-control date_filter"
-                              data-format="D, dd MM yyyy"
-                              placeholder="Select start date"
-                              autoComplete="off"
-                            />
-                          </td>
-                          <td>
-                            <input
-                              type="text"
-                              name="to"
-                              className="form-control date_filter"
-                              data-format="D, dd MM yyyy"
-                              placeholder="Select end date (Optional)"
-                              autoComplete="off"
-                            />
-                          </td>
-                          <td>
-                            <input
-                              type="submit"
-                              defaultValue="Filter Records"
-                              className="btn btn-info"
-                              value="Search Records"
-                            />
-                            &nbsp;
-                            <button onClick={()=>this.addRecord()}  className="btn btn-success">
-                              <i className="fa fa-plus" /> &nbsp; Add Record
-                            </button>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </form>
-                </div>
-                <div className="table-responsive">
-                  <table
-                    id="daily_attendance"
-                    width="100%"
-                    className="table table-striped table-lightfont display"
-                  >
-                    <thead>
-                      <tr>
-                        <th>#</th>
-                        <th>Date</th>
-                        <th>Client Name</th>
-                        <th>Client Card No.</th>
-                        <th>Date of Birth</th>
-                        <th>Age Range</th>
-                        <th>Parity</th>
-                        <th>View</th>
-                        <th>Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>1</td>
-                        <td>...</td>
-                        <td>...</td>
-                        <td>...</td>
-                        <td>...</td>
-                        <td>...</td>
-                        <td>...</td>
-                        <td>...</td>
-                        <td>...</td>
-                      </tr>
-                    </tbody>
-                    <tfoot>
-                      <tr>
-                        <th>#</th>
-                        <th>Date</th>
-                        <th>Client Name</th>
-                        <th>Client Card No.</th>
-                        <th>Date of Birth</th>
-                        <th>Age Range</th>
-                        <th>Parity</th>
-                        <th>View</th>
-                        <th>Action</th>
-                      </tr>
-                    </tfoot>
-                  </table>
-                </div>
+
+                <RenderData
+                          SchemaName={schemas.Antenatal.name}
+                          addRecord={()=>this.addRecord()}
+                          tableHead={
+                            <thead>
+                            <tr>
+                              <th>#</th>
+                              <th>Date</th>
+                              <th>Client Name</th>
+                              <th>Client Card No.</th>
+                              <th>Date of Birth</th>
+                              <th>Age Range</th>
+                              <th>Parity</th>
+                              <th>Action</th>
+
+                            </tr>
+                          </thead>}
+                          properties={[
+                            {key:"date",isDate:true},
+                            {key:"client_names"},
+                            {key:"mothers_card_no"},
+                            {key:"dob",isDate:true},
+                            {key:"age"},
+                            {key:"parity"}
+                           ]}
+                          />
+
               </div>
             </div>
           </div>

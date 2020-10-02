@@ -5,7 +5,8 @@ import SelectComponent from '../components/select'
 import TextArea from '../components/textArea';
 import StepWrapper from '../components/stepWrapper'
 import StepFormWrapper from '../components/stepFormWrapper';
-
+import {createBirthRegister} from '../../realm/queries/writeQueries';
+import NigeriaStates from '../data/states'
 type Props = {
     history: any
 }
@@ -18,11 +19,27 @@ class BirthRegister extends React.Component<Props> {
 
     }
 
+    async createBirthRecord(info:any){
+
+        createBirthRegister(info).then((val)=>{
+
+        if(val == "success") this.props.history.push("/birth-register");
+
+
+      }).catch(e=>{
+
+       console.log(e);
+
+      })
+
+    }
+
 
 
     render() {
         return (
             <StepFormWrapper
+                  onSubmit={(record)=>this.createBirthRecord(record)}
                   title="Add Birth Register"
                   steps={4} // holds total number of steps required
             >
@@ -122,7 +139,7 @@ class BirthRegister extends React.Component<Props> {
                     />
 
                     <Input
-                    type="text"
+                    type="number"
                     placeholder="Enter age of mother"
                     name="mothers_age"
                     title="Age of Mother"
@@ -132,7 +149,7 @@ class BirthRegister extends React.Component<Props> {
                     <SelectComponent
 
                     name="fathers_state_of_origin"
-                    options={["Abia","Adamawa"]}
+                    options={NigeriaStates}
                     title="Father's State of Origin"
                     placeholder="Father's State of Origin"
                     required="Please enter father state of origin"
@@ -165,7 +182,7 @@ class BirthRegister extends React.Component<Props> {
                 >
 
                     {/* Use a date picker here */}
-                    <Input
+                    <DatePicker
                         type="text"
                         placeholder="Enter date of birth certificate was issued"
                         name="date_b_certificate_issued"

@@ -30,6 +30,22 @@ const SelectComponent = (props:SelectComponentProps)=> {
   const [isTouched, setIsTouched] = React.useState(false)
   const showError = !isValid && (isTouched || isSubmitted);
 
+  const handleChange = (v)=>{
+
+    if(type == "number"){
+
+      const _num =  parseInt(v);
+      const _isNaN = isNaN(_num);
+      if(!_isNaN){
+        return setValue(_num)
+      }
+
+      return;
+
+    }
+
+    return setValue(v);
+}
 
 
   return(
@@ -43,7 +59,7 @@ const SelectComponent = (props:SelectComponentProps)=> {
     <div className="col-sm-12">
 
         <select
-        onChange={(e)=>setValue(e.target.value)}
+        onChange={(e)=>handleChange(e.target.value)}
         name={name}
         style={{borderWidth:1}}
         onBlur={()=>setIsTouched(true)}

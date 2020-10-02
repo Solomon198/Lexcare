@@ -1,4 +1,7 @@
 import React from "react";
+import Schema from '../../../realm/schemas/index';
+import RenderData from '../../components/pagination';
+
 
 type props = {
   history: any
@@ -8,6 +11,8 @@ export default class Tetanus extends React.Component<props> {
   addRecord(){
     this.props.history.push("/add-tetanus")
   }
+
+
   render() {
     return (
       <div className="content-w">
@@ -17,94 +22,31 @@ export default class Tetanus extends React.Component<props> {
               <h6 className="element-header">Tetanus Diphtheria</h6>
               <div className="element-box">
                 <h5 className="form-header">All Tetanus Diphtheria Records</h5>
-                <div className="form-desc">
-                  <form
-                    role="form"
-                    encType="multipart/form-data"
-                    className="form-horizontal form-groups"
-                    action="#"
-                    method="post"
-                  >
-                    <table
-                      border={0}
-                      cellSpacing={0}
-                      cellPadding={0}
-                      className="table"
-                    >
-                      <tbody>
-                        <tr>
-                          <td>
-                            <input
-                              type="text"
-                              name="from"
-                              className="form-control date_filter"
-                              data-format="D, dd MM yyyy"
-                              placeholder="Select start date"
-                              autoComplete="off"
-                            />
-                          </td>
-                          <td>
-                            <input
-                              type="text"
-                              name="to"
-                              className="form-control date_filter"
-                              data-format="D, dd MM yyyy"
-                              placeholder="Select end date (Optional)"
-                              autoComplete="off"
-                            />
-                          </td>
-                          <td>
-                            <input
-                              type="submit"
-                              defaultValue="Filter Records"
-                              className="btn btn-info"
-                              value="Search Records"
-                            />
-                            &nbsp;
-                            <button onClick={()=>this.addRecord()} className="btn btn-success">
-                              <i className="fa fa-plus" /> &nbsp; Add Record
-                            </button>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </form>
-                </div>
-                <div className="table-responsive">
-                  <table
-                    id="daily_attendance"
-                    width="100%"
-                    className="table table-striped table-lightfont display"
-                  >
-                    <thead>
-                      <tr>
-                        <th>SN</th>
-                        <th>Card No</th>
-                        <th>Name</th>
-                        <th>Date of Birth</th>
-                        <th>Phone No</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>1</td>
-                        <td>...</td>
-                        <td>...</td>
-                        <td>...</td>
-                        <td>...</td>
-                      </tr>
-                    </tbody>
-                    <tfoot>
-                      <tr>
-                        <th>SN</th>
-                        <th>Card No</th>
-                        <th>Name</th>
-                        <th>Date of Birth</th>
-                        <th>Phone No</th>
-                      </tr>
-                    </tfoot>
-                  </table>
-                </div>
+
+                      <RenderData
+                          SchemaName={Schema.Tetanus.name}
+                          addRecord={()=>this.addRecord()}
+                          dataField="date_of_visit"
+                          tableHead={
+                            <thead>
+                            <tr>
+                              <th>SN</th>
+                              <th>Card No</th>
+                              <th>Name</th>
+                              <th>Date of Birth</th>
+                              <th>Phone No</th>
+                              <th>Action</th>
+                            </tr>
+                          </thead>}
+                          properties={[
+                            {key:"card_no"},
+                            {key:"client_name"},
+                            {key:"date_of_birth",isDate:true},
+                            {key:"phone_number"}
+                           ]}
+                         />
+
+
               </div>
             </div>
           </div>

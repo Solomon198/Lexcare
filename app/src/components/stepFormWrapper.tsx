@@ -1,6 +1,7 @@
 import React from 'react';
 import StepIndicatorComponent from '../components/stepIndicator';
-import {Formiz,useForm} from '@formiz/core'
+import {Formiz,useForm} from '@formiz/core';
+import {assignValuesToEmptyProps} from '../../realm/utils/utils'
 import Step from './stepWrapper';
 
 type StepFormWrapperProps = {
@@ -8,6 +9,7 @@ type StepFormWrapperProps = {
     title:string,
     steps : number,
     children : any,
+    onSubmit:(formValue:any)=>void
 
 }
 
@@ -16,9 +18,11 @@ type StepFormWrapperProps = {
           const MyForm = useForm();
 
 
-          const handleSubmit = (values) => {
+          const handleSubmit = (values:any) => {
 
-            console.log(values) // Retrieves values after submit;
+            //remove any value that is empty from object before submit to avoid crash
+            let finalObj = assignValuesToEmptyProps(values);
+            props.onSubmit(finalObj);
 
           }
 
@@ -73,13 +77,14 @@ type StepFormWrapperProps = {
                                               <button
                                                 type="submit" // Create a submit button
                                                 disabled={!MyForm.isValid} // Disable the button if the form is not valid
-                                                className="btn btn-primary btn-lg ">Submit</button>
+                                                className="btn ml-4 btn-primary btn-lg ">Submit</button>
                                             ) : (
                                               <button
                                               type="submit" // Create a submit button
                                               onClick={goNext}
+
                                               disabled={!MyForm.isStepValid} // Disable the button if the form is not valid
-                                              className="btn btn-primary btn-lg ">Next</button>
+                                              className="btn ml-4 btn-primary btn-lg ">Next</button>
 
                                             )}
 

@@ -2,11 +2,11 @@ import React from 'react';
 import Input from '../components/input'
 import DatePicker from '../components/datePicker';
 import SelectComponent from '../components/select'
-import TextArea from '../components/textArea';
-import CustomDatePicker from '../components/customDatePicker';
+import {createTetanus} from '../../realm/queries/writeQueries'
 import StepWrapper from '../components/stepWrapper'
 import StepFormWrapper from '../components/stepFormWrapper';
-import RadioButton from '../components/radioButtons'
+import SelectClient from '../components/selectClient';
+import schemas from '../../realm/schemas';
 
 type Props = {
     history: any
@@ -21,10 +21,28 @@ class Tetanus extends React.Component<Props> {
     }
 
 
+    async createTentanusRecord(info:any){
+
+      createTetanus(info).then((val)=>{
+
+      if(val == "success") this.props.history.push("/tetanus-diphtherial");
+
+
+    }).catch(e=>{
+
+     console.log(e);
+
+    })
+
+  }
+
+
+
 
     render() {
         return (
             <StepFormWrapper
+            onSubmit={(record)=>this.createTentanusRecord(record)}
             title="Tetanus Diphtheria Register for Pregnant and Non Pregnant Women"
             steps={2} // holds total number of steps required
             >
@@ -45,34 +63,20 @@ class Tetanus extends React.Component<Props> {
 
                     />
 
-                    {/* Use a date picker here */}
-                    <DatePicker
-                        type="text"
-                        placeholder="Select registration date..."
-                        name="date_of_visit"
-                        title="Date of Visit"
-                        required="Please select date of visit"
-                    />
 
-                      <SelectComponent
 
-                      name="client_name"
-                      options={["Client 1","Client 2","Client 3"]}
-                      title="Client Name"
-                      placeholder=""
-                      required="Please select client name"
+                        <SelectClient
+                              name="client_name"
+                              name2="card_no"
+                              title="Select Client"
+                              required="please select client"
+                              date_name="date_of_visit"
+                              date_title="Date of Visit"
+                              date_required="Please select date of visit"
+                              intervention={schemas.Tetanus.name}
+                         />
 
-                      />
 
-                    <Input
-
-                        type="text"
-                        placeholder="Enter child client's card number"
-                        name="card_no"
-                        title="Client's Card Number"
-                        required="Please enter card number"
-
-                    />
 
 
                 </StepWrapper>

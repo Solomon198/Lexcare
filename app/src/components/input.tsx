@@ -8,6 +8,7 @@ type InputComponentProps = {
       title:string,
       type:any,
       placeholder:string,
+      inputValue?:string
 
 }
 
@@ -20,14 +21,30 @@ const InputComponent  = (props:InputComponentProps)=> {
     isValid,
     isSubmitted,
     setValue,
-    value,
+    value = props.inputValue,
   } = useField(props);
 
 
 
-  const { title, type, required } = props
+  const { title, type, required, } = props
   const [isTouched, setIsTouched] = React.useState(false)
   const showError = !isValid && (isTouched || isSubmitted);
+  const handleChange = (v)=>{
+
+      if(type == "number"){
+
+        const _num =  parseInt(v);
+        const _isNaN = isNaN(_num);
+        if(!_isNaN){
+          return setValue(_num)
+        }
+
+        return;
+
+      }
+
+      return setValue(v);
+  }
 
   return (
     <div className="form-group">
@@ -37,7 +54,7 @@ const InputComponent  = (props:InputComponentProps)=> {
       </label>
     <div className="col-sm-12">
       <input
-          onChange={(e)=>setValue(e.target.value)}
+          onChange={(e)=> handleChange(e.target.value)}
           type={type ?? "text"}
           value={value ?? ""}
           name={props.name}

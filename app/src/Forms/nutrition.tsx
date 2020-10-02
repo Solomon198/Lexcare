@@ -2,12 +2,13 @@ import React from 'react';
 import Input from '../components/input'
 import DatePicker from '../components/datePicker';
 import SelectComponent from '../components/select'
-import TextArea from '../components/textArea';
-import CustomDatePicker from '../components/customDatePicker';
 import CheckBox from '../components/checkBox'
 import StepWrapper from '../components/stepWrapper'
 import StepFormWrapper from '../components/stepFormWrapper';
 import RadioButton from '../components/radioButtons'
+import SelectClient from '../components/selectClient'
+import {createNutrition} from '../../realm/queries/writeQueries'
+import schemas from '../../realm/schemas';
 
 type Props = {
     history: any
@@ -22,10 +23,28 @@ class Nutrition extends React.Component<Props> {
     }
 
 
+      async createNutritionRecord(info:any){
+
+        createNutrition(info).then((val)=>{
+
+        if(val == "success") this.props.history.push("/nutrition");
+
+
+        }).catch(e=>{
+
+            console.log(e);
+
+        })
+
+        }
+
+
+
 
     render() {
         return (
             <StepFormWrapper
+            onSubmit={(record)=>this.createNutritionRecord(record)}
             title="Add Nutrition"
             steps={5} // holds total number of steps required
             >
@@ -36,32 +55,18 @@ class Nutrition extends React.Component<Props> {
                 >
 
                     {/* Use a date picker here */}
-                    <DatePicker
-                        type="text"
-                        placeholder="Select registration date..."
-                        name="date"
-                        title="Client Date of Visit"
-                        required="Please select a date"
-                    />
 
-                    <Input
 
-                        type="text"
-                        placeholder="Enter client's client name"
-                        name="client_name"
-                        title="Patient / Client Name"
-                        required="Please provide a client name"
-                    />
-
-                  <Input
-
-                      type="text"
-                      placeholder="Enter client's card number"
-                      name="card_number"
-                      title="Patient / Client Card Number"
-                      required="Please provide a client number"
-
-                  />
+                       <SelectClient
+                            name="client_name"
+                            name2="card_number"
+                            title="Select Client"
+                            required="please select client"
+                            date_name="date"
+                            date_title="Client Date of Visit"
+                            date_required="Please select a date"
+                            intervention={schemas.Nutrition.name}
+                         />
 
 
 
@@ -177,7 +182,7 @@ class Nutrition extends React.Component<Props> {
                     title="Anthropometry (0 - 59 months)" // title of the step
                 >
                       <Input
-                        type="text"
+                        type="number"
                         placeholder="Enter Height/Length (cm)"
                         name="height"
                         title="Height/Length (cm)"
@@ -185,9 +190,9 @@ class Nutrition extends React.Component<Props> {
                       />
 
                      <Input
-                        type="text"
+                        type="number"
                         placeholder="Enter Weight (kg)"
-                        name="height"
+                        name="weight"
                         title="Weight (kg)"
                         required="Please Weight"
                       />

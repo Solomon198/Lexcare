@@ -1,17 +1,20 @@
 import React from 'react';
-import {Link} from 'react-router-dom'
+import {Link} from 'react-router-dom';
+import {image} from '../../img/logobase'
 
   const Login = (props)=>
       (
         <div  className="container-fluid card">
         <div className="row no-gutter">
-          <div className="col-md-6 col-lg-5" style={{marginTop:150}}>
+          <div className="col-md-6 col-lg-5" style={{marginTop:20}}>
             <div className="login d-flex align-items-center py-5 ">
               <div className="container">
                 <div className="row">
                   <div className="col-md-9 col-lg-8 mx-auto">
-                    <h3 style={{letterSpacing:3}} className="login-heading text-dark text-center mb-4">Lexcare</h3>
 
+                      <div className="text-center" style={{marginTop:100,marginBottom:20}}>
+                      <img style={{width:120,height:80}} src={image}/>
+                      </div>
 
                     {
                                  props.error?
@@ -23,10 +26,10 @@ import {Link} from 'react-router-dom'
 
 
                       <div className="form-label-group my-2">
-                        <label className="ml-2" for="inputEmail">Email address</label>
+                        <label className="ml-2" for="inputEmail">Phone Number</label>
                         <input
                         onChange={(e)=>props.setEmail(e.target.value)}
-                        style={{borderRadius:30}} type="email" id="inputEmail" className="form-control outlineInput bg-light py-4" placeholder="Email address" required />
+                        style={{borderRadius:30}} type="text" id="inputEmail" className="form-control outlineInput bg-light py-4" placeholder="Phone number" required />
                       </div>
 
                       <div className="form-label-group my-3">
@@ -38,7 +41,7 @@ import {Link} from 'react-router-dom'
 
                       <button
                       onClick={()=>props.loginUser()}
-                      style={{borderRadius:30}} className="btn btn-lg btn-primary text-uppercase  btn-block btn-login py-3  mt-4" >
+                      style={{borderRadius:30,letterSpacing:4}} className="btn btn-lg btn-primary text-uppercase  btn-block btn-login py-3  mt-4" >
                       {props.login == "started"?
                          <>
                             <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>

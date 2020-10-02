@@ -3,16 +3,12 @@ import Input from '../components/input'
 import DatePicker from '../components/datePicker';
 import SelectComponent from '../components/select'
 import TextArea from '../components/textArea';
-import CustomDatePicker from '../components/customDatePicker';
 import StepWrapper from '../components/stepWrapper'
 import StepFormWrapper from '../components/stepFormWrapper';
-import toast from 'toasted-notes'
 import 'toasted-notes/src/styles.css';
-import {Formik} from 'formik'
-import {createDailyAttendance} from '../../realm/queries/writeQueries';
-import { CheckCurrentUser, LoginRealm } from '../../realm/queries/sync';
-import RadioButton from '../components/radioButtons'
-import CheckBox from '../components/checkBox'
+import SelectClient from '../components/selectClient';
+import {createImmunization} from '../../realm/queries/writeQueries'
+import schemas from '../../realm/schemas';
 
 
 
@@ -27,45 +23,7 @@ class  PostNatal extends React.Component<Props> {
           days:[],
           months:[],
           years:[],
-          states:[
-            "Abia",
-            "Adamawa",
-            "Akwa Ibom",
-            "Anambra",
-            "Bauchi",
-            "Bayelsa",
-            "Benue",
-            "Borno",
-            "Cross River",
-            "Delta",
-            "Ebonyi",
-            "Edo",
-            "Ekiti",
-            "Enugu",
-            "FCT - Abuja",
-            "Gombe",
-            "Imo",
-            "Jigawa",
-            "Kaduna",
-            "Kano",
-            "Katsina",
-            "Kebbi",
-            "Kogi",
-            "Kwara",
-            "Lagos",
-            "Nasarawa",
-            "Niger",
-            "Ogun",
-            "Ondo",
-            "Osun",
-            "Oyo",
-            "Plateau",
-            "Rivers",
-            "Sokoto",
-            "Taraba",
-            "Yobe",
-            "Zamfara"
-          ],
+
 
 
 
@@ -73,97 +31,20 @@ class  PostNatal extends React.Component<Props> {
 
    }
 
-   SubmitRealm(){
-    //  let formValues = Object.assign({},this.state.formValue);
-    //  formValues['client_name'] = this.state.firstName + " " + this.state.lastName;
-    //  formValues["date_of_birth"]  = new Date(this.state.year + "/"+this.state.month+"/"+this.state.day);
-    //  formValues['health_facility_id'] = '1';
-    //  formValues.date = [formValues.date] ;
+   async createImmnunizationRecord(info:any){
 
-    //  createPostNatal(formValues).then((val)=>{
-    //        console.log(val)
-    //        console.log("write successfully");
-    //        console.log("from query = "+ val);
-    //        this.props.history.push("/daily-attendance");
-    //        window.scrollTo(0, 0)
-    //      }).catch((err)=>{
-    //        console.log(err)
-    //      })
-   }
+    createImmunization(info).then((val)=>{
+
+    if(val == "success") this.props.history.push("/family-planing");
 
 
-   setFormValue(fieldName:string,value:any){
-      // let formValues:any = this.state.formValue;
-      // formValues[fieldName] = value;
-      // this.setState({formValue:formValues});
-   }
+ }).catch(e=>{
 
+     console.log(e);
 
-   componentDidMount(){
+ })
 
-      // CheckCurrentUser().then((val)=>{
-      //     console.log("curent use...............")
-      //     console.log(val)
-      // }).catch((e)=>{
-      //   console.log(e)
-      // })
-
-      // LoginRealm().then((cred)=>{
-      //   console.log(cred)
-      // }).catch((e)=>{
-      //   console.log(e)
-      // })
-
-
-      //  let ask =  window.confirm("Do you want to run auth");
-
-      //  if(ask){
-      //       run().then((val)=>{
-      //         console.log(val)
-      //       }).catch((e)=>{
-      //         console.log(e)
-      //       })
-      //  }
-
-       let days = [];
-       let months = [];
-       let years = [];
-
-       for(let i = 1; i <= 31; i++){
-           let day = (i + '').length < 2 ? "0" + i : ""+i;
-           days.push(day)
-       }
-
-       for(let i = 1; i <= 12; i++){
-        let month = (i + '').length < 2 ? "0" + i : ""+i;
-         months.push(month)
-      }
-
-      let thisYear = new Date().getFullYear();
-
-      for(let i = 1970; i <= thisYear; i++){
-        let year = (i + '').length < 2 ? "0" + i : ""+i;
-         years.push(year)
-      }
-
-      this.setState({months:months,years:years,days:days})
-
-
-   }
-
-
-
-
-   setFormPosition(index:number){
-
-       this.setState({active:index},()=>{
-        window.scrollTo(0, 0)
-       })
-
-
-   }
-
-
+}
 
 
 
@@ -173,6 +54,7 @@ class  PostNatal extends React.Component<Props> {
 
 
                        <StepFormWrapper
+                            onSubmit={(records)=>this.createImmnunizationRecord(records)}
                             title="Child Immunization Reister "
                             steps={2} // holds total number of steps required
                         >
@@ -182,30 +64,23 @@ class  PostNatal extends React.Component<Props> {
                               title="" // title of the step
                            >
 
-                              <DatePicker
-                                type="date"
-                                placeholder="Select registration date"
-                                name="date"
-                                title="Date of Child Visit"
-                                required="please select date"
-                              />
 
-                                <SelectComponent
+                                <SelectClient
 
-                                name="child_name"
-                                options={["preloaded names here..."]}
-                                title="Child's Names"
-                                placeholder="Search Clients"
-                                required="Please select a client"
+                                  name="child_name"
+                                  name2="child_card_no"
+                                  title="Select Client"
+                                  required="please select client"
+                                  date_name="date"
+                                  date_title="Date of Child Visit"
+                                  date_required="please select date"
+                                  intervention={schemas.Immunization.name}
+
+
                                 />
 
-                              <Input
-                                type="text"
-                                placeholder="Enter card number..."
-                                name="child_card_no"
-                                title="Child's Card Number"
-                                required="Please select child card number."
-                              />
+
+
 
                             <SelectComponent
 
@@ -214,7 +89,7 @@ class  PostNatal extends React.Component<Props> {
                             title="Sex (M/F)"
                             placeholder="Select Gender"
                             />
-                             
+
                         </StepWrapper>
 
 
@@ -239,12 +114,13 @@ class  PostNatal extends React.Component<Props> {
                                 name="phone"
                                 title="Phone No."
                               />
-                              
+
                               <DatePicker
-                              type="date"
-                              placeholder="Enter child's date of birth"
-                              name="dob"
-                              title="Date of Birth(DD/MM/YY)"
+                                type="date"
+                                placeholder="Enter child's date of birth"
+                                name="dob"
+                                title="Date of Birth(DD/MM/YY)"
+                                required="Please pick a date of birth"
                             />
 
                             <TextArea

@@ -1,4 +1,7 @@
 import React from "react";
+import schemas from "../../realm/schemas";
+import RenderData from '../components/pagination';
+
 
 type props = {
   history : any
@@ -7,9 +10,14 @@ type props = {
 
 export default class PhcStaffs extends React.Component<props> {
 
+
+
+
   addRecord(){
     this.props.history.push("/add-phc-staff");
   }
+
+
 
   render() {
     return (
@@ -25,41 +33,28 @@ export default class PhcStaffs extends React.Component<props> {
                   <i className="fa fa-plus" /> &nbsp; Add Record
                 </button>
                 </div>
-                <div className="table-responsive">
-                  <table
-                    id="birth_register"
-                    width="100%"
-                    className="table table-striped table-lightfont"
-                  >
-                    <thead>
-                      <tr>
-                        <th>#</th>
-                        <th>Name</th>
-                        <th>Phone Number</th>
-                        <th>Role</th>
-                        <th>Date Created</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>1</td>
-                        <td>...</td>
-                        <td>...</td>
-                        <td>...</td>
-                        <td>...</td>
-                      </tr>
-                    </tbody>
-                    <tfoot>
-                      <tr>
-                        <th>#</th>
-                        <th>Name</th>
-                        <th>Phone Number</th>
-                        <th>Role</th>
-                        <th>Date Created</th>
-                      </tr>
-                    </tfoot>
-                  </table>
-                </div>
+                         <RenderData
+                          SchemaName={schemas.StaffSchema.name}
+                          ignoreFilter={true}
+                          tableHead={
+                            <thead>
+                              <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Phone Number</th>
+                                <th>Role</th>
+                              </tr>
+                            </thead>}
+                          properties={[
+
+                            {key:"full_name"},
+                            {key:"phone_number"},
+                            {key:"role"},
+
+                           ]}
+                           hideEdit={true}
+                           />
+
               </div>
             </div>
           </div>

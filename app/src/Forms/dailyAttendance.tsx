@@ -2,9 +2,14 @@ import React from 'react';
 import Input from '../components/input'
 import DatePicker from '../components/datePicker';
 import SelectComponent from '../components/select'
+import Auth from '../../realm/queries/auth'
 import TextArea from '../components/textArea';
 import StepWrapper from '../components/stepWrapper'
 import StepFormWrapper from '../components/stepFormWrapper';
+import {getPHC_configSettings} from   "../../realm/queries/readQueries"
+import {createDailyAttendance} from '../../realm/queries/writeQueries';
+import SelectCommunityLeader from '../components/selectCommunityLeader';
+import NigeriaStates from '../data/states'
 import 'toasted-notes/src/styles.css';
 
 
@@ -18,68 +23,26 @@ class  DailyAttendance extends React.Component<Props> {
 
    state = {
 
-          states:[
-            "Abia",
-            "Adamawa",
-            "Akwa Ibom",
-            "Anambra",
-            "Bauchi",
-            "Bayelsa",
-            "Benue",
-            "Borno",
-            "Cross River",
-            "Delta",
-            "Ebonyi",
-            "Edo",
-            "Ekiti",
-            "Enugu",
-            "FCT - Abuja",
-            "Gombe",
-            "Imo",
-            "Jigawa",
-            "Kaduna",
-            "Kano",
-            "Katsina",
-            "Kebbi",
-            "Kogi",
-            "Kwara",
-            "Lagos",
-            "Nasarawa",
-            "Niger",
-            "Ogun",
-            "Ondo",
-            "Osun",
-            "Oyo",
-            "Plateau",
-            "Rivers",
-            "Sokoto",
-            "Taraba",
-            "Yobe",
-            "Zamfara"
-          ],
-
 
 
 
 
    }
 
-   SubmitRealm(){
-    //  let formValues = Object.assign({},this.state.formValue);
-    //  formValues['client_name'] = this.state.firstName + " " + this.state.lastName;
-    //  formValues["date_of_birth"]  = new Date(this.state.year + "/"+this.state.month+"/"+this.state.day);
-    //  formValues['health_facility_id'] = '1';
-    //  formValues.date = [formValues.date] ;
+   SubmitRealm(info:any){
 
-    //  createDailyAttendance(formValues).then((val)=>{
-    //        console.log(val)
-    //        console.log("write successfully");
-    //        console.log("from query = "+ val);
-    //        this.props.history.push("/daily-attendance");
-    //        window.scrollTo(0, 0)
-    //      }).catch((err)=>{
-    //        console.log(err)
-    //      })
+     createDailyAttendance(info).then((val)=>{
+
+          if(val == "success"){
+            this.props.history.push("/daily-attendance");
+            window.scrollTo(0, 0);
+          }
+
+         }).catch((err)=>{
+
+           console.log(err);
+
+         })
    }
 
 
@@ -102,6 +65,7 @@ class  DailyAttendance extends React.Component<Props> {
 
 
                        <StepFormWrapper
+                            onSubmit={(info:any)=>this.SubmitRealm(info)}
                             title="Add Daily Attendance"
                             steps={4} // holds total number of steps required
                         >
@@ -114,7 +78,7 @@ class  DailyAttendance extends React.Component<Props> {
                               <DatePicker
                                 type="date"
                                 placeholder="Select registration date Y-m-d"
-                                name="reg_date"
+                                name="date"
                                 title="Date"
                                 required="please select date"
                               />
@@ -160,7 +124,7 @@ class  DailyAttendance extends React.Component<Props> {
                              <DatePicker
                                 type="date"
                                 placeholder="Select registration date Y-m-d"
-                                name="dob"
+                                name="date_of_birth"
                                 title="Date of Birth"
                                 required="please select date of birth"
                               />
@@ -196,7 +160,7 @@ class  DailyAttendance extends React.Component<Props> {
                                 />
 
                               <Input
-                                type="text"
+                                type="number"
                                 placeholder="Enter the exact age of client"
                                 name="exact_age"
                                 title="Write Exact Age"
@@ -233,7 +197,7 @@ class  DailyAttendance extends React.Component<Props> {
                             <SelectComponent
 
                                   name="state_of_origin"
-                                  options={this.state.states}
+                                  options={NigeriaStates}
                                   title="State of Origin"
                                   placeholder="Please Select State"
                                   required="Please select state of origin"
@@ -242,11 +206,13 @@ class  DailyAttendance extends React.Component<Props> {
 
 
                              <Input
+
                                 type="text"
                                 placeholder="Enter phone telephone number"
                                 name="telephone_no"
                                 title="Telephone No."
                                 required="Please enter phone number"
+
                               />
 
                               <SelectComponent
@@ -283,18 +249,22 @@ class  DailyAttendance extends React.Component<Props> {
 
 
                           <StepWrapper
-                          position={4}
-                          title="Infomation on Next of Kin">
+
+                              position={4}
+                              title="Infomation on Next of Kin">
 
                              <Input
+
                                 type="text"
                                 placeholder="Enter next of kin name"
                                 name="next_of_kin_name"
                                 title="Name"
                                 required="Please enter name"
+
                               />
 
                             <SelectComponent
+
                                   name="kin_relationship_with_client"
                                   options={["Mother","Father","Brother","Sister","Aunty","Uncle","Cousin","Niece","Nephew"]}
                                   title="Relationship"
@@ -323,14 +293,15 @@ class  DailyAttendance extends React.Component<Props> {
                                 title="Telephone Number"
                               />
 
-                            <SelectComponent
-                                    name="community_leader_id"
-                                    options={["Leader One"]}
-                                    title="Assign Cummunity Leader"
-                                    placeholder="Please Select"
-                                    required="Please select commnunity leader"
 
-                            />
+                            <SelectCommunityLeader
+
+                                name="community_leader_id"
+                                title="Assign Cummunity Leader"
+                                required="Please select commnunity leader"
+
+
+                             />
 
                           </StepWrapper>
 

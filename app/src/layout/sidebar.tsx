@@ -1,5 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import {image} from '../../img/logobase';
+
 
 
  const SideBar = (props)=>  (
@@ -13,11 +15,11 @@ import { Link } from "react-router-dom";
         ------------------*/}
         <div className="menu-w color-scheme-light color-style-transparent menu-position-side menu-side-left menu-layout-compact sub-menu-style-over sub-menu-color-bright selected-menu-color-light menu-activated-on-hover menu-has-selected-link">
           <div className="logo-w">
-          <img src="https://firebasestorage.googleapis.com/v0/b/geniebhai-71acd.appspot.com/o/logo.png?alt=media&token=8e8c1c92-c1a3-4cf3-8d12-283ca771a8a4" />
+          <img src={image}/>
           </div>
 
           <h5 style={{ textAlign: "center", marginTop: "10px" }}>
-            Model PHC Dogon Dawa
+             {props.phc_name}
           </h5>
 
           <h1 className="menu-page-header text-dark">Page Header</h1>
@@ -113,7 +115,9 @@ import { Link } from "react-router-dom";
               </Link>
             </li>
 
-            <li className="selected ">
+             {
+               props.isAdmin ?
+               <li className="selected ">
               <Link to="/phc-staff">
                 <div className="icon-w">
                   <div className="os-icon os-icon-file-text" />
@@ -121,8 +125,9 @@ import { Link } from "react-router-dom";
 
                 <span>PHC Staff</span>
               </Link>
-            </li>
+            </li>:null
 
+             }
             <li className="selected ">
               <Link to="/referal-out">
                 <div className="icon-w">
@@ -157,7 +162,9 @@ import { Link } from "react-router-dom";
               </Link>
             </li>
 
-            <li className="selected ">
+            {
+              props.isAdmin ?
+              <li className="selected ">
               <Link to="community-leaders">
                 <div className="icon-w">
                   <div className={`os-icon os-icon-file-text`}/>
@@ -165,7 +172,8 @@ import { Link } from "react-router-dom";
 
                 <span>Community Leaders</span>
               </Link>
-            </li>
+            </li>:null
+            }
 
             <li className="selected ">
               <Link to="facility-services">

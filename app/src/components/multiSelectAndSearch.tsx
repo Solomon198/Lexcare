@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import {useField} from '@formiz/core'
 import MultiSelect from "react-multi-select-component";
 import { css } from "goober";
@@ -10,8 +10,6 @@ type MultiSelectAndSearchComponentProps = {
   name : string,
   required?:any,
   title:string,
-  type:any,
-  placeholder:string,
   options:any[]
 
 }
@@ -31,15 +29,25 @@ const MultiSelectAndSearchComponent = (props:MultiSelectAndSearchComponentProps)
     value,
   } = useField(props);
 
+  const [selectOption,setOption] = useState([])
 
-
-  const { title, type, required,options } = props
+  const { title, required,options } = props
   const [isTouched, setIsTouched] = React.useState(false)
   const showError = !isValid && (isTouched || isSubmitted);
   let data = [];
   options.forEach((val)=>{
     data.push({label:val,value:val})
   })
+
+  const handleChange = (change)=>{
+     let dataChanged:string[] = [];
+     change.forEach((val:any)=>{
+         dataChanged.push(val.label)
+     })
+
+     setValue(dataChanged);
+     setOption(change);
+  }
 
 
   return(
@@ -55,10 +63,11 @@ const MultiSelectAndSearchComponent = (props:MultiSelectAndSearchComponentProps)
 
        <MultiSelect
          options={data}
-         onChange={setValue}
+         hasSelectAll={false}
+         onChange={handleChange}
          labelledBy="Select"
          ItemRenderer={DefaultItemRenderer}
-         value={value|| []}
+         value={selectOption|| []}
         //  multiple
        />
     </div>
@@ -102,7 +111,7 @@ const DefaultItemRenderer = (props:any) => {
         tabIndex={-1}
         disabled={props.disabled}
       />
-      <span>{props.option.label}</span>
+      <span onClick={()=>props.onClick(props.option.label)}>{props.option.label}</span>
     </div>
   );
 };

@@ -18,7 +18,7 @@ const DailyAttendance : DailyAttendanceTypes = {
 
        health_facility_id: "string",
 
-       date: "date[]",
+       date: "date",
 
        client_name: "string",
 
@@ -28,7 +28,7 @@ const DailyAttendance : DailyAttendanceTypes = {
 
        sex: "string",
 
-       age: "int",
+       age: "string",
 
        exact_age: "int",
 
@@ -38,7 +38,7 @@ const DailyAttendance : DailyAttendanceTypes = {
 
        telephone_no: "string",
 
-       first_contact_with_facility: "bool",
+       first_contact_with_facility: "string",
 
        reference_in: "string",
 
@@ -50,10 +50,14 @@ const DailyAttendance : DailyAttendanceTypes = {
 
        kin_phone: "string",
 
+       createdBy : "string"
+
 
   }
 
 }
+
+
 
 export default DailyAttendance;
 
