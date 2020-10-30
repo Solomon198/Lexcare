@@ -13,6 +13,20 @@ export default class Nutrition extends React.Component<props> {
   }
 
 
+  componentDidMount(){
+
+    window.scrollTo(0, 0)
+
+  }
+
+  edit(payload:any){
+    this.props.history.push({
+      pathname:"/add-nutrition",
+      state:payload
+    })
+  }
+
+
 
   render() {
     return (
@@ -25,6 +39,7 @@ export default class Nutrition extends React.Component<props> {
                 <h5 className="form-header">All Nutrition Records</h5>
 
                 <RenderData
+                          editRecord={(payload)=>this.edit(payload)}
                           SchemaName={Schema.Nutrition.name}
                           addRecord={()=>this.addRecord()}
                           tableHead={

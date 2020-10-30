@@ -17,7 +17,8 @@ import 'toasted-notes/src/styles.css';
 
 
 type Props = {
-  history: any
+  history: any,
+  location:any
 }
 class  DailyAttendance extends React.Component<Props> {
 
@@ -29,9 +30,11 @@ class  DailyAttendance extends React.Component<Props> {
 
    }
 
-   SubmitRealm(info:any){
 
-     createDailyAttendance(info).then((val)=>{
+   SubmitRealm(info:any){
+    const state = this.props.location.state;
+    const isUpdate = state ? true : false;
+     createDailyAttendance(info,isUpdate).then((val)=>{
 
           if(val == "success"){
             this.props.history.push("/daily-attendance");
@@ -48,7 +51,7 @@ class  DailyAttendance extends React.Component<Props> {
 
 
    componentDidMount(){
-
+    window.scrollTo(0, 0)
 
    }
 
@@ -60,6 +63,10 @@ class  DailyAttendance extends React.Component<Props> {
 
 
    render(){
+
+    const state = this.props.location.state;
+
+
     return(
 
 
@@ -79,16 +86,20 @@ class  DailyAttendance extends React.Component<Props> {
                                 type="date"
                                 placeholder="Select registration date Y-m-d"
                                 name="date"
+                                isAttendance={true}
+                                state={state}
                                 title="Date"
                                 required="please select date"
+
                               />
 
                               <Input
-                                type="text"
-                                placeholder="Enter first name ..."
-                                name="first_name"
-                                title="First Name"
-                                required="First Name is required"
+                                  type="text"
+                                  placeholder="Enter first name ..."
+                                  name="first_name"
+                                  title="First Name"
+                                  required="First Name is required"
+                                  state={state}
                               />
 
 
@@ -99,6 +110,7 @@ class  DailyAttendance extends React.Component<Props> {
                                 name="last_name"
                                 title="Last Name"
                                 required="Please enter last name"
+                                state={state}
                               />
 
 
@@ -107,7 +119,8 @@ class  DailyAttendance extends React.Component<Props> {
                                 placeholder="Other last name ..."
                                 name="other_name"
                                 title="Other Name"
-                                required="Please enter other name"
+                                // required="Please enter other name"
+                                state={state}
                               />
 
 
@@ -117,6 +130,7 @@ class  DailyAttendance extends React.Component<Props> {
                                 name="client_card_number"
                                 title="Patient / Client Card Number"
                                 required="Please enter card Number"
+                                state={state}
                               />
 
 
@@ -127,6 +141,7 @@ class  DailyAttendance extends React.Component<Props> {
                                 name="date_of_birth"
                                 title="Date of Birth"
                                 required="please select date of birth"
+                                state={state}
                               />
 
                         </StepWrapper>
@@ -147,6 +162,7 @@ class  DailyAttendance extends React.Component<Props> {
                                   title="Sex"
                                   placeholder="Select Gender"
                                   required="Please select gender"
+                                  state={state}
                               />
 
 
@@ -156,6 +172,7 @@ class  DailyAttendance extends React.Component<Props> {
                                 title="Age"
                                 placeholder="Select Age Range"
                                 required="Please select age range"
+                                state={state}
 
                                 />
 
@@ -165,6 +182,7 @@ class  DailyAttendance extends React.Component<Props> {
                                 name="exact_age"
                                 title="Write Exact Age"
                                 required="Please enter exact age"
+                                state={state}
                               />
 
 
@@ -187,6 +205,7 @@ class  DailyAttendance extends React.Component<Props> {
                             placeholder="Enter contact address"
                             title="Contact Address"
                             required="Please enter address"
+                            state={state}
 
                           />
 
@@ -201,6 +220,7 @@ class  DailyAttendance extends React.Component<Props> {
                                   title="State of Origin"
                                   placeholder="Please Select State"
                                   required="Please select state of origin"
+                                  state={state}
 
                             />
 
@@ -212,6 +232,7 @@ class  DailyAttendance extends React.Component<Props> {
                                 name="telephone_no"
                                 title="Telephone No."
                                 required="Please enter phone number"
+                                state={state}
 
                               />
 
@@ -223,6 +244,7 @@ class  DailyAttendance extends React.Component<Props> {
                               title="First Contact With Facility"
                               placeholder="Select An Option"
                               required="Please select a value"
+                              state={state}
 
                               />
 
@@ -233,6 +255,7 @@ class  DailyAttendance extends React.Component<Props> {
                                 title="Reference In"
                                 placeholder="Select An Option"
                                 required="Please select a value"
+                                state={state}
 
                             />
 
@@ -260,6 +283,7 @@ class  DailyAttendance extends React.Component<Props> {
                                 name="next_of_kin_name"
                                 title="Name"
                                 required="Please enter name"
+                                state={state}
 
                               />
 
@@ -270,6 +294,7 @@ class  DailyAttendance extends React.Component<Props> {
                                   title="Relationship"
                                   placeholder="Please Select Relationship"
                                   required="Please select a relationship"
+                                  state={state}
 
                             />
 
@@ -278,6 +303,7 @@ class  DailyAttendance extends React.Component<Props> {
                               placeholder="Enter address"
                               title="Contact Address"
                               required="Please enter kin address"
+                              state={state}
 
                           />
 
@@ -291,15 +317,14 @@ class  DailyAttendance extends React.Component<Props> {
                                 name="kin_phone"
                                 required="Please enter phone number"
                                 title="Telephone Number"
+                                state={state}
                               />
 
 
                             <SelectCommunityLeader
-
+                                state={state}
                                 name="community_leader_id"
                                 title="Assign Cummunity Leader"
-                                required="Please select commnunity leader"
-
 
                              />
 

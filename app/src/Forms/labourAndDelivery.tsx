@@ -13,7 +13,8 @@ import schemas from '../../realm/schemas';
 
 
 type Props = {
-  history: any
+  history: any,
+  location:any
 }
 class  LabourAndDelivery extends React.Component<Props> {
 
@@ -31,8 +32,12 @@ class  LabourAndDelivery extends React.Component<Props> {
    }
 
    async createLabourAndDeliveryRecord(info:any){
-
-    createLabourAndDelivery(info).then((val)=>{
+    const state = this.props.location.state;
+    const isUpdate = state ? true : false;
+    if(state){
+      info._id = state._id
+    }
+    createLabourAndDelivery(info,isUpdate).then((val)=>{
 
     if(val == "success") this.props.history.push("/labour-and-delivery");
 
@@ -46,7 +51,16 @@ class  LabourAndDelivery extends React.Component<Props> {
     }
 
 
+    componentDidMount(){
+
+      window.scrollTo(0, 0)
+
+    }
+
    render(){
+
+    const state = this.props.location.state;
+
     return(
 
 
@@ -71,6 +85,7 @@ class  LabourAndDelivery extends React.Component<Props> {
                                     date_title="Date"
                                     date_required="please select a date"
                                     intervention={schemas.LabourAndDelivery.name}
+                                    state={state}
                                 />
 
 
@@ -82,6 +97,8 @@ class  LabourAndDelivery extends React.Component<Props> {
                             options={["0 - 28 Days", "29 days - 11 Months", "12 - 59 Months", "5 - 9 Years", "10 - 19 Years", "> 20 Years"]}
                             title="Age"
                             placeholder="Select Gender"
+                            state={state}
+
                             />
 
                             <Input
@@ -89,6 +106,8 @@ class  LabourAndDelivery extends React.Component<Props> {
                                 placeholder="Enter the exact age of client"
                                 name="exact_age"
                                 title="Write Exact Age"
+                                state={state}
+
                               />
 
                         </StepWrapper>
@@ -108,6 +127,8 @@ class  LabourAndDelivery extends React.Component<Props> {
                             title="Types of Client"
                             placeholder="Select Type of Client"
                             required="Please select type of client"
+                            state={state}
+
                             />
 
                             <SelectComponent
@@ -116,6 +137,8 @@ class  LabourAndDelivery extends React.Component<Props> {
                             options={["<24hrs", ">24hrs"]}
                             title="Decision in Seeking Care"
                             placeholder="Please Select"
+                            state={state}
+
                             />
 
                             <SelectComponent
@@ -124,6 +147,8 @@ class  LabourAndDelivery extends React.Component<Props> {
                             options={["Vehicle / Ambulance", "Others"]}
                             title="Transportation In"
                             placeholder="Please Select"
+                            state={state}
+
                             />
 
                             <SelectComponent
@@ -132,6 +157,7 @@ class  LabourAndDelivery extends React.Component<Props> {
                             options={["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"]}
                             title="Parity"
                             placeholder="Please Select"
+                            state={state}
                             />
 
                             <DatePicker
@@ -140,6 +166,7 @@ class  LabourAndDelivery extends React.Component<Props> {
                                 name="delivery_date"
                                 title="Date of Delivery"
                                 required="please enter delivery date"
+                                state={state}
                               />
 
                         </StepWrapper>
@@ -156,6 +183,7 @@ class  LabourAndDelivery extends React.Component<Props> {
                             options={["SVD", "CS", "AD"]}
                             title="Mode of Delivery"
                             placeholder="Please Select"
+                            state={state}
                             />
 
                             <SelectComponent
@@ -164,6 +192,7 @@ class  LabourAndDelivery extends React.Component<Props> {
                             options={["Yes", "No"]}
                             title="Partograph Used?"
                             placeholder="Please Select"
+                            state={state}
                             />
 
                             <h5>Active Management of 3rd Stage of Labour Used</h5>
@@ -174,6 +203,7 @@ class  LabourAndDelivery extends React.Component<Props> {
                             options={["Yes", "No"]}
                             title="Received Oxytocin?"
                             placeholder="Please Select"
+                            state={state}
                             />
 
                             <SelectComponent
@@ -182,6 +212,7 @@ class  LabourAndDelivery extends React.Component<Props> {
                             options={["Yes", "No"]}
                             title="Received Milsoprostol?"
                             placeholder="Please Select"
+                            state={state}
                             />
 
                             <SelectComponent
@@ -190,6 +221,7 @@ class  LabourAndDelivery extends React.Component<Props> {
                             options={["APH", "PPH", "RPC", "PL", "PET", "ET", "RU", "SEP", "OL", "Abt"]}
                             title="Maternal Complication Seen"
                             placeholder="Please Select"
+                            state={state}
                             />
 
                             <SelectComponent
@@ -198,6 +230,8 @@ class  LabourAndDelivery extends React.Component<Props> {
                             options={["Yes", "No"]}
                             title="Pregnant Woman Admitted with Eclampsia (Eclamptic Toxaemia) who recieved MgSO4"
                             placeholder="Please Select"
+                            state={state}
+
                             />
 
                         </StepWrapper>
@@ -214,6 +248,7 @@ class  LabourAndDelivery extends React.Component<Props> {
                             options={["Alive", "Dead"]}
                             title="Mother)"
                             placeholder="Please Select"
+                            state={state}
                             />
 
                             <SelectComponent
@@ -222,6 +257,7 @@ class  LabourAndDelivery extends React.Component<Props> {
                             options={["Admitted", "Discharged", "Referred - out", "Received post abortion care", "Transportation Out"]}
                             title="Alive Status"
                             placeholder="Please Select"
+                            state={state}
                             />
 
                             <SelectComponent
@@ -230,6 +266,7 @@ class  LabourAndDelivery extends React.Component<Props> {
                             options={["Ambulance", "Others"]}
                             title="Transportation Out Status"
                             placeholder="Please Select"
+                            state={state}
                             />
 
                             <SelectComponent
@@ -238,6 +275,7 @@ class  LabourAndDelivery extends React.Component<Props> {
                             options={["MDA Conducted", "MDA not Conducted"]}
                             title="Dead Status"
                             placeholder="Please Select"
+                            state={state}
                             />
 
                           </StepWrapper>
@@ -251,6 +289,7 @@ class  LabourAndDelivery extends React.Component<Props> {
                             name="abortion"
                             options={["IA", "SA"]}
                             title="Abortion"
+                            state={state}
                             placeholder="Please Select"
                             />
 
@@ -259,6 +298,7 @@ class  LabourAndDelivery extends React.Component<Props> {
                                 placeholder="Enter delivery time"
                                 name="delivery_time"
                                 title="Time of Delivery"
+                                state={state}
                               />
 
                             <i>Add check box component here</i>
@@ -269,6 +309,7 @@ class  LabourAndDelivery extends React.Component<Props> {
                             options={["<2.5kg", "≥2.5kg"]}
                             title="Live Birth"
                             placeholder="Please Select"
+                            state={state}
                             />
 
                             <SelectComponent
@@ -277,6 +318,7 @@ class  LabourAndDelivery extends React.Component<Props> {
                             options={["FSB", "MSB"]}
                             title="Still Birth"
                             placeholder="Please Select"
+                            state={state}
                             />
 
                             <i>Add check box component here</i>
@@ -287,6 +329,7 @@ class  LabourAndDelivery extends React.Component<Props> {
                             options={["Male", "Female"]}
                             title="Sex of Baby"
                             placeholder="Please Select"
+                            state={state}
                             />
 
                           </StepWrapper>
@@ -301,6 +344,7 @@ class  LabourAndDelivery extends React.Component<Props> {
                             options={["Doctor", "Midwife or Nurse", "MLSS-trained CHEW", "Others"]}
                             title="Who took delivery of child?"
                             placeholder="Please Select"
+                            state={state}
                             />
 
                             <Input
@@ -308,6 +352,7 @@ class  LabourAndDelivery extends React.Component<Props> {
                                 placeholder=""
                                 name="cord_clamped_at"
                                 title="Time Cord Was Clamped"
+                                state={state}
                               />
 
                             <i>Add check box component here</i>
@@ -318,6 +363,7 @@ class  LabourAndDelivery extends React.Component<Props> {
                             options={["Within 1 hour with skin-to-skin to keep warm", "After 1 hour with skin-to-skin to keep warm"]}
                             title="Baby is put to breast"
                             placeholder="Please Select"
+                            state={state}
                             />
 
                             <Input
@@ -325,6 +371,7 @@ class  LabourAndDelivery extends React.Component<Props> {
                                 placeholder="Enter temperature at 1 hour"
                                 name="temp_at_one_hour"
                                 title="Temperature at 1 Hour"
+                                state={state}
                               />
 
                             <h5>Exclusive Breast Feeding</h5>
@@ -337,6 +384,7 @@ class  LabourAndDelivery extends React.Component<Props> {
                             options={["Counselled", "Accepted"]}
                             title="Postpartum Family Planning"
                             placeholder="Please Select"
+                            state={state}
                             />
 
                             <Input
@@ -344,6 +392,7 @@ class  LabourAndDelivery extends React.Component<Props> {
                                 placeholder="Enter temperature at 1 hour"
                                 name="who_took_delivery_name"
                                 title="Name of Person who took delivery"
+                                state={state}
                               />
 
                           </StepWrapper>

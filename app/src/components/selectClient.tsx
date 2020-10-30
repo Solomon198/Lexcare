@@ -5,7 +5,7 @@ import { css } from "goober";
 import {getDocuments} from '../../realm/queries/readQueries';
 import Schema from '../../realm/schemas/index';
 import TextField from "@material-ui/core/TextField";
-
+import moment from 'moment'
 
 function removeAttendedClient(dailyAttendanceRecords:any[],interventions:any[],interventionFilterKey:string){
 
@@ -24,6 +24,7 @@ function removeAttendedClient(dailyAttendanceRecords:any[],interventions:any[],i
 type DatePickerProps = {
      name : string,
      title: string,
+     state : any,
      onChange:(v:any)=>void
 }
 
@@ -39,6 +40,8 @@ type MultiSelectAndSearchComponentProps = {
   date_required: string,
 
   intervention:string,
+
+  state?:any
 
 
 }
@@ -62,28 +65,42 @@ const DatePicker = (props:DatePickerProps) =>{
       props.onChange(v)
   }
 
+  if(!value){
+    if(props.state){
+      setValue(props.state[props.name])
+    }
+  }
 
-  return(
-    <div className="col-sm-12 mb-3">
-     <label style={{marginLeft:-10}} htmlFor="field-ta" className="col-sm-12 control-label">
-               {props.title}
-     </label>
-    <TextField
-      id="date"
-      InputProps={{disableUnderline:true}}
-      label=""
-      onChange={(e)=> handleChange(e.target.value)}
-      type="date"
-      name={props.name}
-      value={value}
-      className={`form-control demo-input`}
-      style={{borderWidth:1,borderColor:"lightgray",borderStyle:"solid",textDecoration:'none',padding:3}}
-      InputLabelProps={{
-        shrink: true,
-      }}
-    />
-    </div>
-  )
+
+  if(!props.state){
+    return(
+      <div className="col-sm-12 mb-3">
+       <label style={{marginLeft:-10}} htmlFor="field-ta" className="col-sm-12 control-label">
+                 {props.title}
+       </label>
+      <TextField
+        id="date"
+        InputProps={{disableUnderline:true}}
+        label=""
+        onChange={(e)=> handleChange(e.target.value)}
+        type="date"
+        name={props.name}
+        disabled={props.state ? true:false }
+        value={value}
+        className={`form-control demo-input`}
+        style={{borderWidth:1,borderColor:"lightgray",borderStyle:"solid",textDecoration:'none',padding:3}}
+        InputLabelProps={{
+          shrink: true,
+        }}
+      />
+      </div>
+    )
+  }else{
+     return(
+       <div></div>
+     )
+  }
+
 }
 
 
@@ -127,13 +144,34 @@ const MultiSelectAndSearchComponent = (props:MultiSelectAndSearchComponentProps)
 
   const [cardNumber,setCardNumber] = useState(null);
   const [selected,setSelected] = useState([]);
-
-
   const { title, required } = props
   const [isTouched, setIsTouched] = React.useState(false)
   const [recordDate,setRecordDate] = useState();
   const showError = !isValid && (isTouched || isSubmitted);
   let data:any[] = [];
+  const [initialize,setInitialize] = useState(false);
+
+  if(!initialize){
+    if(props.state){
+
+
+      let date = new Date(props.state[props.date_name]);
+      let momentFormat = moment(date).format("L");
+      let splitFormat = momentFormat.split("/");
+      let finalDate = splitFormat[2] + "-" + splitFormat[0] + "-" + splitFormat[1];
+
+      setRecordDate(finalDate as any)
+      setValue(props.state[props.name]);
+      setSelected([{label:props.state[props.name],value:props.state[props.name]}] as any);
+      setCardNumber(props.state[props.name2])
+      setInitialize(true);
+    }else{
+      setInitialize(true);
+    }
+
+    }
+
+
   if(recordDate){
       const docs:any[] = getDocuments(Schema.DailyAttendanceSchema.name,"date",recordDate,recordDate);
       const interventionRecord:any[] = getDocuments(props.intervention,props.date_name,recordDate,recordDate);
@@ -161,13 +199,14 @@ const MultiSelectAndSearchComponent = (props:MultiSelectAndSearchComponentProps)
   return(
     <div className="form-group mt-3">
 
-   <DatePicker
+
+      <DatePicker
 
       onChange={(date:any)=>setRecordDate(date)}
       title={props.date_title}
       name = {props.date_name}
-
-   />
+      state={props.state}
+       />
 
 
     <label htmlFor="field-ta" className="col-sm-12 control-label">
@@ -177,7 +216,7 @@ const MultiSelectAndSearchComponent = (props:MultiSelectAndSearchComponentProps)
     <div className="col-sm-12" style={{maxWidth:500}}>
 
        <MultiSelect
-         disabled={!recordDate?true:false}
+         disabled={!recordDate?true:false || props.state?true:false}
          options={data}
          onChange={handleChange}
          hasSelectAll={false}

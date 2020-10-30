@@ -59,15 +59,18 @@ const createWindow = async () => {
     width: 1024,
     height: 728,
     webPreferences:
-      (process.env.NODE_ENV === 'development' ||
-        process.env.E2E_BUILD === 'true') &&
-      process.env.ERB_SECURE !== 'true'
-        ? {
-            nodeIntegration: true,
-          }
-        : {
-            preload: path.join(__dirname, 'dist/renderer.prod.js'),
-          },
+    {
+      nodeIntegration: true,
+    }
+      // (process.env.NODE_ENV === 'development' ||
+      //   process.env.E2E_BUILD === 'true') &&
+      // process.env.ERB_SECURE !== 'true'
+      //   ? {
+      //       nodeIntegration: true,
+      //     }
+      //   : {
+      //       preload: path.join(__dirname, 'dist/renderer.prod.js'),
+      //     },
   });
 
   mainWindow.loadURL(`file://${__dirname}/app.html`);

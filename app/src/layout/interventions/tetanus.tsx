@@ -12,6 +12,22 @@ export default class Tetanus extends React.Component<props> {
     this.props.history.push("/add-tetanus")
   }
 
+  edit(payload:any){
+    this.props.history.push({
+      pathname:"/add-tetanus",
+      state:payload,
+    })
+  }
+
+
+  componentDidMount(){
+
+    window.scrollTo(0, 0)
+
+  }
+
+
+
 
   render() {
     return (
@@ -24,6 +40,7 @@ export default class Tetanus extends React.Component<props> {
                 <h5 className="form-header">All Tetanus Diphtheria Records</h5>
 
                       <RenderData
+                          editRecord={(payload)=>this.edit(payload)}
                           SchemaName={Schema.Tetanus.name}
                           addRecord={()=>this.addRecord()}
                           dataField="date_of_visit"

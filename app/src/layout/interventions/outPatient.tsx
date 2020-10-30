@@ -12,6 +12,19 @@ export default class OutPatient extends React.Component<OutPatientProps>{
     this.props.history.push("/add-outpatient")
   }
 
+  edit(payload:any){
+    this.props.history.push({
+      pathname:"/add-outpatient",
+      state:payload
+    })
+  }
+
+  componentDidMount(){
+
+    window.scrollTo(0, 0)
+
+  }
+
 
 
   render() {
@@ -26,6 +39,7 @@ export default class OutPatient extends React.Component<OutPatientProps>{
 
                       <RenderData
                           SchemaName={Schema.OutPatient.name}
+                          editRecord={(payload)=>this.edit(payload)}
                           addRecord={()=>this.addRecord()}
                           tableHead={
                             <thead>

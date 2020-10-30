@@ -25,7 +25,8 @@ import schemas from '../../realm/schemas';
 
 
 type Props = {
-  history: any
+  history: any,
+  location:any
 }
 class  FamilyPlanning extends React.Component<Props> {
 
@@ -48,12 +49,17 @@ class  FamilyPlanning extends React.Component<Props> {
 
    componentDidMount(){
 
+    window.scrollTo(0, 0)
 
    }
 
    async createFamilyPlaningRecord(info:any){
-
-     createFamilyPlaning(info).then((val)=>{
+    const state = this.props.location.state;
+    const isUpdate = state ? true : false;
+    if(state){
+      info._id = state._id
+    }
+     createFamilyPlaning(info,isUpdate).then((val)=>{
 
      if(val == "success") this.props.history.push("/family-planing");
 
@@ -69,8 +75,10 @@ class  FamilyPlanning extends React.Component<Props> {
 
 
    render(){
-    return(
 
+    const state = this.props.location.state;
+
+    return(
 
 
                        <StepFormWrapper
@@ -95,6 +103,7 @@ class  FamilyPlanning extends React.Component<Props> {
                                     date_title="Client Date of Visit"
                                     date_required="please select date"
                                     intervention={schemas.FamilyPlaning.name}
+                                    state={state}
 
                                 />
 
@@ -105,6 +114,7 @@ class  FamilyPlanning extends React.Component<Props> {
                                 placeholder="Enter Follow Up Address"
                                 title="Follow Up Address"
                                 required="Please enter follow up address"
+                                state={state}
                             />
 
                             <Input
@@ -112,6 +122,7 @@ class  FamilyPlanning extends React.Component<Props> {
                                 placeholder="Enter phone no."
                                 name="phone_number"
                                 title="Phone No."
+                                state={state}
                               />
 
                             <SelectComponent
@@ -120,15 +131,17 @@ class  FamilyPlanning extends React.Component<Props> {
                             options={["Male", "Female"]}
                             title="Sex"
                             placeholder="Select Gender"
+                            state={state}
                             />
 
-                            <RadioButton name="age" title="Age" options={["10 - 14 years", "15 - 19 years", "20 - 24 years", "25 - 49 years", "≥ 50 years"]} />
+                            <RadioButton state={state} name="age" title="Age" options={["10 - 14 years", "15 - 19 years", "20 - 24 years", "25 - 49 years", "≥ 50 years"]} />
 
                             <Input
                                 type="number"
                                 placeholder="Enter  weight"
                                 name="weight"
                                 title="Weight (Kg)"
+                                state={state}
                               />
 
                             <Input
@@ -136,6 +149,7 @@ class  FamilyPlanning extends React.Component<Props> {
                                 placeholder="Enter blood pressure"
                                 name="blood_pressure"
                                 title="Blood Pressure"
+                                state={state}
                               />
 
 
@@ -154,6 +168,7 @@ class  FamilyPlanning extends React.Component<Props> {
                                 placeholder="Enter Source of Referral"
                                 name="referral_source"
                                 title="Source of Referral"
+                                state={state}
                               />
 
                             <Input
@@ -161,17 +176,44 @@ class  FamilyPlanning extends React.Component<Props> {
                                 placeholder="Enter parity"
                                 name="parity"
                                 title="Parity (female)"
+                                state={state}
                               />
 
-                            <RadioButton name="counselled_fp" title="Counselled FP" options={["Yes", "No"]}  />
+                            <RadioButton
 
-                            <RadioButton name="counselled_ppfp" title="Counselled on PPFP" options={["Yes", "No"]}  />
+                               name="counselled_fp"
+                               title="Counselled FP"
+                               options={["Yes", "No"]}
+                               state={state}
+                               />
 
-                            <RadioButton name="modern_fp" title="First Time Modern FP User" options={["Yes", "No"]}  />
+                            <RadioButton
+                              name="counselled_ppfp"
+                              title="Counselled on PPFP"
+                              options={["Yes", "No"]}
+                              state={state}
+                              />
 
-                            <RadioButton name="contraception" title="Emergency Contraception" options={["Yes", "No"]}  />
+                            <RadioButton
+                              name="modern_fp"
+                              title="First Time Modern FP User"
+                              options={["Yes", "No"]}
+                              state={state}
+                              />
 
-                            <RadioButton name="fp_client_type" title="Type of FP Client" options={["Routine", "PPFP", "PAC"]}  />
+                            <RadioButton
+                              name="contraception"
+                              title="Emergency Contraception"
+                              options={["Yes", "No"]}
+                              state={state}
+                              />
+
+                            <RadioButton
+                               name="fp_client_type"
+                               title="Type of FP Client"
+                               options={["Routine", "PPFP", "PAC"]}
+                               state={state}
+                               />
 
                         </StepWrapper>
 
@@ -186,24 +228,28 @@ class  FamilyPlanning extends React.Component<Props> {
                                 placeholder="Enter name of oral pill"
                                 name="oral_pill_name"
                                 title="Name of Pill"
+                                state={state}
                               />
 
-                            <Input
-                                type="text"
-                                placeholder="Enter name of oral pill"
-                                name="oral_pill_name"
-                                title="Name of Pill"
-                              />
 
-                            <RadioButton name="new_acceptor" title="Type of FP Client" options={["Yes", "No"]}  />
+                            <RadioButton
+                            state={state}
+                            name="new_acceptor"
+                            title="NA(New Acceptor"
+                            options={["Yes", "No"]}  />
 
-                            <RadioButton name="revisit" title="RV (Revisit)" options={["Yes", "No"]} />
+                            <RadioButton
+                            state={state}
+                            name="revisit"
+                            title="RV (Revisit)"
+                            options={["Yes", "No"]} />
 
                             <Input
                                 type="number"
                                 placeholder="Please enter number of cycles"
                                 name="cycles_quantity"
                                 title="Qty (Number of Cycles)"
+                                state={state}
                               />
 
                               <h5>INJECTABLES</h5>
@@ -213,18 +259,26 @@ class  FamilyPlanning extends React.Component<Props> {
                                 placeholder="Enter name of injectable"
                                 name="injectable_name"
                                 title="Name of Injectables"
+                                state={state}
                               />
 
                             <Input
                                 type="text"
                                 placeholder="Enter name of injectable"
                                 name="self_injectibles_name"
-                                title="Name of InjectablesSelf Injection (For DMPA-SC only) (Qty in Vials)"
+                                title="Name of Injectables Self Injection (For DMPA-SC only) (Qty in Vials)"
+                                state={state}
                               />
 
-                            <RadioButton name="injectable_na" title="NA (New Acceptor)" options={["Yes", "No"]} />
+                            <RadioButton
+                            state={state}
+                            name="injectable_na"
+                            title="NA (New Acceptor)" options={["Yes", "No"]} />
 
-                            <RadioButton name="injectable_rv" title="RV (Revisit)" options={["Yes", "No"]}  />
+                            <RadioButton
+                            state={state}
+                            name="injectable_rv"
+                            title="RV (Revisit)" options={["Yes", "No"]}  />
 
                         </StepWrapper>
 
@@ -239,6 +293,7 @@ class  FamilyPlanning extends React.Component<Props> {
                                 placeholder="Please enter type of IUD"
                                 name="type_of_iud"
                                 title="Type of IUD (write: H or C)"
+                                state={state}
                               />
 
                             <SelectComponent
@@ -247,6 +302,7 @@ class  FamilyPlanning extends React.Component<Props> {
                             options={["Yes", "No"]}
                             title="IUD NA (New Acceptor)"
                             placeholder="Select an Option"
+                            state={state}
                             />
 
                             <SelectComponent
@@ -255,6 +311,7 @@ class  FamilyPlanning extends React.Component<Props> {
                             options={["Yes", "No"]}
                             title="IUD RV (Revisit)"
                             placeholder="Select an Option"
+                            state={state}
                             />
 
                             <Input
@@ -262,38 +319,41 @@ class  FamilyPlanning extends React.Component<Props> {
                                 placeholder="Please enter IUD OUT value"
                                 name="iud_out"
                                 title="OUT"
+                                state={state}
                               />
 
-                            <RadioButton name="condom_type" title="Type of Condom" options={["Male", "Female"]}  />
+                            <RadioButton state={state}   name="condom_type" title="Type of Condom" options={["Male", "Female"]}  />
 
 
-                            <RadioButton name="condom_na" title="Condoms NA (New Acceptor)" options={["Yes", "No"]}  />
+                            <RadioButton state={state}   name="condom_na" title="Condoms NA (New Acceptor)" options={["Yes", "No"]}  />
 
-                            <RadioButton name="condom_rv" title="Condom RV (Revisit)" options={["Yes", "No"]}  />
+                            <RadioButton state={state}   name="condom_rv" title="Condom RV (Revisit)" options={["Yes", "No"]}  />
 
                             <Input
                                 type="text"
                                 placeholder="Quanltity of Condoms"
                                 name="condom_qty"
                                 title="Qty (Number of Pieces)"
+                                state={state}
                               />
 
                           </StepWrapper>
 
                           <StepWrapper
                           position={5}
-                          title="">
+                          title="IMPLANTS">
 
                             <Input
                                 type="text"
                                 placeholder="Type of Implants (write: IMP or JD)"
                                 name="implants_type"
                                 title="Type of Implants"
+                                state={state}
                               />
 
-                            <RadioButton name="implants_in" title="Condom RV (Revisit)" options={["NA", "RV"]}  />
+                            <RadioButton state={state}   name="implants_in" title="Condom RV (Revisit)" options={["NA", "RV"]}  />
 
-                             <RadioButton name="implants_out" title="Implants (OUT)" options={["Yes", "No"]}  />
+                             <RadioButton state={state}   name="implants_out" title="Implants (OUT)" options={["Yes", "No"]}  />
 
                              <SelectComponent
 
@@ -301,9 +361,10 @@ class  FamilyPlanning extends React.Component<Props> {
                             options={["M", "F"]}
                             title="Voluntary Sterilization"
                             placeholder="voluntary_sterilization"
+                            state={state}
                             />
 
-                            <h5>Natural Methods</h5>
+                            {/* <h5>Natural Methods</h5> */}
 
                             {/* create checkboxes here... */}
 

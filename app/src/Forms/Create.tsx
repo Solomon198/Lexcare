@@ -8,6 +8,12 @@ import TextArea from '../components/textArea'
 import MultiSelectAndSearch from '../components/multiSelectAndSearch'
 
 class  Create extends React.Component {
+
+   componentDidMount(){
+    window.scrollTo(0, 0)
+   }
+
+
    render(){
     return(
       <div className="element-wrapper container mt-4">
@@ -21,9 +27,9 @@ class  Create extends React.Component {
 
                   <div className="stepwizard">
 
-                         
+
                     {/* STEP COMPONENT */}
-                  
+
 
                     <div className="stepwizard-row setup-panel">
 
@@ -46,7 +52,7 @@ class  Create extends React.Component {
                       <div className="col-sm-12">
                         <div className="col-md-12">
 
-                              <DatePicker 
+                              <DatePicker
                                 type="date"
                                 placeholder="Select date Y-m-d"
                                 name="date"
@@ -55,14 +61,14 @@ class  Create extends React.Component {
                               />
 
 
-                              <SelectComponent 
+                              <SelectComponent
                                   name="client_name"
                                   options={[]}
                                   title="Name of Client"
 
                               />
 
-                              <Input 
+                              <Input
                                 type="text"
                                 placeholder="Enter card number..."
                                 name="card_number"
@@ -71,21 +77,21 @@ class  Create extends React.Component {
                               />
 
 
-                              <RadioBtns 
-                                  name="sex" 
-                                  title="Sex" 
-                                  options={["Male","Female"]} 
-                              />
-                            
                               <RadioBtns
-                                  name="age" 
-                                  title="Age" 
+                                  name="sex"
+                                  title="Sex"
+                                  options={["Male","Female"]}
+                              />
+
+                              <RadioBtns
+                                  name="age"
+                                  title="Age"
                                   options={["0 - 28 Days","29 - 11 Months","12 - 29 Months","5 - 9 Years"]}
                                   />
-                              
-                        
-                          
-                                <DatePicker 
+
+
+
+                                <DatePicker
                                   type="date"
                                   placeholder="Select date of birth"
                                   name="dob"
@@ -94,14 +100,14 @@ class  Create extends React.Component {
                                 />
 
 
-                          
+
                           <button className="btn btn-primary nextBtn btn-lg pull-right" type="button">Next</button>
                         </div>
                       </div>
                     </div>
 
 
-                    
+
                      {/* STEP 2 */}
 
                     <div className="row setup-content" id="step-2" style={{display: 'none'}}>
@@ -111,22 +117,22 @@ class  Create extends React.Component {
                           <h5>Clients Visit Details</h5>
 
                           <RadioBtns
-                                  name="attendance" 
-                                  title="Type of attendance" 
+                                  name="attendance"
+                                  title="Type of attendance"
                                   options={["New","Follow Up"]}
                            />
-                              
+
                           <h5>Nutritional Assessment</h5>
-                              
-                            <Input 
+
+                            <Input
                                 type="text"
                                 placeholder=""
                                 name="weight"
                                 title="Weight (Kg)"
                                 dataError=""
                               />
-                                 
-                              <Input 
+
+                              <Input
                                 type="text"
                                 placeholder=""
                                 name="weight"
@@ -135,7 +141,7 @@ class  Create extends React.Component {
                               />
 
 
-                                <Input 
+                                <Input
                                   type="text"
                                   placeholder=""
                                   name="bmi"
@@ -143,7 +149,7 @@ class  Create extends React.Component {
                                   dataError=""
                               />
 
-                         
+
                           <button className="btn btn-primary nextBtn btn-lg pull-right" type="button">Next</button>
 
                         </div>
@@ -153,18 +159,18 @@ class  Create extends React.Component {
                     <div className="row setup-content" id="step-3" style={{display: 'none'}}>
                       <div className="col-sm-12">
                         <div className="col-md-12">
-                             
 
-                          <TextArea 
-                            
+
+                          <TextArea
+
                             name="complaint"
                             placeholder="Enter complaints"
                             id="field-ta"
                             title="Presenting Complaint"
-                            
+
                           />
 
-                         
+
                            <MultiSelectAndSearch
                               options={["1","2","3"]}
                               title="Diagnosis"
@@ -172,44 +178,44 @@ class  Create extends React.Component {
                               selectId="desease_id"
                               name = "diseaseId[]"
                            />
-                         
 
 
-                        
+
+
                           <div id="target" />
-                          <SelectComponent 
+                          <SelectComponent
                                   name="investigation"
                                   options={["No investigation","Urine Analysis","RVS","Sugar Test","MPS / Widal"]}
                                   title="Type of Laboratory Investigation"
 
                           />
-                         
 
 
-                         <TextArea 
-                            
+
+                         <TextArea
+
                             name="drugs_given"
                             placeholder="Enter complaints"
                             id="drugs_given"
                             title="Drugs Given"
-                            
+
                           />
-                         
+
 
                          <RadioBtns
-                                  name="visit_outcome" 
-                                  title="Outcome of Visits" 
+                                  name="visit_outcome"
+                                  title="Outcome of Visits"
                                   options={["Not Treated (NT)","Treated (T)","Admitted (A)","Referred Out(RO)","Dead (D)"]}
                            />
-                         
 
-                         <TextArea 
-                            
+
+                         <TextArea
+
                             name="ro_condition"
                             placeholder="Enter condition that required referral..."
                             id="field-ta"
                             title="Please write condition that required referral"
-                            
+
                           />
 
 
@@ -329,7 +335,7 @@ class  Create extends React.Component {
                                 <input type="radio" name="pre_refferal" defaultValue=">=5 Years" /> IM/IV artermether
                               </label><br />
                               <label className="radio-inline">
-                                <input type="radio" name="pre_refferal" defaultValue="Other pre referral" /> Other pre referral 
+                                <input type="radio" name="pre_refferal" defaultValue="Other pre referral" /> Other pre referral
                               </label>
                             </div>
                           </div>
@@ -343,7 +349,7 @@ class  Create extends React.Component {
                           <h5>Tuberculosis</h5>
                           <div className="form-group">
                             <label className="checkbox col-sm-12 control-label">
-                              <input type="checkbox" name="screened_tb" defaultValue="Clinically Screened for TB" /> Clinically Screened for TB 
+                              <input type="checkbox" name="screened_tb" defaultValue="Clinically Screened for TB" /> Clinically Screened for TB
                             </label>
                           </div>
                           <div className="form-group">
@@ -424,11 +430,11 @@ class  Create extends React.Component {
                                 <input type="radio" name="hep_c_result" defaultValue="T" /> T
                               </label>
                             </div>
-                          </div>  
+                          </div>
 
 
                           <button className="btn btn-primary nextBtn btn-lg pull-right" type="button">Next</button>
-                          
+
                         </div>
 
                       </div>
@@ -437,7 +443,7 @@ class  Create extends React.Component {
                       <div className="col-sm-12">
                         <div className="col-sm-12">
                           <h5>Gender Based Violence (GBV)</h5>
-                          <div className="form-group">  
+                          <div className="form-group">
                             <label htmlFor="field-ta" className="col-sm-12 control-label">GBV Case Seen (indicate type of case presented)</label>
                             <div className="col-sm-12">
                               <input type="text" name="gbv_case_seen" defaultValue id className="form-control" autoComplete="on" />
@@ -459,7 +465,7 @@ class  Create extends React.Component {
                             <div className="help-block form-text with-errors form-control-feedback" />
                           </div>
                           <button className="btn btn-primary nextBtn btn-lg pull-right disabled" type="submit">Submit</button>
-                        </div>  
+                        </div>
                       </div>
                     </div>
                   </form></div>

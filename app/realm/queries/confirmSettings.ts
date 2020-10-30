@@ -59,35 +59,11 @@ export async function checkIfStaffExist(phc_id?:string){
 
         schema:[
 
-          Schemas.BirthRegister,
 
-          Schemas.DailyAttendanceSchema,
 
           Schemas.StaffSchema,
 
-          Schemas.ClientSchema,
 
-          Schemas.CommunityLeaders,
-
-          Schemas.ReferalOut,
-
-          Schemas.Antenatal,
-
-          Schemas.FamilyPlaning,
-
-          Schemas.Inpatient,
-
-          Schemas.LabourAndDelivery,
-
-          Schemas.PostNatal,
-
-          Schemas.Immunization,
-
-          Schemas.OutPatient,
-
-          Schemas.Nutrition,
-
-          Schemas.Tetanus,
 
         ],
 
@@ -104,8 +80,8 @@ export async function checkIfStaffExist(phc_id?:string){
       let obj = realm.objects(Schemas.StaffSchema.name);
       let staffs = getRealmObjectCollection(obj);
 
-      console.log(staffs);
-      console.log("phc user called")
+      // console.log(staffs);
+      // console.log("phc user called")
 
       if(staffs.length > 0){
         return true;

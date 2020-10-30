@@ -14,7 +14,8 @@ import schemas from '../../realm/schemas';
 
 
 type Props = {
-  history: any
+  history: any,
+  location:any
 }
 class  PostNatal extends React.Component<Props> {
 
@@ -31,11 +32,21 @@ class  PostNatal extends React.Component<Props> {
 
    }
 
+   componentDidMount(){
+
+    window.scrollTo(0, 0)
+
+   }
+
    async createImmnunizationRecord(info:any){
+    const state = this.props.location.state;
+    const isUpdate = state ? true : false;
+    if(state){
+      info._id = state._id
+    }
+    createImmunization(info,isUpdate).then((val)=>{
 
-    createImmunization(info).then((val)=>{
-
-    if(val == "success") this.props.history.push("/family-planing");
+    if(val == "success") this.props.history.push("/child-immunization");
 
 
  }).catch(e=>{
@@ -49,13 +60,17 @@ class  PostNatal extends React.Component<Props> {
 
 
    render(){
+
+    const state = this.props.location.state;
+
+
     return(
 
 
 
                        <StepFormWrapper
                             onSubmit={(records)=>this.createImmnunizationRecord(records)}
-                            title="Child Immunization Reister "
+                            title="Child Immunization Register "
                             steps={2} // holds total number of steps required
                         >
 
@@ -68,6 +83,7 @@ class  PostNatal extends React.Component<Props> {
                                 <SelectClient
 
                                   name="child_name"
+                                  state={state}
                                   name2="child_card_no"
                                   title="Select Client"
                                   required="please select client"
@@ -88,6 +104,7 @@ class  PostNatal extends React.Component<Props> {
                             options={["Male", "Female"]}
                             title="Sex (M/F)"
                             placeholder="Select Gender"
+                            state={state}
                             />
 
                         </StepWrapper>
@@ -106,6 +123,7 @@ class  PostNatal extends React.Component<Props> {
                             placeholder="Enter Follow Up Address"
                             title="Follow Up Address"
                             required="Please enter the childs follow up address."
+                            state={state}
                             />
 
                               <Input
@@ -113,6 +131,7 @@ class  PostNatal extends React.Component<Props> {
                                 placeholder="Enter phone no."
                                 name="phone"
                                 title="Phone No."
+                                state={state}
                               />
 
                               <DatePicker
@@ -121,6 +140,7 @@ class  PostNatal extends React.Component<Props> {
                                 name="dob"
                                 title="Date of Birth(DD/MM/YY)"
                                 required="Please pick a date of birth"
+                                state={state}
                             />
 
                             <TextArea
@@ -128,6 +148,7 @@ class  PostNatal extends React.Component<Props> {
                             name="comment"
                             placeholder="Enter comments"
                             title="Comments"
+                            state={state}
                             />
 
                         </StepWrapper>

@@ -2,7 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import {image} from '../../img/logobase'
 
-  const Login = (props)=>
+  const Login = (props:any)=>
       (
         <div  className="container-fluid card">
         <div className="row no-gutter">
@@ -52,6 +52,8 @@ import {image} from '../../img/logobase'
 
 
                         </button>
+
+                        <p onClick={()=>props.showResset()} style={{marginTop:15,cursor:"pointer"}} className="text-right text-primary">forgot password ?</p>
 
 
 

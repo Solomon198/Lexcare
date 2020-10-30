@@ -3,14 +3,16 @@ import {Pagination} from 'react-bootstrap';
 import moment from 'moment';
 import DatePicker from './component-free/datePicker';
 import {getDocuments} from '../../realm/queries/readQueries'
-
+import {Modal} from 'react-bootstrap'
 
 type paginationProps = {
      properties:any[],
      tableHead:any,
      hideEdit?:boolean,
+     showDetails?:boolean,
      SchemaName:string,
      addRecord?:()=>void,
+     editRecord?:(payload:any)=>void,
      dataField?:string,
      ignoreFilter?:boolean
 
@@ -18,6 +20,8 @@ type paginationProps = {
 
 export default function PaginationComponent(props:paginationProps){
    const badgeSize = 10;
+
+   const [show, setShow] = useState(false);
 
    const [start,setStart] = useState();
    const [end,setEnd] = useState();
@@ -201,12 +205,21 @@ export default function PaginationComponent(props:paginationProps){
                        )
                      }
 
+                    {
+                        props.showDetails?
+                        <td>
+                        <button onClick={()=>setShow(true)} className="btn btn-info btn-small">Details</button>
+                      </td>:null
+                      }
+
                       {
                         !props.hideEdit?
                         <td>
-                        <button className="btn btn-success btn-small">Edit</button>
+                        <button onClick={()=>props.editRecord(valz)} className="btn btn-primary btn-small">Edit</button>
                       </td>:null
                       }
+
+
                 </tr>
 
                )
@@ -252,6 +265,33 @@ export default function PaginationComponent(props:paginationProps){
                </Pagination>
             </div>:null
             }
+
+
+
+                 <Modal
+                    show={show}
+                    onHide={() => setShow(false)}
+                    dialogClassName="modal-90w modal-width"
+                    aria-labelledby="example-custom-modal-styling-title"
+                  >
+
+                    <Modal.Header closeButton>
+                      <Modal.Title id="example-custom-modal-styling-title">
+                        Custom Modal Styling
+                      </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <p>
+                        Ipsum molestiae natus adipisci modi eligendi? Debitis amet quae unde
+                        commodi aspernatur enim, consectetur. Cumque deleniti temporibus
+                        ipsam atque a dolores quisquam quisquam adipisci possimus
+                        laboriosam. Quibusdam facilis doloribus debitis! Sit quasi quod
+                        accusamus eos quod. Ab quos consequuntur eaque quo rem! Mollitia
+                        reiciendis porro quo magni incidunt dolore amet atque facilis ipsum
+                        deleniti rem!
+                      </p>
+                    </Modal.Body>
+                  </Modal>
        </>
    )
 

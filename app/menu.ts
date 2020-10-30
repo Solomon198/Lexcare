@@ -187,13 +187,13 @@ export default class MenuBuilder {
       process.env.NODE_ENV === 'development' ||
       process.env.DEBUG_PROD === 'true'
         ? subMenuViewDev
-        : subMenuViewProd;
+        : null;
 
-    return [subMenuAbout, subMenuEdit, subMenuView, subMenuWindow, subMenuHelp];
+     return [subMenuAbout, subMenuEdit, subMenuView, subMenuWindow, subMenuHelp];
   }
 
   buildDefaultTemplate() {
-    const templateDefault = [
+    const templateDefault = process.env.NODE_ENV === 'development' ?[
       {
         label: '&File',
         submenu: [
@@ -283,7 +283,7 @@ export default class MenuBuilder {
           },
         ],
       },
-    ];
+    ] : [];
 
     return templateDefault;
   }

@@ -13,7 +13,8 @@ import schemas from '../../realm/schemas';
 
 
 type Props = {
-  history: any
+  history: any,
+  location:any
 }
 class  InPatient extends React.Component<Props> {
 
@@ -32,8 +33,12 @@ class  InPatient extends React.Component<Props> {
 
 
    async createInpatientRecord(info:any){
-
-    createInPatient(info).then((val)=>{
+    const state = this.props.location.state;
+    const isUpdate = state ? true : false;
+    if(state){
+      info._id = state._id
+    }
+    createInPatient(info,isUpdate).then((val)=>{
 
     if(val == "success") this.props.history.push("/in-patient");
 
@@ -47,11 +52,21 @@ class  InPatient extends React.Component<Props> {
     }
 
 
+    componentDidMount(){
+
+      window.scrollTo(0, 0)
+
+    }
+
+
 
 
 
 
    render(){
+
+    const state = this.props.location.state;
+
     return(
 
 
@@ -70,6 +85,7 @@ class  InPatient extends React.Component<Props> {
 
 
                                 <SelectClient
+                                  state={state}
                                   name="client_names"
                                   name2="card_number"
                                   title="Select Client"
@@ -87,6 +103,7 @@ class  InPatient extends React.Component<Props> {
                             options={["Male", "Female"]}
                             title="Sex"
                             placeholder="Select Gender"
+                            state={state}
                             />
 
                             <SelectComponent
@@ -95,6 +112,8 @@ class  InPatient extends React.Component<Props> {
                             options={["0 - 28 Days", "29 days - 11 Months", "12 - 59 Months", "5 - 9 Years", "10 - 19 Years", "> 20 Years"]}
                             title="Age"
                             placeholder="Select Gender"
+                            state={state}
+
                             />
 
                             <DatePicker
@@ -103,6 +122,7 @@ class  InPatient extends React.Component<Props> {
                                 name="dob"
                                 title="Date of Birth"
                                 required="Please select date of birth"
+                                state={state}
                               />
 
 
@@ -123,9 +143,12 @@ class  InPatient extends React.Component<Props> {
                             title="Diagnosis"
                             placeholder="Search disease"
                             required="Please select a disease"
+                            state={state}
                             />
 
-                            <RadioButton name="addmission_outcome" title="Admission Outcome" options={["ABC", "DC", "R", "D"]}  />
+                            <RadioButton
+                            state={state}
+                            name="addmission_outcome" title="Admission Outcome" options={["ABC", "DC", "R", "D"]}  />
 
                             <SelectComponent
 
@@ -133,6 +156,7 @@ class  InPatient extends React.Component<Props> {
                             options={["preloaded services here..."]}
                             title="Type of Laboratory Investigation"
                             placeholder="Search Services"
+                            state={state}
                             />
 
                             <TextArea
@@ -140,6 +164,7 @@ class  InPatient extends React.Component<Props> {
                             name="drugs_given"
                             placeholder="Enter drugs..."
                             title="Drugs Given"
+                            state={state}
                             />
 
                         </StepWrapper>

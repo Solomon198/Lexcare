@@ -18,6 +18,12 @@ export default class PhcStaffs extends React.Component<props> {
   }
 
 
+  componentDidMount(){
+
+    window.scrollTo(0, 0)
+
+  }
+
 
   render() {
     return (
@@ -42,6 +48,7 @@ export default class PhcStaffs extends React.Component<props> {
                                 <th>#</th>
                                 <th>Name</th>
                                 <th>Phone Number</th>
+                                <th>Email</th>
                                 <th>Role</th>
                               </tr>
                             </thead>}
@@ -49,6 +56,7 @@ export default class PhcStaffs extends React.Component<props> {
 
                             {key:"full_name"},
                             {key:"phone_number"},
+                            {key:"email"},
                             {key:"role"},
 
                            ]}

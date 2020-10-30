@@ -13,7 +13,8 @@ import {createOutpatient} from '../../realm/queries/writeQueries'
 import schemas from '../../realm/schemas';
 import Diseases from '../data/diseases'
 type Props = {
-    history: any
+    history: any,
+    location:any
 }
 
 class OutPatient extends React.Component<Props> {
@@ -24,9 +25,19 @@ class OutPatient extends React.Component<Props> {
 
     }
 
-    async createOutPatient(info:any){
+    componentDidMount(){
 
-      createOutpatient(info).then((val)=>{
+      window.scrollTo(0, 0)
+
+    }
+
+    async createOutPatient(info:any){
+      const state = this.props.location.state;
+      const isUpdate = state ? true : false;
+      if(state){
+        info._id = state._id
+      }
+      createOutpatient(info,isUpdate).then((val)=>{
 
       if(val == "success") this.props.history.push("/out-patient");
 
@@ -42,6 +53,8 @@ class OutPatient extends React.Component<Props> {
 
 
     render() {
+
+      const state = this.props.location.state;
 
         return (
             <StepFormWrapper
@@ -68,6 +81,7 @@ class OutPatient extends React.Component<Props> {
                               date_title="Client Date of Visit"
                               date_required="Please select a date"
                               intervention={schemas.OutPatient.name}
+                              state={state}
                          />
 
 
@@ -76,6 +90,7 @@ class OutPatient extends React.Component<Props> {
                             title="Sex"
                             options={["Male","Female"]}
                             required="Please select a sex"
+                            state={state}
                             />
 
 
@@ -84,6 +99,7 @@ class OutPatient extends React.Component<Props> {
                             title="Age"
                             options={["0 - 28 Days","29 - 11 months", "12 - 29 months","5 - 9 years"]}
                             required="Please select age"
+                            state={state}
                         />
 
                         <DatePicker
@@ -92,6 +108,7 @@ class OutPatient extends React.Component<Props> {
                           title="Date of Birth"
                           placeholder=""
                           required="Please select client date of birth"
+                          state={state}
                         />
 
 
@@ -109,6 +126,7 @@ class OutPatient extends React.Component<Props> {
                         options={["New","Follow Up"]}
                         title="Type of Attendance"
                         required="Please select type of attendance"
+                        state={state}
 
                     />
 
@@ -124,6 +142,7 @@ class OutPatient extends React.Component<Props> {
                           name="weight"
                           title="Weight (Kg)"
                           required="Please enter weight"
+                          state={state}
 
                         />
 
@@ -134,6 +153,7 @@ class OutPatient extends React.Component<Props> {
                           name="height"
                           title="Height (CM for children < 12 years) and (M for persons > 12 Years )"
                           required="Please enter height"
+                          state={state}
 
                         />
 
@@ -145,6 +165,7 @@ class OutPatient extends React.Component<Props> {
                               name="bmi_weight"
                               title="BMI [Weight (Kg) / Height² (M²)]"
                               required="Please enter height"
+                              state={state}
 
                         />
 
@@ -166,6 +187,7 @@ class OutPatient extends React.Component<Props> {
                       title="Presenting Complaint"
                       placeholder="Enter complaint"
                       required="Please select an option"
+                      state={state}
                     />
 
                     <MultiSelectAndSearch
@@ -174,6 +196,7 @@ class OutPatient extends React.Component<Props> {
                        title="Diagnosis"
                        options={Diseases}
                        required='Please select an option'
+                       state={state}
                     />
 
                     <SelectComponent
@@ -181,12 +204,14 @@ class OutPatient extends React.Component<Props> {
                       options={["No investigation","Urine Analysis","RVS","Sugar Test","MPS/Widal"]}
                       name="type_of_investigation"
                       placeholder=""
+                      state={state}
                     />
 
                     <TextArea
                       title="Drugs Given"
                       placeholder="drugs given"
                       name="drugs_given"
+                      state={state}
 
                     />
 
@@ -198,6 +223,7 @@ class OutPatient extends React.Component<Props> {
                           "Referred Out(RO)",
                           "Dead (D)"
                         ]}
+                        state={state}
                         title="Outcome of Visits"
                         name="visit_outcome"
                     />
@@ -217,6 +243,7 @@ class OutPatient extends React.Component<Props> {
                           ">=5 Years",
                           "PW",
                         ]}
+                        state={state}
                         title="Clinical Diagnosis (Tick if no lab test was done before treatment)"
                         name="clinical_diagnosis"
                     />
@@ -232,6 +259,7 @@ class OutPatient extends React.Component<Props> {
                         ]}
                         title="RDT (Indicate either +ve or -ve)"
                         name="rdt"
+                        state={state}
                     />
 
                      <RadioButton
@@ -241,6 +269,7 @@ class OutPatient extends React.Component<Props> {
                         ]}
                         title="Age"
                         name="age"
+                        state={state}
                     />
 
                      <RadioButton
@@ -248,6 +277,7 @@ class OutPatient extends React.Component<Props> {
                           "+ve",
                           "-ve",
                         ]}
+                        state={state}
                         title="Microscopy (Indicate either +ve or -ve)"
                         name="microscopy"
                     />
@@ -262,6 +292,7 @@ class OutPatient extends React.Component<Props> {
                           ">=5 Years",
                           "PW"
                         ]}
+                        state={state}
                         title="(Tick if ACT was given)"
                         name="act"
                     />
@@ -272,6 +303,7 @@ class OutPatient extends React.Component<Props> {
                         ]}
                         title="Tick if other antimalaria is given)"
                         name="other_anti_maleria"
+                        state={state}
                     />
 
                      <h5>
@@ -285,6 +317,7 @@ class OutPatient extends React.Component<Props> {
                         ]}
                         title="(Tick Only if tested positive for malaria)"
                         name="severe_maleria"
+                        state={state}
                     />
 
                     <h5>
@@ -301,6 +334,7 @@ class OutPatient extends React.Component<Props> {
                         ]}
                         title="(Tick any of the treatment given)"
                         name="pre_referal_treatment"
+                        state={state}
                     />
 
 
@@ -318,6 +352,7 @@ class OutPatient extends React.Component<Props> {
                     <CheckBox
                        title="Clinically Screened for TB"
                        name="clinically_screened"
+                       state={state}
                     />
 
                     <RadioButton
@@ -327,11 +362,13 @@ class OutPatient extends React.Component<Props> {
                             "0",
                             "1"
                           ]}
+                          state={state}
                     />
 
                      <CheckBox
                        title="Client scored 1 (TB suspect) and referred for further TB services"
                        name="clinical_scored"
+                       state={state}
                     />
 
 
@@ -342,12 +379,14 @@ class OutPatient extends React.Component<Props> {
                     <CheckBox
                        title="Tested"
                        name="tested_hepatitis"
+                       state={state}
                     />
 
                     <RadioButton
                       options={["Positive","Negative"]}
                       title="Result"
                       name="result_hepatitis_test"
+                      state={state}
                     />
 
                     <h5>
@@ -358,12 +397,14 @@ class OutPatient extends React.Component<Props> {
                       options={["Positive","Negative"]}
                       title="Result"
                       name="result_hepatitis_screening"
+                      state={state}
                     />
 
                     <RadioButton
                        title="Referred or Treated"
                        name="refered_or_treated"
                        options={["R","T"]}
+                       state={state}
                     />
 
 
@@ -380,12 +421,14 @@ class OutPatient extends React.Component<Props> {
                        name="gbv"
                        type=""
                        placeholder=""
+                       state={state}
                     />
 
                     <Input
                        title="Post GBV Care Received"
                        name="post_gbv"
                        type=""
+                       state={state}
                        placeholder=""
                     />
 
@@ -393,6 +436,7 @@ class OutPatient extends React.Component<Props> {
                        title="GBV Case Referred for further Treatment"
                        name="gbv_refered"
                        type=""
+                       state={state}
                        placeholder=""
                     />
 

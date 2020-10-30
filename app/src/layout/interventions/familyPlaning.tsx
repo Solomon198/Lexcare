@@ -12,6 +12,22 @@ export default class FamilyPlaning extends React.Component<props> {
     this.props.history.push("/add-family-planning");
   }
 
+
+  componentDidMount(){
+
+    window.scrollTo(0, 0)
+
+  }
+
+  edit(payload:any){
+    this.props.history.push({
+      pathname:"/add-family-planning",
+      state:payload
+    })
+  }
+
+
+
   render() {
     return (
       <div className="content-w">
@@ -23,6 +39,7 @@ export default class FamilyPlaning extends React.Component<props> {
                 <h5 className="form-header">All Family Planning Records</h5>
 
                 <RenderData
+                          editRecord={(payload)=>this.edit(payload)}
                           addRecord={()=>this.addRecord()}
                           SchemaName={schemas.FamilyPlaning.name}
                           tableHead={

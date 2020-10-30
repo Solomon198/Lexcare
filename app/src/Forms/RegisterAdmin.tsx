@@ -19,6 +19,8 @@ class AdminStaff extends React.Component<Props> {
 
     componentDidMount(){
 
+      window.scrollTo(0, 0)
+
     }
 
 
@@ -40,7 +42,7 @@ class AdminStaff extends React.Component<Props> {
 
              <StepFormWrapper
                  onSubmit={(values:any)=>this.props.addStaff(values)}
-                 title="Setup a Super Admin"
+                 title="Register Super Admin"
                  steps={1} // holds total number of steps required
               >
                 <div style={{marginTop:20}}></div>
@@ -65,6 +67,14 @@ class AdminStaff extends React.Component<Props> {
                     name="phone_number"
                     title="Phone Number"
                     required="Please enter phone number"
+                    />
+
+                    <Input
+                        type="email"
+                        placeholder="Enter Email Address"
+                        name="email"
+                        title="Email Address"
+                        required="Please enter email address"
                     />
 
                    <Input

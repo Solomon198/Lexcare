@@ -16,7 +16,8 @@ import schemas from '../../realm/schemas';
 
 
 type Props = {
-  history: any
+  history: any,
+  location :any
 }
 class PostNatal extends React.Component<Props> {
 
@@ -33,9 +34,19 @@ class PostNatal extends React.Component<Props> {
 
    }
 
-   async createPostNatalRecord(info:any){
+   componentDidMount(){
 
-    createPostNatal(info).then((val)=>{
+    window.scrollTo(0, 0)
+
+   }
+
+   async createPostNatalRecord(info:any){
+    const state = this.props.location.state;
+    const isUpdate = state ? true : false;
+    if(state){
+      info._id = state._id
+    }
+    createPostNatal(info,isUpdate).then((val)=>{
 
     if(val == "success") this.props.history.push("/post-natal");
 
@@ -55,6 +66,9 @@ class PostNatal extends React.Component<Props> {
 
 
    render(){
+
+    const state = this.props.location.state;
+
     return(
 
 
@@ -81,6 +95,7 @@ class PostNatal extends React.Component<Props> {
                                   date_title="Select registration date"
                                   date_required="Please select a date"
                                   intervention={schemas.PostNatal.name}
+                                  state={state}
                                 />
 
 
@@ -89,13 +104,16 @@ class PostNatal extends React.Component<Props> {
                             name="age"
                             options={["0 - 28 Days", "29 days - 11 Months", "12 - 59 Months", "5 - 9 Years", "10 - 19 Years", "> 20 Years"]}
                             title="Age"
-                            placeholder="Select Gender"
+                            placeholder="Select Age"
+                            state={state}
+
                             />
 
                             <Input
                                 type="number"
                                 placeholder="Enter the exact age of client"
                                 name="exact_age"
+                                state={state}
                                 title="Write Exact Age"
                               />
 
@@ -104,12 +122,16 @@ class PostNatal extends React.Component<Props> {
                                 placeholder="Record the number of times the woman has carried pregnancies to 28 weeks and above."
                                 name="parity"
                                 title="Parity"
+                                state={state}
                               />
 
-                            <RadioButton name="pnc_clinic_attendance" title="Postnatal Clinic Attendance<" options={["10 - 14 years", "15 - 19 years", "20 - 24 years", "25 - 49 years", "≥ 50 years"]}  />
+                        <RadioButton state={state}        name="pnc_clinic_attendance"  title="Postnatal Clinic Attendance<"
+                              options={["10 - 14 years", "15 - 19 years", "20 - 24 years", "25 - 49 years", "≥ 50 years"]}
+
+                            />
 
                             <TextArea
-
+                                state={state}
                                 name="associated_problems"
                                 placeholder="Enter associated problems"
                                 title="Enter associated problems"
@@ -125,13 +147,14 @@ class PostNatal extends React.Component<Props> {
                        position={2}
                        title="Postnatal Care">
 
-                            <RadioButton name="mother" title="Mother" options={["1 Day", "2 - 3 Days", "4 - 7 Days", "> 7 Days"]}  />
+                            <RadioButton state={state} name="mother" title="Mother" options={["1 Day", "2 - 3 Days", "4 - 7 Days", "> 7 Days"]}  />
 
-                            <RadioButton name="newborn" title="Newborn" options={["1 Day", "2 - 3 Days", "4 - 7 Days", "> 7 Days"]}  />
+                            <RadioButton state={state} name="newborn" title="Newborn" options={["1 Day", "2 - 3 Days", "4 - 7 Days", "> 7 Days"]}  />
 
-                            <RadioButton name="sex_of_child" title="Sex of Child" options={["Male", "Female"]}  />
+                            <RadioButton state={state} name="sex_of_child" title="Sex of Child" options={["Male", "Female"]}  />
 
                              <MultiSelectAndSearchComponent
+                                 state={state}
                                  title="Maternal Care"
                                  options={[
                                    "Maternal Nutrition",
@@ -154,6 +177,7 @@ class PostNatal extends React.Component<Props> {
                                   ]}
                                   required="Please select maternal care"
                                   name="servies"
+                                  state={state}
                              />
 
                               <Input
@@ -161,6 +185,7 @@ class PostNatal extends React.Component<Props> {
                                 placeholder="write the result of the PVC/HB test"
                                 name="hb_pvc_test"
                                 title="HB/PCV Test Result"
+                                state={state}
                               />
 
                               <Input
@@ -168,6 +193,7 @@ class PostNatal extends React.Component<Props> {
                                 placeholder="write result for sugar"
                                 name="urinal_test_result"
                                 title="Urinalysis Test Result"
+                                state={state}
                               />
 
 
@@ -190,10 +216,11 @@ class PostNatal extends React.Component<Props> {
                                   ]}
                                   required="Please select maternal care"
                                   name="neonatal_complications"
+                                  state={state}
                              />
 
 
-                            <RadioButton name="kmc" title="KMC" options={["A", "DS"]} />
+                            <RadioButton state={state} name="kmc" title="KMC" options={["A", "DS"]} />
 
                         </StepWrapper>
 
@@ -203,16 +230,17 @@ class PostNatal extends React.Component<Props> {
                           position={4}
                           title="">
 
-                            <RadioButton name="outcome_of_visit" title="Outcome of Visit (for mother and newborn)" options={["NT", "T", "A", "RO"]}  />
+                            <RadioButton state={state} name="outcome_of_visit" title="Outcome of Visit (for mother and newborn)"
+                            options={["NT", "T", "A", "RO"]}  />
 
                             <TextArea
-
                                 name="ro_reason"
                                 placeholder="Please state reason for referral"
                                 title="Reason for Referral"
+                                state={state}
                             />
 
-                            <RadioButton name="transportation_out" title="Transportation Out" options={["Ambulance", "Others"]}  />
+                            <RadioButton state={state} name="transportation_out" title="Transportation Out" options={["Ambulance", "Others"]}  />
 
                           </StepWrapper>
 

@@ -17,6 +17,8 @@ import {_APP_INSTANCE_, _DATA_BASE_INSTACE_} from './dbConfig';
 
 import {documentExist, getPHC_configSettings} from './readQueries';
 
+import { setAdminExist } from './configApp';
+
 
 
 
@@ -92,35 +94,9 @@ export async function createPHC_Staff(documents:any){
     const realm =  new Realm({
       schema:[
 
-        Schemas.BirthRegister,
-
-        Schemas.DailyAttendanceSchema,
 
         Schemas.StaffSchema,
 
-        Schemas.ClientSchema,
-
-        Schemas.CommunityLeaders,
-
-        Schemas.ReferalOut,
-
-        Schemas.Antenatal,
-
-        Schemas.FamilyPlaning,
-
-        Schemas.Inpatient,
-
-        Schemas.LabourAndDelivery,
-
-        Schemas.PostNatal,
-
-        Schemas.Immunization,
-
-        Schemas.OutPatient,
-
-        Schemas.Nutrition,
-
-        Schemas.Tetanus,
 
 
       ],
@@ -138,7 +114,7 @@ export async function createPHC_Staff(documents:any){
    })
 
 
-   console.log("writing sucess")
+   setAdminExist("true");
 
    return "success";
 
@@ -151,7 +127,7 @@ export async function createPHC_Staff(documents:any){
 
 
 
-export async  function createDailyAttendance(document:any){
+export async  function createDailyAttendance(document:any,isUpdate?:boolean){
 
       try{
 
@@ -165,13 +141,18 @@ export async  function createDailyAttendance(document:any){
 
           document["date_of_birth"]  = new Date(document.date_of_birth);
 
-          document['health_facility_id'] = getPHC_configSettings().phc_id;
-
-          document["createdBy"]  = Auth.getCurrentUser().staff_id
-
           document.date = new Date(document.date);
 
-          document._id = new BSON.ObjectID();
+
+          if(!isUpdate){
+
+                document['health_facility_id'] = getPHC_configSettings().phc_id;
+
+                document["createdBy"]  = Auth.getCurrentUser().staff_id
+
+                document._id = new BSON.ObjectID();
+
+          }
 
            const check = documentExist(`client_card_number = "${document.client_card_number}"`,Schemas.ClientSchema.name);
 
@@ -195,6 +176,7 @@ export async  function createDailyAttendance(document:any){
                   client.next_of_kin_name = client.next_of_kin_name;
                });
 
+
                const clientFound = realm.objects(Schemas.ClientSchema.name).filtered('client_card_number = $0',document.client_card_number);
 
                clientFound.forEach((client:any)=>{
@@ -214,7 +196,9 @@ export async  function createDailyAttendance(document:any){
                realm.create(Schemas.ClientSchema.name,document);
            }
 
-           realm.create(Schemas.DailyAttendanceSchema.name,document);
+           if(!isUpdate){
+            realm.create(Schemas.DailyAttendanceSchema.name,document);
+           }
 
 
           });
@@ -230,19 +214,22 @@ export async  function createDailyAttendance(document:any){
 }
 
 
-export async function createBirthRegister(documents:any){
+export async function createBirthRegister(documents:any,isUpdate?:boolean){
 
   try{
 
 
-    documents._id = getObjectId();
+    if(!isUpdate){
+
+            documents._id = getObjectId();
+
+            documents.health_facility_id = getPHC_configSettings().phc_id;
+
+            documents.createdBy = Auth.getCurrentUser().staff_id;
+
+    }
 
     documents.child_reg_date = new Date(documents.child_reg_date);
-
-    documents.health_facility_id = getPHC_configSettings().phc_id;
-
-    documents.createdBy = Auth.getCurrentUser().staff_id;
-
 
     documents.dob = new Date(documents.dob);
 
@@ -251,7 +238,11 @@ export async function createBirthRegister(documents:any){
 
      realm.write(()=>{
 
-         realm.create(Schemas.BirthRegister.name,documents);
+         if(!isUpdate){
+          realm.create(Schemas.BirthRegister.name,documents);
+         }else{
+          realm.create(Schemas.BirthRegister.name,documents,true);
+         }
 
    })
 
@@ -267,18 +258,22 @@ export async function createBirthRegister(documents:any){
 
 
 
-export async function createReferalOut(documents:any){
+export async function createReferalOut(documents:any,isUpdate?:boolean){
 
   try{
 
 
-    documents._id = getObjectId();
+    if(!isUpdate){
+
+      documents._id = getObjectId();
+
+      documents.health_facility_id = getPHC_configSettings().phc_id;
+
+      documents.createdBy = Auth.getCurrentUser().staff_id;
+
+    }
 
     documents.referal_date = new Date(documents.referal_date);
-
-    documents.health_facility_id = getPHC_configSettings().phc_id;
-
-    documents.createdBy = Auth.getCurrentUser().staff_id;
 
 
     const realm =  _DATA_BASE_INSTACE_;
@@ -286,7 +281,11 @@ export async function createReferalOut(documents:any){
 
      realm.write(()=>{
 
-         realm.create(Schemas.ReferalOut.name,documents);
+        if(!isUpdate){
+          realm.create(Schemas.ReferalOut.name,documents);
+        }else{
+          realm.create(Schemas.ReferalOut.name,documents,true);
+        }
 
    })
 
@@ -301,27 +300,35 @@ export async function createReferalOut(documents:any){
 }
 
 
-export async function createAntenatal(documents:any){
+export async function createAntenatal(documents:any,isUpdate?:boolean){
 
   try{
 
 
-    documents._id = getObjectId();
 
     documents.date = new Date(documents.date);
 
     documents.dob = new Date();
 
-    documents.health_facility_id = getPHC_configSettings().phc_id;
+    if(!isUpdate){
 
-    documents.createdBy = Auth.getCurrentUser().staff_id;
+            documents.health_facility_id = getPHC_configSettings().phc_id;
+
+            documents.createdBy = Auth.getCurrentUser().staff_id;
+
+            documents._id = getObjectId();
+    }
+
 
     const realm = _DATA_BASE_INSTACE_;
 
      realm.write(()=>{
 
-         realm.create(Schemas.Antenatal.name,documents);
-
+        if(!isUpdate){
+          realm.create(Schemas.Antenatal.name,documents);
+        }else{
+          realm.create(Schemas.Antenatal.name,documents,true);
+        }
    })
 
 
@@ -336,26 +343,36 @@ export async function createAntenatal(documents:any){
 
 
 
-export async function createFamilyPlaning(documents:any){
+export async function createFamilyPlaning(documents:any,isUpdate?:boolean){
 
   try{
 
 
-    documents._id = getObjectId();
 
     documents.date = new Date(documents.date);
 
     documents.dob = new Date();
 
-    documents.health_facility_id = getPHC_configSettings().phc_id;
+    if(!isUpdate){
 
-    documents.createdBy = Auth.getCurrentUser().staff_id;
+      documents.health_facility_id = getPHC_configSettings().phc_id;
+
+      documents.createdBy = Auth.getCurrentUser().staff_id;
+
+      documents._id = getObjectId();
+
+    }
+
 
     const realm = _DATA_BASE_INSTACE_;
 
      realm.write(()=>{
 
-         realm.create(Schemas.FamilyPlaning.name,documents);
+         if(!isUpdate){
+          realm.create(Schemas.FamilyPlaning.name,documents);
+         }else{
+          realm.create(Schemas.FamilyPlaning.name,documents,true);
+         }
 
    })
 
@@ -371,25 +388,36 @@ export async function createFamilyPlaning(documents:any){
 
 
 
-export async function createInPatient(documents:any){
+export async function createInPatient(documents:any,isUpdate?:boolean){
 
   try{
 
-    documents._id = getObjectId();
 
     documents.date = new Date(documents.date);
 
     documents.dob = new Date(documents.dob);
 
-    documents.health_facility_id = getPHC_configSettings().phc_id;
+    if(!isUpdate){
 
-    documents.createdBy = Auth.getCurrentUser().staff_id;
+      documents.health_facility_id = getPHC_configSettings().phc_id;
+
+      documents.createdBy = Auth.getCurrentUser().staff_id;
+
+      documents._id = getObjectId();
+
+
+    }
+
 
     const realm = _DATA_BASE_INSTACE_;
 
      realm.write(()=>{
 
-         realm.create(Schemas.Inpatient.name,documents);
+        if(!isUpdate){
+          realm.create(Schemas.Inpatient.name,documents);
+        }else{
+          realm.create(Schemas.Inpatient.name,documents,true);
+        }
 
    })
 
@@ -405,25 +433,34 @@ export async function createInPatient(documents:any){
 
 
 
-export async function createLabourAndDelivery(documents:any){
+export async function createLabourAndDelivery(documents:any,isUpdate?:boolean){
 
   try{
 
-    documents._id = getObjectId();
 
     documents.date = new Date(documents.date);
 
     documents.delivery_date = new Date(documents.delivery_date);
 
-    documents.health_facility_id = getPHC_configSettings().phc_id;
+     if(!isUpdate){
 
-    documents.createdBy = Auth.getCurrentUser().staff_id;
+      documents._id = getObjectId();
+
+      documents.health_facility_id = getPHC_configSettings().phc_id;
+
+      documents.createdBy = Auth.getCurrentUser().staff_id;
+
+     }
 
     const realm = _DATA_BASE_INSTACE_;
 
      realm.write(()=>{
 
-         realm.create(Schemas.LabourAndDelivery.name,documents);
+         if(!isUpdate){
+          realm.create(Schemas.LabourAndDelivery.name,documents);
+         }else{
+          realm.create(Schemas.LabourAndDelivery.name,documents,true);
+         }
 
      })
 
@@ -444,24 +481,33 @@ export async function createLabourAndDelivery(documents:any){
 
 
 
-export async function createPostNatal(documents:any){
+export async function createPostNatal(documents:any,isUpdate?:boolean){
 
   try{
 
-    documents._id = getObjectId();
 
     documents.date = new Date(documents.date);
 
-    documents.health_facility_id = getPHC_configSettings().phc_id;
+    if(!isUpdate){
 
-    documents.createdBy = Auth.getCurrentUser().staff_id;
+      documents.health_facility_id = getPHC_configSettings().phc_id;
+
+      documents.createdBy = Auth.getCurrentUser().staff_id;
+
+      documents._id = getObjectId();
+
+    }
+
 
     const realm = _DATA_BASE_INSTACE_;
 
      realm.write(()=>{
 
-         realm.create(Schemas.PostNatal.name,documents);
-
+         if(!isUpdate){
+          realm.create(Schemas.PostNatal.name,documents);
+         }else{
+          realm.create(Schemas.PostNatal.name,documents,true);
+         }
      })
 
 
@@ -475,25 +521,34 @@ export async function createPostNatal(documents:any){
 }
 
 
-export async function createImmunization(documents:any){
+export async function createImmunization(documents:any,isUpdate?:boolean){
 
   try{
 
-    documents._id = getObjectId();
 
     documents.date = new Date(documents.date);
 
     documents.dob = new Date(documents.dob);
 
-    documents.health_facility_id = getPHC_configSettings().phc_id;
+    if(!isUpdate){
 
-    documents.createdBy = Auth.getCurrentUser().staff_id;
+      documents._id = getObjectId();
+
+      documents.health_facility_id = getPHC_configSettings().phc_id;
+
+      documents.createdBy = Auth.getCurrentUser().staff_id;
+
+    }
 
     const realm = _DATA_BASE_INSTACE_;
 
      realm.write(()=>{
 
-         realm.create(Schemas.Immunization.name,documents);
+         if(!isUpdate){
+          realm.create(Schemas.Immunization.name,documents);
+         }else{
+          realm.create(Schemas.Immunization.name,documents,true);
+         }
 
    })
 
@@ -509,25 +564,35 @@ export async function createImmunization(documents:any){
 
 
 
-export async function createOutpatient(documents:any){
+export async function createOutpatient(documents:any,isUpdate?:boolean){
 
   try{
 
-    documents._id = getObjectId();
 
     documents.date = new Date(documents.date);
 
     documents.date_of_birth = new Date(documents.date_of_birth);
 
-    documents.health_facility_id = getPHC_configSettings().phc_id;
+    if(!isUpdate){
 
-    documents.createdBy = Auth.getCurrentUser().staff_id;
+      documents.health_facility_id = getPHC_configSettings().phc_id;
+
+      documents.createdBy = Auth.getCurrentUser().staff_id;
+
+      documents._id = getObjectId();
+
+    }
+
 
     const realm = _DATA_BASE_INSTACE_;
 
      realm.write(()=>{
 
-         realm.create(Schemas.OutPatient.name,documents);
+         if(!isUpdate){
+          realm.create(Schemas.OutPatient.name,documents);
+         }else{
+          realm.create(Schemas.OutPatient.name,documents,true);
+         }
 
    })
 
@@ -544,11 +609,10 @@ export async function createOutpatient(documents:any){
 
 
 
-export async function createNutrition(documents:any){
+export async function createNutrition(documents:any,isUpdate?:boolean){
 
   try{
 
-    documents._id = getObjectId();
 
     documents.date = new Date(documents.date);
 
@@ -556,15 +620,26 @@ export async function createNutrition(documents:any){
 
     documents.outcome_treatment = new Date(documents.outcome_treatment);
 
-    documents.health_facility_id = getPHC_configSettings().phc_id;
+    if(!isUpdate){
 
-    documents.createdBy = Auth.getCurrentUser().staff_id;
+      documents.health_facility_id = getPHC_configSettings().phc_id;
+
+      documents.createdBy = Auth.getCurrentUser().staff_id;
+
+      documents._id = getObjectId();
+
+    }
+
 
     const realm = _DATA_BASE_INSTACE_;
 
      realm.write(()=>{
 
-         realm.create(Schemas.Nutrition.name,documents);
+         if(!isUpdate){
+          realm.create(Schemas.Nutrition.name,documents);
+         }else{
+          realm.create(Schemas.Nutrition.name,documents,true);
+         }
 
    })
 
@@ -579,25 +654,35 @@ export async function createNutrition(documents:any){
 }
 
 
-export async function createTetanus(documents:any){
+export async function createTetanus(documents:any,isUpdate?:boolean){
 
   try{
 
-    documents._id = getObjectId();
 
     documents.date_of_visit = new Date(documents.date_of_visit);
 
     documents.date_of_birth = new Date(documents.date_of_birth);
 
-    documents.health_facility_id = getPHC_configSettings().phc_id;
+    if(!isUpdate){
 
-    documents.createdBy = Auth.getCurrentUser().staff_id;
+      documents.health_facility_id = getPHC_configSettings().phc_id;
+
+      documents.createdBy = Auth.getCurrentUser().staff_id;
+
+      documents._id = getObjectId();
+
+    }
+
 
     const realm = _DATA_BASE_INSTACE_;
 
      realm.write(()=>{
 
-         realm.create(Schemas.Tetanus.name,documents);
+         if(!isUpdate){
+          realm.create(Schemas.Tetanus.name,documents);
+         }else{
+          realm.create(Schemas.Tetanus.name,documents,true);
+         }
 
    })
 

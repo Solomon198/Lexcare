@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import {useField} from '@formiz/core'
 
 type InputComponentProps = {
@@ -8,7 +8,8 @@ type InputComponentProps = {
       title:string,
       type:any,
       placeholder:string,
-      inputValue?:string
+      value?:string,
+      state?:any
 
 }
 
@@ -21,14 +22,38 @@ const InputComponent  = (props:InputComponentProps)=> {
     isValid,
     isSubmitted,
     setValue,
-    value = props.inputValue,
+    value,
   } = useField(props);
 
 
 
   const { title, type, required, } = props
+  const [initialize,setInitialize] = useState(false);
   const [isTouched, setIsTouched] = React.useState(false)
   const showError = !isValid && (isTouched || isSubmitted);
+
+  if(!initialize){
+     if(props.state){
+
+       if(props.name == "first_name"){
+             let name = props.state["client_name"].split(" ");
+             setValue(name[0]);
+             setInitialize(true);
+       }else if(props.name == "last_name"){
+           let name = props.state["client_name"].split(" ");
+           setValue(name[1]);
+           setInitialize(true);
+       }else{
+        setValue(props.state[props.name]);
+        setInitialize(true);
+       }
+
+     }else{
+       setInitialize(true);
+     }
+
+  }
+
   const handleChange = (v)=>{
 
       if(type == "number"){
@@ -58,6 +83,7 @@ const InputComponent  = (props:InputComponentProps)=> {
           type={type ?? "text"}
           value={value ?? ""}
           name={props.name}
+          disabled={ props.state && props.name == "client_card_number" ? true:false}
           id={props.name}
           style={{borderWidth:1}}
           placeholder={props.placeholder}

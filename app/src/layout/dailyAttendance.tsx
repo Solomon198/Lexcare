@@ -24,6 +24,20 @@ export default class DailyAttendance extends React.Component<props> {
        this.props.history.push("/daily-attendance-register");
   }
 
+  edit(payload:any){
+    this.props.history.push({
+      pathname:"/daily-attendance-register",
+      state:payload,
+    })
+  }
+
+
+  componentDidMount(){
+
+    window.scrollTo(0, 0)
+
+  }
+
 
 
 
@@ -43,6 +57,7 @@ export default class DailyAttendance extends React.Component<props> {
                           <RenderData
                           dataField="date"
                           addRecord={()=>this.addRecord()}
+                          editRecord={(payload)=>this.edit(payload)}
                           SchemaName={schemas.DailyAttendanceSchema.name}
 
                           tableHead={

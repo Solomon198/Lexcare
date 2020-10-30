@@ -6,6 +6,12 @@ import RenderData from '../components/pagination';
 export default class Clients extends React.Component {
 
 
+  componentDidMount(){
+
+    window.scrollTo(0, 0)
+
+  }
+
 
   render() {
     return (
@@ -19,6 +25,7 @@ export default class Clients extends React.Component {
 
                 <RenderData
                           ignoreFilter={true}
+                          showDetails
                           SchemaName={Schema.ClientSchema.name}
                           tableHead={
                             <thead>

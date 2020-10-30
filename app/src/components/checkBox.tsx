@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import {useField} from '@formiz/core'
 
 
@@ -6,7 +6,9 @@ type CheckBoxProps = {
    name : string,
    title : string,
    required? : any,
-   options ? : any[]
+   options ? : any[],
+   data ?: any,
+   state?:any
 }
 
 const CheckBox = (props:CheckBoxProps)=>{
@@ -26,10 +28,18 @@ const CheckBox = (props:CheckBoxProps)=>{
   const { title, required , name} = props
   const [isTouched, setIsTouched] = React.useState(false)
   const showError = !isValid && (isTouched || isSubmitted);
+  const [initialize,setInitialize] = useState(false);
 
-  const options = ["red","blue","white","yellow","Fanta","Mirror","whitish","Fans"]
 
+  if(!initialize){
+    if(props.state){
+      setValue(props.state[props.name]);
+      setInitialize(true);
+    }else{
+      setInitialize(true);
+    }
 
+ }
 
 
   return (
@@ -42,9 +52,11 @@ const CheckBox = (props:CheckBoxProps)=>{
             <input
               name={name}
               type="checkbox"
+              checked={value?true:false}
               style={{marginTop:5,marginRight:10}}
               onChange={(e)=> e.target.checked?setValue(title):setValue("")}
               onBlur={()=>setIsTouched(true)}
+
 
             />
 

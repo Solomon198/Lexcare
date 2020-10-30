@@ -34,6 +34,7 @@ class CommunityLeader extends React.Component<Props> {
 
     componentDidMount(){
 
+      window.scrollTo(0, 0)
 
     }
 

@@ -13,6 +13,19 @@ export default class BirthRegister extends React.Component<props> {
   }
 
 
+  edit(payload:any){
+    this.props.history.push({
+      pathname:"/add-birth-register",
+      state:payload,
+    })
+  }
+
+  componentDidMount(){
+
+    window.scrollTo(0, 0)
+
+  }
+
 
 
 
@@ -29,6 +42,7 @@ export default class BirthRegister extends React.Component<props> {
                 <h5 className="form-header">All Birth Registers</h5>
 
                         <RenderData
+                          editRecord={(payload)=>this.edit(payload)}
                           dataField="child_reg_date"
                           addRecord={()=>this.addRecord()}
                           SchemaName={schemas.BirthRegister.name}

@@ -4,7 +4,6 @@ import { ConnectedRouter } from 'connected-react-router';
 import { hot } from 'react-hot-loader/root';
 import { History } from 'history';
 import { Store } from '../store';
-import { BrowserRouter as Router} from 'react-router-dom';
 import Routes from '../Routes';
 
 type Props = {

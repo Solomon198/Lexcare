@@ -9,7 +9,8 @@ import SelectClient from '../components/selectClient';
 import schemas from '../../realm/schemas';
 
 type Props = {
-    history: any
+    history: any,
+    location:any
 }
 
 class Tetanus extends React.Component<Props> {
@@ -20,10 +21,20 @@ class Tetanus extends React.Component<Props> {
 
     }
 
+    componentDidMount(){
+
+      window.scrollTo(0, 0)
+
+    }
+
 
     async createTentanusRecord(info:any){
-
-      createTetanus(info).then((val)=>{
+      const state = this.props.location.state;
+      const isUpdate = state ? true : false;
+      if(state){
+        info._id = state._id
+      }
+      createTetanus(info,isUpdate).then((val)=>{
 
       if(val == "success") this.props.history.push("/tetanus-diphtherial");
 
@@ -40,6 +51,7 @@ class Tetanus extends React.Component<Props> {
 
 
     render() {
+      const state = this.props.location.state;
         return (
             <StepFormWrapper
             onSubmit={(record)=>this.createTentanusRecord(record)}
@@ -59,6 +71,7 @@ class Tetanus extends React.Component<Props> {
                     title="SESSION TYPE"
                     placeholder=""
                     required="Please select session type"
+                    state={state}
 
 
                     />
@@ -74,6 +87,7 @@ class Tetanus extends React.Component<Props> {
                               date_title="Date of Visit"
                               date_required="Please select date of visit"
                               intervention={schemas.Tetanus.name}
+                              state={state}
                          />
 
 
@@ -93,6 +107,7 @@ class Tetanus extends React.Component<Props> {
                         name="date_of_birth"
                         title="Date of Birth"
                         required="Please select date of birth"
+                        state={state}
                     />
 
                       <Input
@@ -101,6 +116,7 @@ class Tetanus extends React.Component<Props> {
                         name="follow_up_address"
                         title="Follow up Address"
                         required="Please enter the childs follow up address."
+                        state={state}
                     />
 
 
@@ -112,6 +128,7 @@ class Tetanus extends React.Component<Props> {
                           name="phone_number"
                           title="Phone No."
                           required="Please enter phone number"
+                          state={state}
                     />
 
 

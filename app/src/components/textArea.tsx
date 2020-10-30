@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import {useField} from '@formiz/core'
 
 type TextAreaProps = {
@@ -8,6 +8,7 @@ type TextAreaProps = {
       title:string,
       type?:any,
       placeholder:string,
+      state?:any
 
 }
 
@@ -27,6 +28,17 @@ const TextArea  = (props:TextAreaProps)=> {
   const { title, type, required } = props
   const [isTouched, setIsTouched] = React.useState(false)
   const showError = !isValid && (isTouched || isSubmitted);
+  const [initialize,setInitialize] = useState(false);
+
+  if(!initialize){
+    if(props.state){
+      setValue(props.state[props.name]);
+      setInitialize(true);
+    }else{
+      setInitialize(true);
+    }
+
+    }
 
   return (
     <div className="form-group">

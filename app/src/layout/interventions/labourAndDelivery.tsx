@@ -13,6 +13,20 @@ export default class LabourAndDelivery extends React.Component<props> {
   }
 
 
+  componentDidMount(){
+
+    window.scrollTo(0, 0)
+
+  }
+
+  edit(payload:any){
+    this.props.history.push({
+      pathname:"/add-labour-delivery",
+      state:payload
+    })
+  }
+
+
 
 
   render() {
@@ -26,6 +40,7 @@ export default class LabourAndDelivery extends React.Component<props> {
                 <h5 className="form-header">All Labour Delivery Records</h5>
 
                         <RenderData
+                          editRecord={(payload)=>this.edit(payload)}
                           SchemaName={Schema.LabourAndDelivery.name}
                           addRecord={()=>this.addRecord()}
                           tableHead={

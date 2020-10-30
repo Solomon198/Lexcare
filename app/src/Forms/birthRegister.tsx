@@ -8,7 +8,8 @@ import StepFormWrapper from '../components/stepFormWrapper';
 import {createBirthRegister} from '../../realm/queries/writeQueries';
 import NigeriaStates from '../data/states'
 type Props = {
-    history: any
+    history: any,
+    location:any
 }
 
 class BirthRegister extends React.Component<Props> {
@@ -20,8 +21,12 @@ class BirthRegister extends React.Component<Props> {
     }
 
     async createBirthRecord(info:any){
-
-        createBirthRegister(info).then((val)=>{
+      const state = this.props.location.state;
+      const isUpdate = state ? true : false;
+      if(state){
+        info._id = state._id
+      }
+        createBirthRegister(info,isUpdate).then((val)=>{
 
         if(val == "success") this.props.history.push("/birth-register");
 
@@ -34,9 +39,14 @@ class BirthRegister extends React.Component<Props> {
 
     }
 
+    componentDidMount(){
+      window.scrollTo(0, 0)
+    }
 
 
     render() {
+      const state = this.props.location.state;
+
         return (
             <StepFormWrapper
                   onSubmit={(record)=>this.createBirthRecord(record)}
@@ -50,6 +60,7 @@ class BirthRegister extends React.Component<Props> {
                 >
 
                     <Input
+                        state={state}
                         type="text"
                         placeholder="Enter Mother's Hospital Card No."
                         name="mothers_card_no"
@@ -58,6 +69,7 @@ class BirthRegister extends React.Component<Props> {
                     />
 
                      <DatePicker
+                       state={state}
                        type="text"
                        placeholder="Enter Date of Child Registration"
                        name="child_reg_date"
@@ -67,6 +79,7 @@ class BirthRegister extends React.Component<Props> {
 
 
                     <DatePicker
+                        state={state}
                         type="text"
                         placeholder="Enter Date of Birth"
                         name="dob"
@@ -81,6 +94,7 @@ class BirthRegister extends React.Component<Props> {
                         title="Sex"
                         placeholder="Select Gender"
                         required="Please select gender"
+                        state={state}
 
                     />
 
@@ -97,6 +111,7 @@ class BirthRegister extends React.Component<Props> {
                         name="childs_surname"
                         title="Surname"
                         required="Please enter surname"
+                        state={state}
                     />
 
                     <Input
@@ -105,6 +120,7 @@ class BirthRegister extends React.Component<Props> {
                         name="childs_firstname"
                         title="First Name"
                         required="Please enter first name"
+                        state={state}
                     />
 
                     <Input
@@ -113,6 +129,7 @@ class BirthRegister extends React.Component<Props> {
                         name="childs_other_name"
                         title="Other Name (Optional)"
                         required="Please enter childs other name"
+                        state={state}
                     />
 
                 </StepWrapper>
@@ -128,6 +145,7 @@ class BirthRegister extends React.Component<Props> {
                         name="fathers_fullname"
                         title="Father's Full Name"
                         required="Please enter father's full name"
+                        state={state}
                     />
 
                     <Input
@@ -136,6 +154,7 @@ class BirthRegister extends React.Component<Props> {
                         name="mothers_fullname"
                         title="Mother's Full Name"
                         required="Please enter mothers full name"
+                        state={state}
                     />
 
                     <Input
@@ -144,6 +163,7 @@ class BirthRegister extends React.Component<Props> {
                     name="mothers_age"
                     title="Age of Mother"
                     required="Please enter mothers age"
+                    state={state}
                     />
 
                     <SelectComponent
@@ -153,6 +173,7 @@ class BirthRegister extends React.Component<Props> {
                     title="Father's State of Origin"
                     placeholder="Father's State of Origin"
                     required="Please enter father state of origin"
+                    state={state}
 
                     />
 
@@ -161,6 +182,7 @@ class BirthRegister extends React.Component<Props> {
                     type="text"
                     placeholder="Enter parent's phone number (Father / Mother)"
                     name="parents_phone_number"
+                    state={state}
                     title="Parent's Phone Number (Father / Mother)"
                     required="Please enter parent phone number"
                     />
@@ -171,6 +193,7 @@ class BirthRegister extends React.Component<Props> {
                     placeholder="Enter residential address (Father / Mother)"
                     title="Residential Address (Father / Mother)"
                     required="Please enter address"
+                    state={state}
 
                     />
 
@@ -188,6 +211,7 @@ class BirthRegister extends React.Component<Props> {
                         name="date_b_certificate_issued"
                         title="Date of Birth Certificate was Issued"
                         required="Please enter date of birth certificate was issued"
+                        state={state}
                     />
 
                     <Input
@@ -196,6 +220,7 @@ class BirthRegister extends React.Component<Props> {
                         name="certificate_no"
                         title="Certificate Number"
                         required="Please enter certificate number"
+                        state={state}
                     />
 
                     <DatePicker
@@ -203,6 +228,7 @@ class BirthRegister extends React.Component<Props> {
                           placeholder="Select date of certificate collection"
                           name="certificate_collection_date"
                           title="Date of Collection of Certificate"
+                          state={state}
                           required="Please select a date of collection"
                     />
 
@@ -212,6 +238,7 @@ class BirthRegister extends React.Component<Props> {
                         name="certificate_collector_name"
                         title="Person Who Collected the Certificate"
                         required="Please enter certificate collector name"
+                        state={state}
                     />
 
                     <Input
@@ -220,6 +247,7 @@ class BirthRegister extends React.Component<Props> {
                           name="responsible_officer"
                           title="Responsible Officer"
                           required="Please enter collectors name"
+                          state={state}
                     />
 
 

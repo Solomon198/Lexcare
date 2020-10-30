@@ -11,7 +11,8 @@ import {createNutrition} from '../../realm/queries/writeQueries'
 import schemas from '../../realm/schemas';
 
 type Props = {
-    history: any
+    history: any,
+    location:any
 }
 
 class Nutrition extends React.Component<Props> {
@@ -23,9 +24,20 @@ class Nutrition extends React.Component<Props> {
     }
 
 
-      async createNutritionRecord(info:any){
+    componentDidMount(){
 
-        createNutrition(info).then((val)=>{
+      window.scrollTo(0, 0)
+
+    }
+
+
+      async createNutritionRecord(info:any){
+        const state = this.props.location.state;
+        const isUpdate = state ? true : false;
+        if(state){
+          info._id = state._id
+        }
+        createNutrition(info,isUpdate).then((val)=>{
 
         if(val == "success") this.props.history.push("/nutrition");
 
@@ -42,6 +54,9 @@ class Nutrition extends React.Component<Props> {
 
 
     render() {
+
+      const state = this.props.location.state;
+
         return (
             <StepFormWrapper
             onSubmit={(record)=>this.createNutritionRecord(record)}
@@ -65,6 +80,7 @@ class Nutrition extends React.Component<Props> {
                             date_name="date"
                             date_title="Client Date of Visit"
                             date_required="Please select a date"
+                            state={state}
                             intervention={schemas.Nutrition.name}
                          />
 
@@ -76,6 +92,7 @@ class Nutrition extends React.Component<Props> {
                         title="Sex"
                         options={["Male","Female"]}
                         required="Please select a sex"
+                        state={state}
                          />
 
 
@@ -84,6 +101,7 @@ class Nutrition extends React.Component<Props> {
                         placeholder="Date of birth"
                         name="date_of_birth"
                         title="Client Date of Birth"
+                        state={state}
                         required="Please select a date of birth"
                     />
 
@@ -102,6 +120,7 @@ class Nutrition extends React.Component<Props> {
                         options={["0 - 5 months","6 - 23 months", "24 - 59 months"]}
                         title="Age in Months"
                         required="Please select age"
+                        state={state}
 
                     />
 
@@ -110,6 +129,7 @@ class Nutrition extends React.Component<Props> {
                        title="Type of Visit"
                        options={["N", "R"]}
                        required="Please select an option"
+                       state={state}
 
                     />
 
@@ -129,6 +149,7 @@ class Nutrition extends React.Component<Props> {
                         name="infant_feeding"
                         title="Infant feeding (0 -5 months)"
                         required="Please select an option"
+                        state={state}
                     />
 
                    <SelectComponent
@@ -143,6 +164,7 @@ class Nutrition extends React.Component<Props> {
                         name="complimentary_feeding"
                         title="Complementary feeding (6 - 23 months)"
                         required="Please select an option"
+                        state={state}
                     />
 
 
@@ -156,6 +178,7 @@ class Nutrition extends React.Component<Props> {
 
                     <RadioButton
                       name="unknown"
+                      state={state}
                       title=""
                       options={[
                         "Maternal",
@@ -171,6 +194,7 @@ class Nutrition extends React.Component<Props> {
                        title="Referred to Support Group"
                        options={["Y", "N"]}
                        required='Please select an option'
+                       state={state}
 
                     />
 
@@ -187,6 +211,7 @@ class Nutrition extends React.Component<Props> {
                         name="height"
                         title="Height/Length (cm)"
                         required="Please Height/Length"
+                        state={state}
                       />
 
                      <Input
@@ -195,6 +220,7 @@ class Nutrition extends React.Component<Props> {
                         name="weight"
                         title="Weight (kg)"
                         required="Please Weight"
+                        state={state}
                       />
 
 
@@ -204,6 +230,7 @@ class Nutrition extends React.Component<Props> {
                         placeholder=""
                         options={["0", "+", "++","+++"]}
                         required="Please select an option"
+                        state={state}
                      />
 
                     <RadioButton
@@ -211,6 +238,7 @@ class Nutrition extends React.Component<Props> {
                        title="MUAC - enter in CM (measure for children 6 - 59 months)"
                        options={["Red", "Yellow", "Green"]}
                        required="Please select an option"
+                       state={state}
                      />
 
                       <RadioButton
@@ -218,24 +246,30 @@ class Nutrition extends React.Component<Props> {
                          title="Growth according to the Child Health Card (Tick as appropriate for child 0 - 59 months)"
                          options={["Growing Well", "Not Growing Well"]}
                          required="Please select an option"
+                         state={state}
                          />
 
                        <RadioButton
                          name="vitamin_a_suplement"
                          title="Vitamin A Supplement (Tick if child6 - 59 months was given Vit. A)"
                          options={["6 - 11 months", "12 - 59 months"]}
-                         required="Please select an option"/>
+                         required="Please select an option"
+                         state={state}
+                         />
 
                       <RadioButton
                         name="deworming"
                         title="Deworming (Tick if child 12 - 59 months was given Deworming tablet)"
                         options={["12 - 23 months", "24 - 59 months"]}
-                        required="Please select an option" />
+                        required="Please select an option"
+                        state={state}
+                         />
 
                       <CheckBox
                          name="micronutrient_powder"
                          title="Micronutrient powder (Tick if child aged 6 - 23 months was given Micronutrient Powder (MNP)"
                          required="Please select an option"
+                         state={state}
                       />
 
                 </StepWrapper>
@@ -252,6 +286,7 @@ class Nutrition extends React.Component<Props> {
                         options={["Self","HF not Providing OTP","Community Volunteer/CHIPS"]}
                         title="Source of Referral to OTP"
                         required="Please select source of referal"
+                        state={state}
                     />
 
                     <RadioButton
@@ -263,7 +298,10 @@ class Nutrition extends React.Component<Props> {
                             "Yes, Transferred in from another OTP/SC",
                             "No, Referred to SC",
                             "No, does not meet OTP Admission Criteria"
+
                           ]}
+                          state={state}
+
                     />
 
 
@@ -279,6 +317,7 @@ class Nutrition extends React.Component<Props> {
                             "Non-recovered"
                           ]}
                           required="Please select an option"
+                          state={state}
 
                       />
 
@@ -288,6 +327,7 @@ class Nutrition extends React.Component<Props> {
                          placeholder="Please enter treatment outcome date"
                          name="outcome_treatment"
                          required="please select outcome of treatment date"
+                         state={state}
 
                       />
 

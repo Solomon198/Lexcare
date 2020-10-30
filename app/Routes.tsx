@@ -7,6 +7,8 @@ import Dashboard from '../app/src/layout/dashboard'
 
 import Login from '../app/src/layout/login';
 
+import ForgottPassword from '../app/src/layout/forgotpassword';
+
 import AddStaff from '../app/src/Forms/RegisterAdmin';
 
 import ConfigureApp from '../app/src/layout/configApp'
@@ -53,7 +55,8 @@ export default class Routes extends React.Component {
       configError:"",
       adminExist:false,
       successAdmin:false,
-      loginStatus:"unitiated"
+      loginStatus:"unitiated",
+      forgotpassword:false
     }
 
 
@@ -91,7 +94,7 @@ export default class Routes extends React.Component {
 
     async componentDidMount(){
 
-      // clearStorage();
+      //clearStorage();
       if(getPHC_configSettings()){
           this.setState({adminExist:"kdk"})
 
@@ -159,6 +162,7 @@ export default class Routes extends React.Component {
       return (
           <Switch>
 
+
             {
               // check if app is config
                  !checkIfAppIsConfig()?
@@ -178,10 +182,16 @@ export default class Routes extends React.Component {
 
                 :
 
+                this.state.forgotpassword?
+
+                <ForgottPassword Switch={()=>this.setState({forgotpassword:false})}/>
+
+                :
+
                  !Auth.getCurrentUser()?
 
                  <Login
-
+                 showResset={()=>this.setState({forgotpassword:true})}
                  error={this.state.error}
                  loginUser={()=>this.validate()}
                  login={this.state.login}
@@ -191,9 +201,14 @@ export default class Routes extends React.Component {
               />
               :
 
-                  <Dashboard
+
+
+                   <Dashboard
                       logout={()=>this.logout()}
                    />
+
+
+
 
             }
 

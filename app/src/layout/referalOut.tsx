@@ -12,6 +12,20 @@ export default class ReferalOut extends React.Component<props> {
     this.props.history.push("/add-referal-out");
   }
 
+
+  componentDidMount(){
+
+    window.scrollTo(0, 0)
+
+  }
+
+  edit(payload:any){
+    this.props.history.push({
+      pathname:"/add-referal-out",
+      state:payload,
+    })
+  }
+
   render() {
     return (
       <div className="content-w">
@@ -24,6 +38,7 @@ export default class ReferalOut extends React.Component<props> {
 
 
                       <RenderData
+                          editRecord={(payload)=>this.edit(payload)}
                           dataField="referal_date"
                           ignoreFilter={false}
                           SchemaName={schemas.ReferalOut.name}

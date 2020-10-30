@@ -1,6 +1,5 @@
 import React from 'react';
 import {image} from '../../img/logobase'
-import {Button} from 'react-bootstrap'
 
 const ConfigApp = ({setApiKey,error,status,configure})=>
       (

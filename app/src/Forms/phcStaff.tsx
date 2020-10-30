@@ -6,7 +6,7 @@ import StepWrapper from '../components/stepWrapper'
 import StepFormWrapper from '../components/stepFormWrapper';
 
 type Props = {
-    history: any
+    history: any,
 }
 
 class BirthRegister extends React.Component<Props> {
@@ -18,6 +18,8 @@ class BirthRegister extends React.Component<Props> {
 
     componentDidMount(){
 
+
+      window.scrollTo(0, 0)
 
     }
 
@@ -44,6 +46,7 @@ class BirthRegister extends React.Component<Props> {
       })
  }
     render() {
+
         return (
             <StepFormWrapper
             title="Add Staff"
@@ -64,6 +67,7 @@ class BirthRegister extends React.Component<Props> {
                     name="full_name"
                     title="Full Name"
                     required="Please enter full name"
+
                     />
 
                     {/* Use a date picker here */}
@@ -82,6 +86,15 @@ class BirthRegister extends React.Component<Props> {
                     title="Password"
                     required="Please Enter Password"
                     />
+
+                   <Input
+                    type="email"
+                    placeholder="Enter Email"
+                    name="email"
+                    title="Email"
+                    required="Please Enter Email"
+                    />
+
 
                     <SelectComponent
 

@@ -14,7 +14,8 @@ type MultiSelectAndSearchComponentProps = {
 
   name : string,
   required?:any,
-  title:string
+  title:string,
+  state?:any
 
 }
 
@@ -40,6 +41,21 @@ const MultiSelectAndSearchComponent = (props:MultiSelectAndSearchComponentProps)
   const { title, required } = props
   const [isTouched, setIsTouched] = React.useState(false)
   const showError = !isValid && (isTouched || isSubmitted);
+  const [initialize,setInitialize] = useState(false);
+
+  if(!initialize){
+    if(props.state){
+      console.log(props.state)
+      setValue(props.state[props.name]);
+      setSelected([{label:props.state[props.name],value:props.state[props.name]}] as any);
+
+      setInitialize(true);
+
+    }else{
+      setInitialize(true);
+    }
+
+  }
 
       let data:any[] = [];
       const docs:any[] = getDocuments(Schema.CommunityLeaders.name,"","","",true);
@@ -77,6 +93,7 @@ const MultiSelectAndSearchComponent = (props:MultiSelectAndSearchComponentProps)
          options={data}
          onChange={handleChange}
          hasSelectAll={false}
+         disabled={props.state?true:false}
          labelledBy="Select"
          ItemRenderer={DefaultItemRenderer}
          value={selected|| []}

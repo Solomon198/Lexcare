@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import {useField} from '@formiz/core'
 
 type RadioButtonsComponentProps = {
@@ -6,7 +6,8 @@ type RadioButtonsComponentProps = {
       name : string,
       required?:any,
       title:string,
-      options:any[]
+      options:any[],
+      state?: any
 
 }
 
@@ -27,7 +28,17 @@ const RadioButtonsComponent = (props:RadioButtonsComponentProps)=>{
   const { title, type, required, name } = props
   const [isTouched, setIsTouched] = React.useState(false)
   const showError = !isValid && (isTouched || isSubmitted);
+  const [initialize,setInitialize] = useState(false);
 
+  if(!initialize){
+    if(props.state){
+      setValue(props.state[props.name]);
+      setInitialize(true);
+    }else{
+      setInitialize(true);
+    }
+
+ }
 
   return(
 
@@ -46,6 +57,7 @@ const RadioButtonsComponent = (props:RadioButtonsComponentProps)=>{
                        name={name}
                        onBlur={()=>setIsTouched(true)}
                        type="radio"
+                       checked={value == val}
 
                       />
                       <label style={{marginTop:4,marginLeft:10}}>

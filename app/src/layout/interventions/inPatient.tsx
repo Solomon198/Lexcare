@@ -13,6 +13,19 @@ export default class InPatient extends React.Component<props> {
     this.props.history.push("/add-in-patient");
   }
 
+  edit(payload:any){
+    this.props.history.push({
+      pathname:"/add-in-patient",
+      state:payload
+    })
+  }
+
+  componentDidMount(){
+
+    window.scrollTo(0, 0)
+
+  }
+
 
 
   render() {
@@ -27,6 +40,7 @@ export default class InPatient extends React.Component<props> {
 
                 <RenderData
                           SchemaName={Schema.Inpatient.name}
+                          editRecord={(payload)=>this.edit(payload)}
                           addRecord={()=>this.addRecord()}
                           tableHead={
                             <thead>

@@ -23,6 +23,8 @@ type PHC_STAFFS = {
 
       staff_id : string,
 
+      email:string,
+
       salt : string,
 
       hash : string,

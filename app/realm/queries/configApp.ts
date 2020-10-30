@@ -26,14 +26,18 @@ export function clearStorage(){
 
 }
 
-function setAdminExist(status:string){
+export function setAdminExist(status:string){
         localStorage.setItem(ADMIN_EXIST,status);
 }
 
 export function isAdminSet(){
     let admin = localStorage.getItem(ADMIN_EXIST);
     if(admin){
-       return true
+       if(admin == "true"){
+        return true
+       }else{
+         return false
+       }
     }else{
       return false;
     }

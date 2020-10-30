@@ -142,7 +142,7 @@ import {image} from '../../img/logobase';
               <span>Others</span>
             </li>
 
-            <li className="selected ">
+            {/* <li className="selected ">
               <Link to="all-users">
                 <div className="icon-w">
                   <div className="os-icon os-icon-file-text" />
@@ -150,9 +150,9 @@ import {image} from '../../img/logobase';
 
                 <span>All Users</span>
               </Link>
-            </li>
+            </li> */}
 
-            <li className="selected ">
+            {/* <li className="selected ">
               <Link to="covid-19">
                 <div className="icon-w">
                   <div className="os-icon os-icon-file-text" />
@@ -160,7 +160,7 @@ import {image} from '../../img/logobase';
 
                 <span>Covid-19</span>
               </Link>
-            </li>
+            </li> */}
 
             {
               props.isAdmin ?

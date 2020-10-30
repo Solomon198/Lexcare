@@ -13,6 +13,19 @@ export default class Antenatal extends React.Component<props> {
   }
 
 
+  componentDidMount(){
+
+    window.scrollTo(0, 0)
+
+  }
+
+  edit(payload:any){
+       this.props.history.push({
+         pathname:"/add-antenatal",
+         state:payload
+       })
+  }
+
 
 
   render() {
@@ -28,6 +41,7 @@ export default class Antenatal extends React.Component<props> {
                 <RenderData
                           SchemaName={schemas.Antenatal.name}
                           addRecord={()=>this.addRecord()}
+                          editRecord={(payload)=>this.edit(payload)}
                           tableHead={
                             <thead>
                             <tr>

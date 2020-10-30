@@ -13,6 +13,13 @@ export default class CommunityLeaders extends React.Component<props> {
   }
 
 
+  componentDidMount(){
+
+    window.scrollTo(0, 0)
+
+  }
+
+
   render() {
     return (
       <div className="content-w">

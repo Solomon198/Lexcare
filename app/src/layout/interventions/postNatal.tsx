@@ -13,6 +13,19 @@ export default class PostNatal extends React.Component<props> {
   }
 
 
+  componentDidMount(){
+
+    window.scrollTo(0, 0)
+
+  }
+
+
+edit(payload:any){
+    this.props.history.push({
+      pathname:"/add-post-natal",
+      state:payload,
+    })
+  }
 
   render() {
     return (
@@ -25,6 +38,7 @@ export default class PostNatal extends React.Component<props> {
                 <h5 className="form-header">All Post Natal Records</h5>
 
                      <RenderData
+                          editRecord={(payload)=>this.edit(payload)}
                           addRecord={()=>this.addRecord()}
                           SchemaName={Schema.PostNatal.name}
                           tableHead={

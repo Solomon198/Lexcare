@@ -8,7 +8,7 @@ import { Route, Link, BrowserRouter as Router,Switch} from 'react-router-dom'
 ReactDOM.render(
 
    <Router>
-     <Dashboard/>
+     {/* <Dashboard/> */}
    </Router>,
 
   document.getElementById('root')

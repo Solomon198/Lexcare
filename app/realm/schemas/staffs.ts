@@ -22,6 +22,8 @@ const STAFFS : PHC_STAFFS = {
 
       role: "string",
 
+      email:"string",
+
       staff_id: "string",
 
       hash : "string",

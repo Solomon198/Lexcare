@@ -10,7 +10,8 @@ type MultiSelectAndSearchComponentProps = {
   name : string,
   required?:any,
   title:string,
-  options:any[]
+  options:any[],
+  state?:any
 
 }
 
@@ -34,17 +35,34 @@ const MultiSelectAndSearchComponent = (props:MultiSelectAndSearchComponentProps)
   const { title, required,options } = props
   const [isTouched, setIsTouched] = React.useState(false)
   const showError = !isValid && (isTouched || isSubmitted);
+  const [initialize,setInitialize] = useState(false);
+
   let data = [];
   options.forEach((val)=>{
     data.push({label:val,value:val})
   })
+
+  if(!initialize){
+    if(props.state){
+      setValue(props.state[props.name]);
+      let formatSelected:any = [];
+      props.state[props.name].forEach((val:string)=>{
+        formatSelected.push({label:val,value:val})
+      })
+      setOption(formatSelected)
+      setInitialize(true);
+    }else{
+      setValue([]);
+      setInitialize(true);
+    }
+
+ }
 
   const handleChange = (change)=>{
      let dataChanged:string[] = [];
      change.forEach((val:any)=>{
          dataChanged.push(val.label)
      })
-
      setValue(dataChanged);
      setOption(change);
   }

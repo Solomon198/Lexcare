@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import {useField} from '@formiz/core'
 
 type SelectComponentProps = {
@@ -8,7 +8,8 @@ type SelectComponentProps = {
       title:string,
       type?:any,
       placeholder:string,
-      options:any[]
+      options:any[],
+      state?: any
 
 }
 
@@ -29,6 +30,18 @@ const SelectComponent = (props:SelectComponentProps)=> {
   const { title, type, required } = props
   const [isTouched, setIsTouched] = React.useState(false)
   const showError = !isValid && (isTouched || isSubmitted);
+  const [initialize,setInitialize] = useState(false);
+
+  if(!initialize){
+    if(props.state){
+      setValue(props.state[props.name]);
+      setInitialize(true);
+    }else{
+      setInitialize(true);
+    }
+
+    }
+
 
   const handleChange = (v)=>{
 
