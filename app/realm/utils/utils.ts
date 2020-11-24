@@ -80,20 +80,14 @@ export function assignValuesToEmptyProps(obj:any){
 
       Object.keys(obj).forEach((key:string)=>{
 
-        if(typeof(obj[key]) == "string"){
-
-          if(!obj[key].trim()){
-              obj[key] = "unspecified"
-          }
-
-        }else if(typeof(obj[key]) == "object"){
+       if(typeof(obj[key]) == "object"){
           if(obj[key]== null){
-             obj[key] = "unspecified"
+              delete obj[key]
           }else{
             let _data:any[]  = obj[key];
 
             if(_data.length == 0){
-              _data.push("unspecified");
+              _data.push(" ");
               obj[key] = _data;
             }
           }

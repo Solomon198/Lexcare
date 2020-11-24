@@ -13,6 +13,9 @@ import Immunization from './immunization'
 import OutPatient from './outpatient';
 import Nutrition from './nutrition';
 import Tetanus from './tetanus'
+import Services  from './Services'
+import TetanusAdministration from './administerTD';
+import AdministerVaccine from './administerVaccine';
 
 export default {
 
@@ -31,6 +34,9 @@ export default {
     OutPatient,
     Nutrition,
     Tetanus,
+    Services,
+    TetanusAdministration,
+    AdministerVaccine
 
 
 }

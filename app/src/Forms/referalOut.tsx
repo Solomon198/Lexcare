@@ -110,7 +110,6 @@ class ReferalOut extends React.Component<Props> {
                     placeholder="Enter initiating facility name"
                     name="initiating_facility_name"
                     title="Name"
-                    required="Please enter name"
                     />
 
                     <Input
@@ -119,7 +118,6 @@ class ReferalOut extends React.Component<Props> {
                         name="initiating_facility_address"
                         title="Address"
                         state={state}
-                        required="Please enter faclilty name"
                     />
 
                     <RadioButton
@@ -127,14 +125,12 @@ class ReferalOut extends React.Component<Props> {
                        title="Any telephone arrangements made by initiating facility?"
                        options={["Yes", "No"]}
                        state={state}
-                       required="Please select an option"
                      />
 
                     <RadioButton
                          name="initiating_facility_transportation_arrangement"
                          title="Any transportation arrangements made by initiating facility?"
                          options={["Yes", "No"]}
-                         required="Please select an option"
                          state={state}
                          />
 
@@ -151,7 +147,6 @@ class ReferalOut extends React.Component<Props> {
                         placeholder="Enter refered facility name"
                         name="refered_to_facility_name"
                         title="Name"
-                        required="Please enter a name"
                         state={state}
                     />
 
@@ -161,7 +156,6 @@ class ReferalOut extends React.Component<Props> {
                         name="refered_to_facility_address"
                         title="Address"
                         state={state}
-                        required="Please enter facility address"
                     />
 
 
@@ -179,7 +173,6 @@ class ReferalOut extends React.Component<Props> {
                         placeholder="Enter client name"
                         name="client_name"
                         title="Client Name"
-                        required="Please enter client name"
                     />
 
                     <Input
@@ -188,7 +181,6 @@ class ReferalOut extends React.Component<Props> {
                         name="identity_number"
                         title="Identity Number"
                         state={state}
-                        required="Please enter identity number"
                     />
 
                     <TextArea
@@ -197,7 +189,6 @@ class ReferalOut extends React.Component<Props> {
                         name="client_address"
                         title="Client Address"
                         state={state}
-                        required="Please enter client address"
                     />
 
                     <Input
@@ -207,7 +198,6 @@ class ReferalOut extends React.Component<Props> {
                         name="age"
                         state={state}
                         title="Age"
-                        required="Please enter age"
                     />
 
 
@@ -215,7 +205,6 @@ class ReferalOut extends React.Component<Props> {
                          name="sex"
                          title="Sex"
                          options={["Male", "Female"]}
-                         required="Please select a sex"
                          state={state}
                          />
 
@@ -225,7 +214,6 @@ class ReferalOut extends React.Component<Props> {
                             placeholder="Enter clinical history"
                             state={state}
                             title="Clinical History"
-                            required="Please enter clinical history"
 
                         />
 
@@ -234,7 +222,6 @@ class ReferalOut extends React.Component<Props> {
                             name="findings_diagnosis"
                             placeholder="Enter findings / diagnosis"
                             title="Findings / Diagnosis"
-                            required="Please enter diagnosis"
                             state={state}
 
                         />
@@ -245,7 +232,6 @@ class ReferalOut extends React.Component<Props> {
                         placeholder="Enter treatment given (if any)"
                         title="Treatment given (if any)"
                         state={state}
-                        required="Please enter treatment given"
                     />
 
                     <TextArea
@@ -253,7 +239,6 @@ class ReferalOut extends React.Component<Props> {
                         name="reason_for_referal"
                         placeholder="Enter reason for referal"
                         title="Reason for referal"
-                        required="Please enter reason for referal"
                         state={state}
 
                     />
@@ -263,7 +248,6 @@ class ReferalOut extends React.Component<Props> {
                          name="any_referal_documents"
                          title="Any other documents accompanying referal from initiating faciliting?"
                          options={["Yes", "No"]}
-                         required="Please select an option"
                          state={state}
                          />
 
@@ -280,7 +264,6 @@ class ReferalOut extends React.Component<Props> {
                 name="initiating_facility_oic_name"
                 title="Name"
                 state={state}
-                required="Please enter name"
                 />
 
 

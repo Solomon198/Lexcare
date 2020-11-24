@@ -1,12 +1,38 @@
-import React from "react";
 
-export default class FACILITYSERVICES extends React.Component {
+
+
+import React from "react";
+import RenderData from '../components/pagination';
+import schemas from "../../realm/schemas";
+
+type props = {
+  history : any
+}
+
+export default class Services extends React.Component<props> {
+
+  addServices(){
+    this.props.history.push("/add-services")
+  }
+
+
+  edit(payload:any){
+    this.props.history.push({
+      pathname:"/add-services",
+      state:payload,
+    })
+  }
 
   componentDidMount(){
 
     window.scrollTo(0, 0)
 
   }
+
+
+
+
+
 
   render() {
     return (
@@ -17,43 +43,29 @@ export default class FACILITYSERVICES extends React.Component {
               <h6 className="element-header">Services</h6>
               <div className="element-box">
                 <h5 className="form-header">All Services</h5>
-                <div className="form-desc">
-                  <a
-                    href="#"
-                    className="btn btn-success"
-                    style={{ float: "right", marginTop: "-20px" }}
-                  >
-                    <i className="fa fa-plus" /> &nbsp; Add Record
-                  </a>
-                </div>
-                <div className="table-responsive">
-                  <table className="table table-striped table-lightfont">
-                    <thead>
-                      <tr>
-                        <th>#</th>
-                        <th>Service Name</th>
-                        <th>Description</th>
-                        <th>Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>1</td>
-                        <td>...</td>
-                        <td>...</td>
-                        <td>...</td>
-                      </tr>
-                    </tbody>
-                    <tfoot>
-                      <tr>
-                        <th>#</th>
-                        <th>Service Name</th>
-                        <th>Description</th>
-                        <th>Action</th>
-                      </tr>
-                    </tfoot>
-                  </table>
-                </div>
+
+                        <RenderData
+                          editRecord={(payload)=>this.edit(payload)}
+                          addRecord={()=>this.addServices()}
+                          SchemaName={schemas.Services.name}
+                          ignoreFilter
+                          tableHead={
+                            <thead>
+                            <tr>
+                              <th>#</th>
+                              <th>Service Name</th>
+                              <th>Description</th>
+                              <th>Action</th>
+                            </tr>
+                          </thead>}
+                          properties={[
+                            {key:"service_name"},
+                            {key:"service_description"},
+
+                           ]}
+                          />
+
+
               </div>
             </div>
           </div>

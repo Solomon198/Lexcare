@@ -103,7 +103,8 @@ class  PostNatal extends React.Component<Props> {
                             name="sex"
                             options={["Male", "Female"]}
                             title="Sex (M/F)"
-                            placeholder="Select Gender"
+                            required="Please select Sex"
+                            placeholder="Select Sex"
                             state={state}
                             />
 
@@ -131,6 +132,7 @@ class  PostNatal extends React.Component<Props> {
                                 placeholder="Enter phone no."
                                 name="phone"
                                 title="Phone No."
+                                required="Please enter phone number"
                                 state={state}
                               />
 

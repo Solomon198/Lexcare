@@ -53,7 +53,7 @@ const CheckBox = (props:CheckBoxProps)=>{
               name={name}
               type="checkbox"
               checked={value?true:false}
-              style={{marginTop:5,marginRight:10}}
+              style={{marginTop:5,marginRight:10,marginLeft:10}}
               onChange={(e)=> e.target.checked?setValue(title):setValue("")}
               onBlur={()=>setIsTouched(true)}
 

@@ -8,7 +8,16 @@ type TextAreaProps = {
       title:string,
       type?:any,
       placeholder:string,
-      state?:any
+      state?:any,
+       //fields for the depending fields
+       isDependable?:boolean,
+       dependableValue?:any,
+       recievedValue?:any,
+
+       //props for field that other fields depend on
+       hasDependable?:boolean,
+       onValueSelected?:(value:any)=>void
+
 
 }
 
@@ -25,7 +34,7 @@ const TextArea  = (props:TextAreaProps)=> {
 
 
 
-  const { title, type, required } = props
+  const { title, type, required,isDependable,dependableValue,recievedValue } = props
   const [isTouched, setIsTouched] = React.useState(false)
   const showError = !isValid && (isTouched || isSubmitted);
   const [initialize,setInitialize] = useState(false);
@@ -40,7 +49,7 @@ const TextArea  = (props:TextAreaProps)=> {
 
     }
 
-  return (
+  const TextAreaUI = ()=>(
     <div className="form-group">
         <label htmlFor="field-ta" className="col-sm-12 control-label">
        {title}
@@ -55,7 +64,7 @@ const TextArea  = (props:TextAreaProps)=> {
               className={`demo-input form-control ${showError && "border-danger"}`}
               defaultValue={""}
               onChange={(e)=>setValue(e.target.value)}
-              value={value ?? ""}
+              value={value && value != "None" ? value : ""}
               name={props.name}
               id={props.name}
               style={{borderWidth:1}}
@@ -71,8 +80,19 @@ const TextArea  = (props:TextAreaProps)=> {
         </div>
       )}
   </div>
+)
 
-)}
+  if(isDependable && dependableValue == recievedValue){
+      return TextAreaUI();
+  }
+
+  if(!isDependable){
+    return TextAreaUI();
+  }
+
+
+     return <></>
+}
 
 
 export default TextArea

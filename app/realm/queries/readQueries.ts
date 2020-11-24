@@ -107,7 +107,7 @@ export function getStatistics(){
 
 }
 
-export function getDocuments(SchemaName:string,dateField="date",startDate?:string,endDate?:string,ignoreFilter?:boolean){
+export function getDocuments(SchemaName:string,dateField="date",startDate?:string,endDate?:string,ignoreFilter?:boolean,searchValue?:any){
 
 
 
@@ -129,12 +129,30 @@ export function getDocuments(SchemaName:string,dateField="date",startDate?:strin
 
           let end = endDate ? endOfDay(new Date(endDate)) : startOfDay(defaultEndDate);
 
-          let obj = ignoreFilter ? realm.objects(SchemaName) : realm.objects(SchemaName).filtered(`${dateField} >= $0 && ${dateField} < $1`,start,end);
+          if(!searchValue){
+            let obj = ignoreFilter ? realm.objects(SchemaName) : realm.objects(SchemaName).filtered(`${dateField} >= $0 && ${dateField} < $1`,start,end);
 
 
-          let documents = getRealmObjectCollection(obj);
+            let documents = getRealmObjectCollection(obj);
 
-          return documents;
+            return documents;
+          }else{
+
+            console.log(searchValue)
+            console.log(dateField)
+
+            let obj =  realm.objects(SchemaName).filtered(`${dateField} == $0`,searchValue);
+
+            console.log(obj,"This is the object",obj)
+
+            let documents = getRealmObjectCollection(obj);
+
+            console.log(documents,"this sis ar")
+
+
+            return documents;
+          }
+
 
 
         }catch(e){

@@ -74,7 +74,7 @@ export function configureApplication(apiKey:string){
       Auth.login(data.phc_realm_api_key).then(()=>{
 
         if(_APP_INSTANCE_.currentUser){
-
+  
 
              checkIfStaffExist(data.phc_id).then((_checkIfStaffExist:boolean)=>{
 

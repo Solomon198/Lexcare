@@ -1,6 +1,6 @@
 
 
-/* eslint-disable prettier/prettier */
+/* eslint?-disable prettier/prettier */
 
 
 import {AntenatalProps} from '../../types/antenatal'; // typescript type validation for daily attendance
@@ -20,81 +20,81 @@ const Antenatal : AntenatalProps = {
 
         health_facility_id: "string",
 
-        actual_age: "int",
+        actual_age: "int?",
 
-        age: "string",
+        age: "string?",
 
-        anemia: "string",
+        anemia: "string?",
 
-        associated_problems: "string",
+        associated_problems: "string?",
 
-        attendance_type: "string",
+        attendance_type: "string?",
 
-        blood_pressure: "string",
+        blood_pressure: "string?",
 
-        client_names: "string",
+        client_names: "string?",
 
         date: "date",
 
-        dob: "date",
+        dob: "date?",
 
-        early_breast_feeding: "string",
+        early_breast_feeding: "string?",
 
-        exclusive_breast_feeding: "string",
+        exclusive_breast_feeding: "string?",
 
-        family_planning: "string",
+        family_planning: "string?",
 
-        fgm: "string",
+        fgm: "string?",
 
-        hepatitis_b_testing: "string",
+        hepatitis_b_testing: "string?",
 
-        hepatitis_b_treated: "string",
+        hepatitis_b_treated: "string?",
 
-        hepatitis_c_testing: "string",
+        hepatitis_c_testing: "string?",
 
-        hepatitis_c_treated: "string",
+        hepatitis_c_treated: "string?",
 
-        hiv_testing: "string",
+        hiv_testing: "string?",
 
-        ipt_greater_three: "string",
+        ipt_greater_three: "string?",
 
-        ipt_one: "string",
+        ipt_one: "string?",
 
-        ipt_three: "string",
+        ipt_three: "string?",
 
-        ipt_two: "string",
+        ipt_two: "string?",
 
-        llin_given: "string",
+        llin_given: "string?",
 
-        maternal_nutrition: "string",
+        maternal_nutrition: "string?",
 
-        mothers_card_no: "string",
+        mothers_card_no: "string?",
 
-        parity: "int",
+        parity: "int?",
 
-        pregnancy_age: "int",
+        pregnancy_age: "int?",
 
-        protein: "string",
+        protein: "string?",
 
-        referral_reason: "string",
+        referral_reason: "string?",
 
-        sugar_test_result: "string",
+        sugar_test_result: "string?",
 
-        syphilis_testing: "string",
+        syphilis_testing: "string?",
 
-        syphilis_treated: "string",
+        syphilis_treated: "string?",
 
-        td: "string",
+        td: "string?",
 
-        transportation: "string",
+        transportation: "string?",
 
-        urinalysis_sugar: "string",
+        urinalysis_sugar: "string?",
 
-        visit_outcome: "string",
+        visit_outcome: "string?",
 
-        visits: "int",
+        visits: "int?",
 
-        weight: "int",
+        weight: "int?",
 
         createdBy : "string",
 

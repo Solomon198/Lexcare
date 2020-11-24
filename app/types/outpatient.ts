@@ -32,6 +32,20 @@ type OutpatientProperties = {
 
   date_of_birth: string,
 
+  ro_reason: string,
+
+  tested_hepatitis_b : string,
+
+  result_hepatitis_b_test:string,
+
+  hepatitis_b_refered_or_treated:string,
+
+  tested_hepatitis_c : string,
+
+  result_hepatitis_c_test:string,
+
+  hepatitis_c_refered_or_treated:string,
+
   diagnosis: string,
 
   drugs_given: string,

@@ -94,7 +94,7 @@ export default class Routes extends React.Component {
 
     async componentDidMount(){
 
-      //clearStorage();
+     // clearStorage();
       if(getPHC_configSettings()){
           this.setState({adminExist:"kdk"})
 

@@ -128,7 +128,6 @@ class BirthRegister extends React.Component<Props> {
                         placeholder="Enter child's other name"
                         name="childs_other_name"
                         title="Other Name (Optional)"
-                        required="Please enter childs other name"
                         state={state}
                     />
 
@@ -172,7 +171,6 @@ class BirthRegister extends React.Component<Props> {
                     options={NigeriaStates}
                     title="Father's State of Origin"
                     placeholder="Father's State of Origin"
-                    required="Please enter father state of origin"
                     state={state}
 
                     />
@@ -184,7 +182,6 @@ class BirthRegister extends React.Component<Props> {
                     name="parents_phone_number"
                     state={state}
                     title="Parent's Phone Number (Father / Mother)"
-                    required="Please enter parent phone number"
                     />
 
                     <TextArea
@@ -192,7 +189,6 @@ class BirthRegister extends React.Component<Props> {
                     name="parent_residential_address"
                     placeholder="Enter residential address (Father / Mother)"
                     title="Residential Address (Father / Mother)"
-                    required="Please enter address"
                     state={state}
 
                     />
@@ -229,7 +225,6 @@ class BirthRegister extends React.Component<Props> {
                           name="certificate_collection_date"
                           title="Date of Collection of Certificate"
                           state={state}
-                          required="Please select a date of collection"
                     />
 
                     <Input
@@ -237,7 +232,6 @@ class BirthRegister extends React.Component<Props> {
                         placeholder="Enter certificate collector name"
                         name="certificate_collector_name"
                         title="Person Who Collected the Certificate"
-                        required="Please enter certificate collector name"
                         state={state}
                     />
 
@@ -246,7 +240,6 @@ class BirthRegister extends React.Component<Props> {
                           placeholder="Enter certificate collector name"
                           name="responsible_officer"
                           title="Responsible Officer"
-                          required="Please enter collectors name"
                           state={state}
                     />
 

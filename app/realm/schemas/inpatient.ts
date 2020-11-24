@@ -19,25 +19,25 @@ const InPatient : InPatientProps = {
 
         health_facility_id: "string",
 
-        addmission_outcome: "string",
+        addmission_outcome: "string?",
 
-        age: "string",
+        age: "string?",
 
-        card_number: "string",
+        card_number: "string?",
 
-        client_names: "string",
+        client_names: "string?",
 
         date: "date",
 
-        disease: "string",
+        diagnosis: "string[]",
 
-        dob: "date",
+        dob: "date?",
 
-        drugs_given: "string",
+        drugs_given: "string?",
 
-        investigation: "string",
+        investigation: "string?",
 
-        sex: "string",
+        sex: "string?",
 
         createdBy : "string",
 

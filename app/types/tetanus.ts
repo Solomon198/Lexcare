@@ -19,8 +19,6 @@ type TetanusProperties = {
 
   phone_number: string,
 
-  session_type: string,
-
   createdBy:string
 
 

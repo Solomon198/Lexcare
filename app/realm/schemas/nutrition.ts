@@ -19,51 +19,51 @@ const Nutrition : NutritionProps = {
 
         health_facility_id: "string",
 
-        age_in_months: "string",
+        age_in_months: "string?",
 
-        bilateral_oedema: "string",
+        bilateral_oedema: "string?",
 
-        card_number: "string",
+        card_number: "string?",
 
-        client_name: "string",
+        client_name: "string?",
 
-        complimentary_feeding: "string",
+        complimentary_feeding: "string?",
 
         date: "date",
 
-        date_of_birth: "date",
+        date_of_birth: "date?",
 
-        deworming: "string",
+        deworming: "string?",
 
-        eligibility_for_otp: "string",
+        eligibility_for_otp: "string?",
 
-        growth_according_to_health: "string",
+        growth_according_to_health: "string?",
 
-        height: "int",
+        height: "int?",
 
-        infant_feeding: "string",
+        infant_feeding: "string?",
 
-        micronutrient_powder: "string",
+        micronutrient_powder: "string?",
 
-        muac: "string",
+        muac: "string?",
 
-        outcome_of_treament: "string",
+        outcome_of_treament: "string?",
 
-        outcome_treatment: "date",
+        outcome_treatment: "date?",
 
-        referred_support: "string",
+        referred_support: "string?",
 
-        sex: "string",
+        sex: "string?",
 
-        source_of_referral: "string",
+        source_of_referral: "string?",
 
-        unknown: "string",
+        unknown: "string?",
 
-        visit_type: "string",
+        visit_type: "string?",
 
-        vitamin_a_suplement: "string",
+        vitamin_a_suplement: "string?",
 
-        weight: "int",
+        weight: "int?",
 
         createdBy : "string",
 

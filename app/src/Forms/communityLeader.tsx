@@ -6,7 +6,8 @@ import StepFormWrapper from '../components/stepFormWrapper';
 import {createCommunityLeader} from '../../realm/queries/writeQueries'
 
 type Props = {
-    history: any
+    history: any,
+    location:any
 }
 
 class CommunityLeader extends React.Component<Props> {
@@ -17,8 +18,12 @@ class CommunityLeader extends React.Component<Props> {
     }
 
     async CreateCommunityLieader(info:any){
-
-      createCommunityLeader(info).then((val)=>{
+      const state = this.props.location.state;
+      const isUpdate = state ? true : false;
+      if(state){
+        info._id = state._id
+      }
+      createCommunityLeader(info,isUpdate).then((val)=>{
 
         if(val == "success") this.props.history.push("/community-leaders");
 
@@ -42,6 +47,7 @@ class CommunityLeader extends React.Component<Props> {
 
 
     render() {
+         const state = this.props.location.state;
         return (
             <StepFormWrapper
               onSubmit={(values)=>this.CreateCommunityLieader(values)}
@@ -58,6 +64,7 @@ class CommunityLeader extends React.Component<Props> {
                     type="text"
                     placeholder="Enter full name"
                     name="full_name"
+                    state={state}
                     title="Full Name"
                     required="Please enter full name"
                     />
@@ -66,6 +73,7 @@ class CommunityLeader extends React.Component<Props> {
                     type="text"
                     placeholder="Enter phone number"
                     name="phone_number"
+                    state={state}
                     title="Phone Number"
                     required="Please enter phone number"
                     />
@@ -74,16 +82,16 @@ class CommunityLeader extends React.Component<Props> {
                         type="text"
                         placeholder="Enter email"
                         name="email"
+                        state={state}
                         title="Email"
-                        required="Please enter email"
                     />
 
                     <TextArea
 
                         name="home_address"
+                        state={state}
                         placeholder="Enter home address"
                         title="Home Address"
-                        required="Please enter home address"
 
                     />
 

@@ -40,6 +40,9 @@ import PostNatalForm from '../Forms/postNatal'
 import Auth from '../../realm/queries/auth';
 import ImmunizationForm from '../Forms/immunization';
 import {getPHC_configSettings} from "../../realm/queries/readQueries";
+import AdministerTD from '../Forms/administerTD';
+import AdministerVaccine from '../Forms/administerVacine'
+import AddServices from '../Forms/facilityServices'
 
 // Initiate on click and on hover sub menu activation logic
 function os_init_sub_menus() {
@@ -199,6 +202,11 @@ export default class Dashboard extends React.Component<dashboardProps> {
 
               <Route path="/add-immunization" component={ImmunizationForm}/>
 
+              <Route path="/administerTD" component={AdministerTD} />
+
+              <Route path="/administerVaccine" component={AdministerVaccine}/>
+
+              <Route path="/add-services" component={AddServices} />
 
             </Switch>
           </div>

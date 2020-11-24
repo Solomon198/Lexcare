@@ -20,41 +20,41 @@ const BirthRegister : BirthRegisterProps = {
 
         health_facility_id: "string",
 
-        certificate_collection_date: "string",
+        certificate_collection_date: "string?",
 
-        certificate_collector_name: "string",
+        certificate_collector_name: "string?",
 
-        certificate_no: "string",
+        certificate_no: "string?",
 
         child_reg_date: "date",
 
-        childs_firstname: "string",
+        childs_firstname: "string?",
 
-        childs_other_name: "string",
+        childs_other_name: "string?",
 
-        childs_surname: "string",
+        childs_surname: "string?",
 
-        date_b_certificate_issued: "string",
+        date_b_certificate_issued: "string?",
 
-        dob: "date",
+        dob: "date?",
 
-        fathers_fullname: "string",
+        fathers_fullname: "string?",
 
-        fathers_state_of_origin: "string",
+        fathers_state_of_origin: "string?",
 
-        mothers_age: "int",
+        mothers_age: "int?",
 
-        mothers_card_no: "string",
+        mothers_card_no: "string?",
 
-        mothers_fullname: "string",
+        mothers_fullname: "string?",
 
-        parent_residential_address: "string",
+        parent_residential_address: "string?",
 
-        parents_phone_number: "string",
+        parents_phone_number: "string?",
 
-        responsible_officer: "string",
+        responsible_officer: "string?",
 
-        sex: "string",
+        sex: "string?",
 
         createdBy : "string",
 

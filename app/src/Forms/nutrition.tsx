@@ -102,7 +102,6 @@ class Nutrition extends React.Component<Props> {
                         name="date_of_birth"
                         title="Client Date of Birth"
                         state={state}
-                        required="Please select a date of birth"
                     />
 
 
@@ -119,7 +118,6 @@ class Nutrition extends React.Component<Props> {
                         name="age_in_months"
                         options={["0 - 5 months","6 - 23 months", "24 - 59 months"]}
                         title="Age in Months"
-                        required="Please select age"
                         state={state}
 
                     />
@@ -128,7 +126,6 @@ class Nutrition extends React.Component<Props> {
                        name="visit_type"
                        title="Type of Visit"
                        options={["N", "R"]}
-                       required="Please select an option"
                        state={state}
 
                     />
@@ -148,7 +145,6 @@ class Nutrition extends React.Component<Props> {
                         ]}
                         name="infant_feeding"
                         title="Infant feeding (0 -5 months)"
-                        required="Please select an option"
                         state={state}
                     />
 
@@ -163,7 +159,6 @@ class Nutrition extends React.Component<Props> {
                         ]}
                         name="complimentary_feeding"
                         title="Complementary feeding (6 - 23 months)"
-                        required="Please select an option"
                         state={state}
                     />
 
@@ -186,14 +181,12 @@ class Nutrition extends React.Component<Props> {
                         "ComplementaryFeeding",
                         "Water, Sanitation and Hygiene"
                       ]}
-                      required="Please select an option"
                     />
 
                     <RadioButton
                        name="referred_support"
                        title="Referred to Support Group"
                        options={["Y", "N"]}
-                       required='Please select an option'
                        state={state}
 
                     />
@@ -210,7 +203,6 @@ class Nutrition extends React.Component<Props> {
                         placeholder="Enter Height/Length (cm)"
                         name="height"
                         title="Height/Length (cm)"
-                        required="Please Height/Length"
                         state={state}
                       />
 
@@ -219,7 +211,6 @@ class Nutrition extends React.Component<Props> {
                         placeholder="Enter Weight (kg)"
                         name="weight"
                         title="Weight (kg)"
-                        required="Please Weight"
                         state={state}
                       />
 
@@ -229,7 +220,6 @@ class Nutrition extends React.Component<Props> {
                         title="Bilateral Oedema"
                         placeholder=""
                         options={["0", "+", "++","+++"]}
-                        required="Please select an option"
                         state={state}
                      />
 
@@ -237,7 +227,6 @@ class Nutrition extends React.Component<Props> {
                        name="muac"
                        title="MUAC - enter in CM (measure for children 6 - 59 months)"
                        options={["Red", "Yellow", "Green"]}
-                       required="Please select an option"
                        state={state}
                      />
 
@@ -245,7 +234,6 @@ class Nutrition extends React.Component<Props> {
                          name="growth_according_to_health"
                          title="Growth according to the Child Health Card (Tick as appropriate for child 0 - 59 months)"
                          options={["Growing Well", "Not Growing Well"]}
-                         required="Please select an option"
                          state={state}
                          />
 
@@ -253,7 +241,6 @@ class Nutrition extends React.Component<Props> {
                          name="vitamin_a_suplement"
                          title="Vitamin A Supplement (Tick if child6 - 59 months was given Vit. A)"
                          options={["6 - 11 months", "12 - 59 months"]}
-                         required="Please select an option"
                          state={state}
                          />
 
@@ -261,14 +248,12 @@ class Nutrition extends React.Component<Props> {
                         name="deworming"
                         title="Deworming (Tick if child 12 - 59 months was given Deworming tablet)"
                         options={["12 - 23 months", "24 - 59 months"]}
-                        required="Please select an option"
                         state={state}
                          />
 
                       <CheckBox
                          name="micronutrient_powder"
                          title="Micronutrient powder (Tick if child aged 6 - 23 months was given Micronutrient Powder (MNP)"
-                         required="Please select an option"
                          state={state}
                       />
 
@@ -285,14 +270,12 @@ class Nutrition extends React.Component<Props> {
                         name="source_of_referral"
                         options={["Self","HF not Providing OTP","Community Volunteer/CHIPS"]}
                         title="Source of Referral to OTP"
-                        required="Please select source of referal"
                         state={state}
                     />
 
                     <RadioButton
                           name="eligibility_for_otp"
                           title="Eligibility for OTP Admission (tick as appropriate for admission)"
-                          required="Please select eligibility"
                           options={[
                             "Yes, admitted in HF (OTP)",
                             "Yes, Transferred in from another OTP/SC",
@@ -316,7 +299,6 @@ class Nutrition extends React.Component<Props> {
                             "Died",
                             "Non-recovered"
                           ]}
-                          required="Please select an option"
                           state={state}
 
                       />
@@ -326,7 +308,6 @@ class Nutrition extends React.Component<Props> {
                          type=""
                          placeholder="Please enter treatment outcome date"
                          name="outcome_treatment"
-                         required="please select outcome of treatment date"
                          state={state}
 
                       />

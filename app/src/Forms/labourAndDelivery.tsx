@@ -2,12 +2,13 @@ import React from 'react';
 import Input from '../components/input'
 import DatePicker from '../components/datePicker';
 import SelectComponent from '../components/select'
-
+import MultiSelectAndSearch from "../components/multiSelectAndSearch"
 import StepWrapper from '../components/stepWrapper'
 import StepFormWrapper from '../components/stepFormWrapper';
 import SelectClient from '../components/selectClient';
 import {createLabourAndDelivery} from '../../realm/queries/writeQueries'
 import schemas from '../../realm/schemas';
+import CheckBox from '../components/checkBox'
 
 
 
@@ -23,7 +24,8 @@ class  LabourAndDelivery extends React.Component<Props> {
           days:[],
           months:[],
           years:[],
-
+          aliveStatus:"",
+          transportationOut:""
 
 
 
@@ -96,8 +98,9 @@ class  LabourAndDelivery extends React.Component<Props> {
                             name="age"
                             options={["0 - 28 Days", "29 days - 11 Months", "12 - 59 Months", "5 - 9 Years", "10 - 19 Years", "> 20 Years"]}
                             title="Age"
-                            placeholder="Select Gender"
+                            placeholder="Select Age"
                             state={state}
+                            required="Please  select Age"
 
                             />
 
@@ -247,6 +250,8 @@ class  LabourAndDelivery extends React.Component<Props> {
                             name="mother_status"
                             options={["Alive", "Dead"]}
                             title="Mother)"
+                            hasDependable
+                            onValueSelected={(value)=>this.setState({aliveStatus:value,transportationOut:""})}
                             placeholder="Please Select"
                             state={state}
                             />
@@ -254,28 +259,43 @@ class  LabourAndDelivery extends React.Component<Props> {
                             <SelectComponent
 
                             name="alive_status"
+                            isDependable
+                            dependableValue="Alive"
+                            hasDependable
+                            onValueSelected={(value)=>this.setState({transportationOut:value})}
+                            recievedValue={this.state.aliveStatus}
                             options={["Admitted", "Discharged", "Referred - out", "Received post abortion care", "Transportation Out"]}
                             title="Alive Status"
                             placeholder="Please Select"
                             state={state}
                             />
 
+
+
                             <SelectComponent
 
-                            name="transportation_out_status"
-                            options={["Ambulance", "Others"]}
-                            title="Transportation Out Status"
-                            placeholder="Please Select"
-                            state={state}
+                                  name="dead_status"
+                                  options={["MDA Conducted", "MDA not Conducted"]}
+                                  title="Dead Status"
+                                  isDependable
+                                  dependableValue="Dead"
+                                  recievedValue={this.state.aliveStatus}
+                                  placeholder="Please Select"
+                                  state={state}
+
                             />
 
                             <SelectComponent
 
-                            name="dead_status"
-                            options={["MDA Conducted", "MDA not Conducted"]}
-                            title="Dead Status"
-                            placeholder="Please Select"
-                            state={state}
+                                  name="transportation_out_status"
+                                  options={["Ambulance", "Others"]}
+                                  isDependable
+                                  dependableValue="Transportation Out"
+                                  recievedValue={this.state.transportationOut}
+                                  title="Transportation Out Status"
+                                  placeholder="Please Select"
+                                  state={state}
+
                             />
 
                           </StepWrapper>
@@ -294,14 +314,22 @@ class  LabourAndDelivery extends React.Component<Props> {
                             />
 
                              <Input
-                                type="text"
+                                type="time"
                                 placeholder="Enter delivery time"
                                 name="delivery_time"
                                 title="Time of Delivery"
                                 state={state}
                               />
 
-                            <i>Add check box component here</i>
+
+                            <MultiSelectAndSearch
+
+                              name="baby_condition"
+                              title=""
+                              options={["Pre-Term","Not Breathing / Cycling Birth","Not breathing/crying at birth successfully resuscitated with Ambu bag and mask"]}
+                              state={state}
+
+                              />
 
                             <SelectComponent
 
@@ -321,7 +349,14 @@ class  LabourAndDelivery extends React.Component<Props> {
                             state={state}
                             />
 
-                            <i>Add check box component here</i>
+                            <MultiSelectAndSearch
+
+                                name="live_status"
+                                title=""
+                                options={["Dead","Live Births by HIV positive women only."]}
+                                state={state}
+
+                            />
 
                             <SelectComponent
 
@@ -355,7 +390,12 @@ class  LabourAndDelivery extends React.Component<Props> {
                                 state={state}
                               />
 
-                            <i>Add check box component here</i>
+                            <CheckBox
+                              name="gel_applied"
+                              title="Tick if 4% CHX gel is applied to cord at birth"
+                              state={state}
+                            />
+
 
                              <SelectComponent
 
@@ -376,7 +416,12 @@ class  LabourAndDelivery extends React.Component<Props> {
 
                             <h5>Exclusive Breast Feeding</h5>
 
-                            <i>Add check box component here</i>
+                            <CheckBox
+                              name="counselled"
+                              title="Counselled"
+                              state={state}
+                            />
+
 
                             <SelectComponent
 

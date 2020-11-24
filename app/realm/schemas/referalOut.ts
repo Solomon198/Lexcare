@@ -20,45 +20,45 @@ const Client : RefreralOutProps = {
 
        health_facility_id: "string",
 
-       age: "int",
+       age: "int?",
 
-      any_referal_documents: "string",
+      any_referal_documents: "string?",
 
-      client_address:"string",
+      client_address:"string?",
 
-      client_name: "string",
+      client_name: "string?",
 
-      clinical_history: "string",
+      clinical_history: "string?",
 
-      findings_diagnosis: "string",
+      findings_diagnosis: "string?",
 
-      identity_number: "string",
+      identity_number: "string?",
 
-      initiating_facility_address: "string",
+      initiating_facility_address: "string?",
 
-      initiating_facility_name: "string",
+      initiating_facility_name: "string?",
 
-      initiating_facility_oic_name: "string",
+      initiating_facility_oic_name: "string?",
 
-      initiating_facility_telephone_used: "string",
+      initiating_facility_telephone_used: "string?",
 
-      initiating_facility_transportation_arrangement: "string",
+      initiating_facility_transportation_arrangement: "string?",
 
-      reason_for_referal: "string",
+      reason_for_referal: "string?",
 
       referal_date: "date",
 
-      refered_by_designation: "string",
+      refered_by_designation: "string?",
 
-      refered_by_name: "string",
+      refered_by_name: "string?",
 
-      refered_to_facility_address: "string",
+      refered_to_facility_address: "string?",
 
-      refered_to_facility_name: "string",
+      refered_to_facility_name: "string?",
 
-      sex: "string",
+      sex: "string?",
 
-      treatment_given: "string",
+      treatment_given: "string?",
 
       createdBy : "string"
 

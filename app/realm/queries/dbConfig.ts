@@ -120,6 +120,14 @@ export function openSyncronizedRealm(){
 
                   Schemas.Tetanus,
 
+                  Schemas.Services,
+
+                  Schemas.AdministerVaccine,
+
+                  Schemas.TetanusAdministration,
+
+
+
 
                 ],
 

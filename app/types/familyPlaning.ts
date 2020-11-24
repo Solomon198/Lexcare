@@ -15,6 +15,12 @@ import Bson from 'bson'
 
         client_card_number: string,
 
+        natural_methods_cb:string,
+
+        natural_methods_others: string,
+
+        natural_methods_referal : string,
+
         client_name: string,
 
         condom_na: string,

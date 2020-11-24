@@ -12,6 +12,13 @@ export default class CommunityLeaders extends React.Component<props> {
     this.props.history.push("/add-community-leader");
   }
 
+  edit(payload:any){
+    this.props.history.push({
+      pathname:"/add-community-leader",
+      state:payload,
+    })
+  }
+
 
   componentDidMount(){
 
@@ -38,6 +45,7 @@ export default class CommunityLeaders extends React.Component<props> {
                 <RenderData
                           SchemaName={schemas.CommunityLeaders.name}
                           ignoreFilter
+                          editRecord={(record)=>this.edit(record)}
                           tableHead={
                             <thead>
                               <tr>
@@ -45,6 +53,7 @@ export default class CommunityLeaders extends React.Component<props> {
                                 <th>Full Name</th>
                                 <th>Phone Number</th>
                                 <th>Email</th>
+                                <th>Action</th>
                               </tr>
                             </thead>
                            }
@@ -55,7 +64,6 @@ export default class CommunityLeaders extends React.Component<props> {
                             {key:"email"},
 
                            ]}
-                           hideEdit={true}
                            />
 
 

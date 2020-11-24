@@ -50,13 +50,13 @@ const CommunityLeaders : CommunityLeadersProps = {
 
        health_facility_id: "string",
 
-       email: "string",
+       email: "string?",
 
-       full_name: "string",
+       full_name: "string?",
 
-       home_address: "string",
+       home_address: "string?",
 
-       phone_number: "string",
+       phone_number: "string?",
 
   }
 

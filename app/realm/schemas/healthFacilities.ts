@@ -12,13 +12,13 @@ const healthFacility : HealthCareFacilityTypes = {
 
           health_facility_id : "string",
 
-          state : "string",
+          state : "string?",
 
-          lga : "string",
+          lga : "string?",
 
-          ward : "string",
+          ward : "string?",
 
-          zone : "string",
+          zone : "string?",
 
      }
 

@@ -19,7 +19,7 @@ type StepFormWrapperProps = {
 
 
           const handleSubmit = (values:any) => {
-
+            console.log(values)
             //remove any value that is empty from object before submit to avoid crash
             let finalObj = assignValuesToEmptyProps(values);
             props.onSubmit(finalObj);
@@ -34,10 +34,17 @@ type StepFormWrapperProps = {
 
           }
 
-          const gotoStep = (step:string)=>{
-               if(MyForm.isStepValid){
+          const gotoStep = (step:string,stepNumber:number,active:number)=>{
+
+               if(stepNumber < (active + 1 )){
                   MyForm.goToStep(step);
+               }else{
+                 if(MyForm.isStepValid){
+                    MyForm.goToStep(step);
+                 }
                }
+
+
           }
 
 
@@ -62,7 +69,7 @@ type StepFormWrapperProps = {
                                       </h5>
 
                                         <StepIndicatorComponent
-                                          jumpToIndex={(step:string)=> gotoStep(step)}
+                                          jumpToIndex={(step:string,stepNumber,active)=> gotoStep(step,stepNumber,active)}
                                           stepNumber={props.steps}
                                           active = {MyForm.currentStep.index}
                                         />

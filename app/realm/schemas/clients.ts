@@ -20,35 +20,35 @@ const Client : ClientTypes = {
 
        date: "date",
 
-       client_name: "string",
+       client_name: "string?",
 
-       client_card_number: "string",
+       client_card_number: "string?",
 
-       date_of_birth: "date",
+       date_of_birth: "date?",
 
-       sex: "string",
+       sex: "string?",
 
-       age: "string",
+       age: "string?",
 
-       exact_age: "int",
+       exact_age: "int?",
 
-       contact_address: "string",
+       contact_address: "string?",
 
-       state_of_origin: "string",
+       state_of_origin: "string?",
 
-       telephone_no: "string",
+       telephone_no: "string?",
 
-       first_contact_with_facility: "string",
+       first_contact_with_facility: "string?",
 
-       reference_in: "string",
+       reference_in: "string?",
 
-       next_of_kin_name: "string",
+       next_of_kin_name: "string?",
 
-       kin_relationship_with_client: "string",
+       kin_relationship_with_client: "string?",
 
-       kin_address: "string",
+       kin_address: "string?",
 
-       kin_phone: "string",
+       kin_phone: "string?",
 
        createdBy : "string"
 

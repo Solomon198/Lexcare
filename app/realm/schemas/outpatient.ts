@@ -19,71 +19,79 @@ const OutPatient : OutPatientProps = {
 
         health_facility_id: "string",
 
-        act: "string",
+        act: "string?",
 
-        age: "string",
+        age: "string?",
 
-        bmi_weight: "int",
+        bmi_weight: "int?",
 
-        card_number: "string",
+        card_number: "string?",
 
-        client_name: "string",
+        client_name: "string?",
 
-        clinical_diagnosis: "string",
+        clinical_diagnosis: "string?",
 
-        clinical_scored: "string",
+        clinical_scored: "string?",
 
-        clinical_screening_score: "string",
+        clinical_screening_score: "string?",
 
-        clinically_screened: "string",
+        clinically_screened: "string?",
 
-        complaint: "string",
+        complaint: "string?",
 
         date: "date",
 
-        date_of_birth: "date",
+        date_of_birth: "date?",
 
         diagnosis: "string[]",
 
-        drugs_given: "string",
+        drugs_given: "string?",
 
-        gbv: "string",
+        gbv: "string?",
 
-        gbv_refered: "string",
+        gbv_refered: "string?",
 
-        height: "int",
+        height: "int?",
 
-        microscopy: "string",
+        microscopy: "string?",
 
-        other_anti_maleria: "string",
+        other_anti_maleria: "string?",
 
-        post_gbv: "string",
+        post_gbv: "string?",
 
-        pre_referal_treatment: "string",
+        pre_referal_treatment: "string?",
 
-        rdt: "string",
+        rdt: "string?",
 
-        refered_or_treated: "string",
+        refered_or_treated: "string?",
 
-        result_hepatitis_screening: "string",
+        ro_reason: "string?",
 
-        result_hepatitis_test: "string",
+        tested_hepatitis_b : "string?",
 
-        severe_maleria: "string",
+        result_hepatitis_b_test: "string?",
 
-        sex: "string",
+        hepatitis_b_refered_or_treated:"string?",
 
-        tested_hepatitis: "string",
+        tested_hepatitis_c : "string?",
 
-        type_of_attendance: "string",
+        result_hepatitis_c_test: "string?",
 
-        type_of_investigation: "string",
+        hepatitis_c_refered_or_treated:"string?",
 
-        visit_outcome: "string",
+        severe_maleria: "string?",
 
-        weight: "int",
+        sex: "string?",
 
-        createdBy : "string",
+        type_of_attendance: "string?",
+
+        type_of_investigation: "string?",
+
+        visit_outcome: "string?",
+
+        weight: "int?",
+
+        createdBy : "string?",
 
   }
 

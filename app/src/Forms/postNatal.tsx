@@ -26,6 +26,8 @@ class PostNatal extends React.Component<Props> {
           days:[],
           months:[],
           years:[],
+          services:[],
+          ro:""
 
 
 
@@ -104,6 +106,7 @@ class PostNatal extends React.Component<Props> {
                             name="age"
                             options={["0 - 28 Days", "29 days - 11 Months", "12 - 59 Months", "5 - 9 Years", "10 - 19 Years", "> 20 Years"]}
                             title="Age"
+                            required="Please Select Age"
                             placeholder="Select Age"
                             state={state}
 
@@ -170,6 +173,10 @@ class PostNatal extends React.Component<Props> {
 
                               <MultiSelectAndSearchComponent
                                  title="Services"
+                                 hasDependable
+                                 onValueSelected={(value)=>this.setState({services:value},()=>{
+                                   console.log(value)
+                                 })}
                                  options={[
                                    "Vaginal Examination",
                                    "HB/PCV (Please write the result of the PCV/HB test)",
@@ -182,6 +189,9 @@ class PostNatal extends React.Component<Props> {
 
                               <Input
                                 type="text"
+                                isDependable
+                                dependableValue="HB/PCV (Please write the result of the PCV/HB test)"
+                                recievedValue={this.state.services}
                                 placeholder="write the result of the PVC/HB test"
                                 name="hb_pvc_test"
                                 title="HB/PCV Test Result"
@@ -190,6 +200,9 @@ class PostNatal extends React.Component<Props> {
 
                               <Input
                                 type="text"
+                                isDependable
+                                dependableValue="Urinalysis (Please write result for sugar)"
+                                recievedValue={this.state.services}
                                 placeholder="write result for sugar"
                                 name="urinal_test_result"
                                 title="Urinalysis Test Result"
@@ -230,11 +243,17 @@ class PostNatal extends React.Component<Props> {
                           position={4}
                           title="">
 
-                            <RadioButton state={state} name="outcome_of_visit" title="Outcome of Visit (for mother and newborn)"
+                            <RadioButton
+                             state={state} name="outcome_of_visit" title="Outcome of Visit (for mother and newborn)"
+                             hasDependable
+                             onValueSelected={(v)=>this.setState({ro:v})}
                             options={["NT", "T", "A", "RO"]}  />
 
                             <TextArea
                                 name="ro_reason"
+                                isDependable
+                                dependableValue="RO"
+                                recievedValue={this.state.ro}
                                 placeholder="Please state reason for referral"
                                 title="Reason for Referral"
                                 state={state}

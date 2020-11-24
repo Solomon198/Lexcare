@@ -11,7 +11,16 @@ type MultiSelectAndSearchComponentProps = {
   required?:any,
   title:string,
   options:any[],
-  state?:any
+  state?:any,
+   //fields for the depending fields
+   isDependable?:boolean,
+   dependableValue?:any,
+   recievedValue?:any,
+
+   //props for field that other fields depend on
+   hasDependable?:boolean,
+   onValueSelected?:(value:any)=>void
+
 
 }
 
@@ -32,7 +41,7 @@ const MultiSelectAndSearchComponent = (props:MultiSelectAndSearchComponentProps)
 
   const [selectOption,setOption] = useState([])
 
-  const { title, required,options } = props
+  const { title, required,options,hasDependable,onValueSelected } = props
   const [isTouched, setIsTouched] = React.useState(false)
   const showError = !isValid && (isTouched || isSubmitted);
   const [initialize,setInitialize] = useState(false);
@@ -63,6 +72,7 @@ const MultiSelectAndSearchComponent = (props:MultiSelectAndSearchComponentProps)
      change.forEach((val:any)=>{
          dataChanged.push(val.label)
      })
+     if(hasDependable){onValueSelected(dataChanged)}
      setValue(dataChanged);
      setOption(change);
   }

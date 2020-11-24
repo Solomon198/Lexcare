@@ -16,19 +16,17 @@ const Tetanus : TetanusProps = {
 
       health_facility_id: "string",
 
-      card_no: "string",
+      card_no: "string?",
 
-      client_name: "string",
+      client_name: "string?",
 
-      date_of_birth: "date",
+      date_of_birth: "date?",
 
       date_of_visit: "date",
 
-      follow_up_address: "string",
+      follow_up_address: "string?",
 
-      phone_number: "string",
-
-      session_type: "string",
+      phone_number: "string?",
 
       createdBy:"string"
 

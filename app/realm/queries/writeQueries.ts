@@ -23,39 +23,51 @@ import { setAdminExist } from './configApp';
 
 
 
-export async function createCommunityLeader(documents:any){
+export async function createCommunityLeader(documents:any,isUpdate?:boolean){
 
   try{
 
+    if(!isUpdate){
 
-    documents._id = getObjectId();
+      documents._id = getObjectId();
+
+      documents.health_facility_id = getPHC_configSettings().phc_id
+
+      documents.leader_id = generateRandomByte();
 
 
-    documents.health_facility_id = getPHC_configSettings().phc_id
+      const leaderExist = documentExist(`email = "${documents.email}"`,Schemas.CommunityLeaders.name);
 
-    documents.leader_id = generateRandomByte();
+      if(leaderExist) {
+
+        showToast("Email Already exist !!!")
+
+        return new Error("Email aready In use");
+
+      }
+
+    }
 
 
-    const leaderExist = documentExist(`email = "${documents.email}"`,Schemas.CommunityLeaders.name);
 
-    if(leaderExist) {
 
-      showToast("Email Already exist !!!")
 
-      return new Error("Email aready In use");
 
-    }else{
 
       const realm = _DATA_BASE_INSTACE_;
 
 
       realm.write(()=>{
 
+         if(!isUpdate){
           realm.create(Schemas.CommunityLeaders.name,documents);
+         }else{
+          realm.create(Schemas.CommunityLeaders.name,documents,true);
+         }
 
        })
 
-    }
+
 
 
    return "success";
@@ -133,13 +145,12 @@ export async  function createDailyAttendance(document:any,isUpdate?:boolean){
 
           const realm = _DATA_BASE_INSTACE_
 
-          document['client_name'] = document.first_name + " " + document.last_name;
+          if(document.date_of_birth){
+            document["date_of_birth"]  =  new Date(document.date_of_birth);
+          }else{
+            delete document.date_of_birth;
+          }
 
-          delete document.first_name;
-
-          delete document.last_name;
-
-          document["date_of_birth"]  = new Date(document.date_of_birth);
 
           document.date = new Date(document.date);
 
@@ -173,7 +184,10 @@ export async  function createDailyAttendance(document:any,isUpdate?:boolean){
                   client.kin_address = document.kin_address;
                   client.kin_phone = document.kin_phone;
                   client.kin_relationship_with_client = document.kin_relationship_with_client;
-                  client.next_of_kin_name = client.next_of_kin_name;
+                  client.next_of_kin_name = document.next_of_kin_name;
+                  client.state_of_origin = document.state_of_origin
+                  client.first_contact_with_facility = document.first_contact_with_facility
+                    client.reference_in = document.reference_in;
                });
 
 
@@ -184,12 +198,15 @@ export async  function createDailyAttendance(document:any,isUpdate?:boolean){
                     client.client_name = document.client_name;
                     client.contact_address = document.contact_address;
                     client.date_of_birth = document.date_of_birth;
+                    client.state_of_origin = document.state_of_origin
                     client.exact_age = document.exact_age;
                     client.telephone_no = document.telephone_no;
                     client.kin_address = document.kin_address;
                     client.kin_phone = document.kin_phone;
                     client.kin_relationship_with_client = document.kin_relationship_with_client;
-                    client.next_of_kin_name = client.next_of_kin_name;
+                    client.next_of_kin_name = document.next_of_kin_name;
+                    client.first_contact_with_facility = document.first_contact_with_facility
+                    client.reference_in = document.reference_in;
                })
 
            }else{
@@ -231,7 +248,12 @@ export async function createBirthRegister(documents:any,isUpdate?:boolean){
 
     documents.child_reg_date = new Date(documents.child_reg_date);
 
-    documents.dob = new Date(documents.dob);
+    if(documents.dob){
+      documents.dob = new Date(documents.dob);
+    }else{
+      delete documents.dob
+    }
+
 
     const realm =  _DATA_BASE_INSTACE_
 
@@ -243,6 +265,47 @@ export async function createBirthRegister(documents:any,isUpdate?:boolean){
          }else{
           realm.create(Schemas.BirthRegister.name,documents,true);
          }
+
+   })
+
+
+    return "success";
+
+  }catch(e){
+     console.log(e)
+     return e;
+
+  }
+}
+
+
+export async function createFacilityService(documents:any,isUpdate?:boolean){
+
+  try{
+
+
+    if(!isUpdate){
+
+      documents._id = getObjectId();
+
+      documents.health_facility_id = getPHC_configSettings().phc_id;
+
+      documents.createdBy = Auth.getCurrentUser().staff_id;
+
+    }
+
+
+
+    const realm =  _DATA_BASE_INSTACE_;
+
+
+     realm.write(()=>{
+
+        if(!isUpdate){
+          realm.create(Schemas.Services.name,documents);
+        }else{
+          realm.create(Schemas.Services.name,documents,true);
+        }
 
    })
 
@@ -395,7 +458,13 @@ export async function createInPatient(documents:any,isUpdate?:boolean){
 
     documents.date = new Date(documents.date);
 
-    documents.dob = new Date(documents.dob);
+    if(documents.dob){
+      documents.dob = new Date(documents.dob);
+    }else{
+      delete documents.dob;
+    }
+
+
 
     if(!isUpdate){
 
@@ -440,7 +509,12 @@ export async function createLabourAndDelivery(documents:any,isUpdate?:boolean){
 
     documents.date = new Date(documents.date);
 
-    documents.delivery_date = new Date(documents.delivery_date);
+    if(documents.delivery_date){
+      documents.delivery_date = new Date(documents.delivery_date);
+    }else{
+      delete documents.delivery_date
+    }
+
 
      if(!isUpdate){
 
@@ -485,7 +559,6 @@ export async function createPostNatal(documents:any,isUpdate?:boolean){
 
   try{
 
-
     documents.date = new Date(documents.date);
 
     if(!isUpdate){
@@ -520,6 +593,74 @@ export async function createPostNatal(documents:any,isUpdate?:boolean){
   }
 }
 
+export async function _AdministerImmunizationVaccine(documents:any,isUpdate?:boolean){
+
+  try{
+
+
+    if(!isUpdate){
+
+      documents.health_facility_id = getPHC_configSettings().phc_id;
+
+      documents._id = getObjectId();
+
+    }
+
+    const realm = _DATA_BASE_INSTACE_;
+
+     realm.write(()=>{
+
+         if(!isUpdate){
+          realm.create(Schemas.AdministerVaccine.name,documents);
+         }else{
+          realm.create(Schemas.AdministerVaccine.name,documents,true);
+         }
+     })
+
+
+    return "success";
+
+  }catch(e){
+     console.log(e)
+     return e;
+
+  }
+}
+
+export async function _AdministerTD(documents:any,isUpdate?:boolean){
+
+  try{
+
+
+    if(!isUpdate){
+
+      documents.health_facility_id = getPHC_configSettings().phc_id;
+
+      documents._id = getObjectId();
+
+    }
+
+    const realm = _DATA_BASE_INSTACE_;
+
+     realm.write(()=>{
+
+         if(!isUpdate){
+          realm.create(Schemas.TetanusAdministration.name,documents);
+         }else{
+          realm.create(Schemas.TetanusAdministration.name,documents,true);
+         }
+     })
+
+
+    return "success";
+
+  }catch(e){
+     console.log(e)
+     return e;
+
+  }
+}
+
 
 export async function createImmunization(documents:any,isUpdate?:boolean){
 
@@ -528,7 +669,12 @@ export async function createImmunization(documents:any,isUpdate?:boolean){
 
     documents.date = new Date(documents.date);
 
-    documents.dob = new Date(documents.dob);
+    if(documents.dob){
+      documents.dob = new Date(documents.dob);
+    }else{
+      delete documents.dob;
+    }
+
 
     if(!isUpdate){
 
@@ -571,7 +717,13 @@ export async function createOutpatient(documents:any,isUpdate?:boolean){
 
     documents.date = new Date(documents.date);
 
-    documents.date_of_birth = new Date(documents.date_of_birth);
+    if(documents.date_of_birth){
+
+      documents.date_of_birth = new Date(documents.date_of_birth);
+
+    }else{
+       delete documents.date_of_birth;
+    }
 
     if(!isUpdate){
 
@@ -616,9 +768,13 @@ export async function createNutrition(documents:any,isUpdate?:boolean){
 
     documents.date = new Date(documents.date);
 
-    documents.date_of_birth = new Date(documents.date_of_birth);
+    if(documents.date_of_birth){
 
-    documents.outcome_treatment = new Date(documents.outcome_treatment);
+      documents.date_of_birth = new Date(documents.date_of_birth);
+
+    }else{
+       delete documents.date_of_birth;
+    }
 
     if(!isUpdate){
 
@@ -661,7 +817,11 @@ export async function createTetanus(documents:any,isUpdate?:boolean){
 
     documents.date_of_visit = new Date(documents.date_of_visit);
 
-    documents.date_of_birth = new Date(documents.date_of_birth);
+    if(documents.date_of_birth){
+      documents.date_of_birth = new Date(documents.date_of_birth);
+    }else{
+       delete documents.date_of_birth;
+    }
 
     if(!isUpdate){
 

@@ -9,27 +9,36 @@ import 'toasted-notes/src/styles.css';
 import RadioButton from '../components/radioButtons'
 import SelectClient from '../components/selectClient'
 import schemas from '../../realm/schemas';
-
+import MultiSelectAndSearch from "../components/multiSelectAndSearch"
+import Diseases from '../data/diseases'
+import {getDocuments} from '../../realm/queries/readQueries'
 
 
 type Props = {
   history: any,
   location:any
 }
+
+
 class  InPatient extends React.Component<Props> {
 
-   state = {
-
-          days:[],
-          months:[],
-          years:[],
+  constructor(props){
+    super(props);
 
 
+     this.state = {
+
+      days:[],
+      months:[],
+      years:[],
+      services:[],
 
 
 
+      }
+  }
 
-   }
+
 
 
    async createInpatientRecord(info:any){
@@ -55,6 +64,15 @@ class  InPatient extends React.Component<Props> {
     componentDidMount(){
 
       window.scrollTo(0, 0)
+
+      let doc = getDocuments(schemas.Services.name,"","","",true);
+      let _doc:any[] = [];
+
+      doc.forEach((val)=>{
+          _doc.push(val.service_name);
+      })
+      console.log(doc,'sercies>>>>>>>>>>>>>>>>>>>>.')
+      this.setState({services:_doc});
 
     }
 
@@ -102,7 +120,8 @@ class  InPatient extends React.Component<Props> {
                             name="sex"
                             options={["Male", "Female"]}
                             title="Sex"
-                            placeholder="Select Gender"
+                            placeholder="Select sex"
+                            required="Please select sex"
                             state={state}
                             />
 
@@ -111,7 +130,7 @@ class  InPatient extends React.Component<Props> {
                             name="age"
                             options={["0 - 28 Days", "29 days - 11 Months", "12 - 59 Months", "5 - 9 Years", "10 - 19 Years", "> 20 Years"]}
                             title="Age"
-                            placeholder="Select Gender"
+                            placeholder="Select Age"
                             state={state}
 
                             />
@@ -121,7 +140,6 @@ class  InPatient extends React.Component<Props> {
                                 placeholder="Select date Y-m-d"
                                 name="dob"
                                 title="Date of Birth"
-                                required="Please select date of birth"
                                 state={state}
                               />
 
@@ -136,13 +154,11 @@ class  InPatient extends React.Component<Props> {
                        position={2}
                        title="">
 
-                            <SelectComponent
+                            <MultiSelectAndSearch
 
-                            name="disease"
-                            options={["preloaded diagnosis..."]}
+                            name="diagnosis"
+                            options={Diseases}
                             title="Diagnosis"
-                            placeholder="Search disease"
-                            required="Please select a disease"
                             state={state}
                             />
 
@@ -153,7 +169,7 @@ class  InPatient extends React.Component<Props> {
                             <SelectComponent
 
                             name="investigation"
-                            options={["preloaded services here..."]}
+                            options={this.state.services}
                             title="Type of Laboratory Investigation"
                             placeholder="Search Services"
                             state={state}

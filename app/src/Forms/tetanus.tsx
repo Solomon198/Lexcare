@@ -64,7 +64,7 @@ class Tetanus extends React.Component<Props> {
                     title="Client's Basic Details" // title of the step
                 >
 
-                    <SelectComponent
+                    {/* <SelectComponent
 
                     name="session_type"
                     options={["FIXED","OUTREACH","MOBILE"]}
@@ -75,7 +75,7 @@ class Tetanus extends React.Component<Props> {
 
 
                     />
-
+ */}
 
 
                         <SelectClient

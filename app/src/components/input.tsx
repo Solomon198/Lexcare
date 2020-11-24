@@ -9,7 +9,16 @@ type InputComponentProps = {
       type:any,
       placeholder:string,
       value?:string,
-      state?:any
+      state?:any,
+        //fields for the depending fields
+      isDependable?:boolean,
+      dependableValue?:any,
+      recievedValue?:any,
+
+      //props for field that other fields depend on
+      hasDependable?:boolean,
+      onValueSelected?:(value:any)=>void
+
 
 }
 
@@ -23,11 +32,11 @@ const InputComponent  = (props:InputComponentProps)=> {
     isSubmitted,
     setValue,
     value,
-  } = useField(props);
+  } = useField({name:props.name,required:props.required,defaultValue:props.type=="number"?0:""});
 
 
 
-  const { title, type, required, } = props
+  const { title, type, required,isDependable,dependableValue,recievedValue } = props
   const [initialize,setInitialize] = useState(false);
   const [isTouched, setIsTouched] = React.useState(false)
   const showError = !isValid && (isTouched || isSubmitted);
@@ -71,7 +80,7 @@ const InputComponent  = (props:InputComponentProps)=> {
       return setValue(v);
   }
 
-  return (
+  const InputUI = ()=>(
     <div className="form-group">
     <label htmlFor="field-ta" className="col-sm-12 control-label">
        {title}
@@ -81,7 +90,8 @@ const InputComponent  = (props:InputComponentProps)=> {
       <input
           onChange={(e)=> handleChange(e.target.value)}
           type={type ?? "text"}
-          value={value ?? ""}
+          defaultValue={0}
+          value={value ? value : ""}
           name={props.name}
           disabled={ props.state && props.name == "client_card_number" ? true:false}
           id={props.name}
@@ -99,6 +109,37 @@ const InputComponent  = (props:InputComponentProps)=> {
       )}
   </div>
 )
+        let show = false;
+
+        if(typeof(recievedValue) == "object"){
+           let index = recievedValue.indexOf(dependableValue);
+           if(index >= 0){
+             show = true;
+           }else{
+             show = false;
+           }
+        }else{
+            if(recievedValue == dependableValue){
+              show = true;
+            }else{
+              show = false;
+            }
+        }
+
+        if(isDependable && show ){
+
+          return InputUI();
+
+        }
+
+        if(!isDependable){
+          return InputUI();
+        }
+
+        return<></>
+
+
+
 }
 
 

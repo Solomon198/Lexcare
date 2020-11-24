@@ -20,67 +20,75 @@ const LabourAndDelivery : LabourAndDeliveryProps = {
 
         health_facility_id: "string",
 
-        abortion: "string",
+        abortion: "string?",
 
-        age: "string",
+        age: "string?",
 
-        alive_status: "string",
+        alive_status: "string?",
 
-        baby_put_to_breast: "string",
+        baby_put_to_breast: "string?",
 
-        child_delivery_by: "string",
+        child_delivery_by: "string?",
 
-        client_card_number: "string",
+        client_card_number: "string?",
 
-        client_names: "string",
+        client_names: "string?",
 
-        client_type: "string",
+        client_type: "string?",
 
-        cord_clamped_at: "string",
+        cord_clamped_at: "string?",
 
         date: "date",
 
-        dead_status: "string",
+        dead_status: "string?",
 
-        decision_in_care: "string",
+        decision_in_care: "string?",
 
-        delivery_date: "date",
+        delivery_date: "date?",
 
-        delivery_mode: "string",
+        delivery_mode: "string?",
 
-        delivery_time: "string",
+        delivery_time: "string?",
 
-        exact_age: "int",
+        exact_age: "int?",
 
-        live_birth: "string",
+        live_birth: "string?",
 
-        maternal_complication_seen: "string",
+        maternal_complication_seen: "string?",
 
-        mother_status: "string",
+        mother_status: "string?",
 
-        parity: "int",
+        parity: "int?",
 
-        partograph_used: "string",
+        partograph_used: "string?",
 
-        postpartum_fm_planning: "string",
+        postpartum_fm_planning: "string?",
 
-        pregnant_women_admt_eclamptic: "string",
+        pregnant_women_admt_eclamptic: "string?",
 
-        recieved_milsoprostol: "string",
+        recieved_milsoprostol: "string?",
 
-        recieved_oxytocin: "string",
+        recieved_oxytocin: "string?",
 
-        sex_of_baby: "string",
+        sex_of_baby: "string?",
 
-        still_birth: "string",
+        still_birth: "string?",
 
-        temp_at_one_hour: "string",
+        temp_at_one_hour: "string?",
 
-        transportation_in: "string",
+        transportation_in: "string?",
 
-        transportation_out_status: "string",
+        transportation_out_status: "string?",
 
-        who_took_delivery_name: "string",
+        who_took_delivery_name: "string?",
+
+        baby_condition : "string[]",
+
+        gel_applied : "string?",
+
+        counselled : "string?",
+
+        live_status : "string[]",
 
         createdBy : "string",
 

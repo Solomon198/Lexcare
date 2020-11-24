@@ -25,7 +25,8 @@ export default class Clients extends React.Component {
 
                 <RenderData
                           ignoreFilter={true}
-                          showDetails
+                          // showDetails
+                          hideEdit
                           SchemaName={Schema.ClientSchema.name}
                           tableHead={
                             <thead>
@@ -36,7 +37,7 @@ export default class Clients extends React.Component {
                                 <th>Client Card No.</th>
                                 <th>Sex</th>
                                 <th>First Contact With Facility</th>
-                                <th>Action</th>
+                                {/* <th>Action</th> */}
                               </tr>
                             </thead>}
                           properties={[

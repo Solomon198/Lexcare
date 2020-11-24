@@ -20,21 +20,21 @@ const Immunization : ImmunizationProps = {
 
        health_facility_id: "string",
 
-       child_card_no: "string",
+       child_card_no: "string?",
 
-       child_name: "string",
+       child_name: "string?",
 
-       comment: "string",
+       comment: "string?",
 
        date: "date",
 
-       dob: "date",
+       dob: "date?",
 
-       followup_address: "string",
+       followup_address: "string?",
 
-       phone: "string",
+       phone: "string?",
 
-       sex: "string",
+       sex: "string?",
 
        createdBy : "string",
 

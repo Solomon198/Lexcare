@@ -19,79 +19,85 @@ const FamilyPlaning : FamilyPlaningProps = {
 
         health_facility_id: "string",
 
-        age: "string",
+        age: "string?",
 
-        blood_pressure: "string",
+        blood_pressure: "string?",
 
-        client_card_number: "string",
+        client_card_number: "string?",
 
-        client_name: "string",
+        client_name: "string?",
 
-        condom_na: "string",
+        condom_na: "string?",
 
-        condom_qty: "string",
+        condom_qty: "string?",
 
-        condom_rv: "string",
+        condom_rv: "string?",
 
-        condom_type: "string",
+        condom_type: "string?",
 
-        contraception: "string",
+        contraception: "string?",
 
-        counselled_fp: "string",
+        counselled_fp: "string?",
 
-        counselled_ppfp: "string",
+        counselled_ppfp: "string?",
 
-        cycles_quantity: "int",
+        cycles_quantity: "int?",
 
         date: "date",
 
-        dob: "date",
+        natural_methods_cb : "string[]",
 
-        followup_address: "string",
+        natural_methods_others:"string[]",
 
-        fp_client_type: "string",
+        natural_methods_referal: "string[]",
 
-        implants_in: "string",
+        dob: "date?",
 
-        implants_out: "string",
+        followup_address: "string?",
 
-        implants_type: "string",
+        fp_client_type: "string?",
 
-        injectable_na: "string",
+        implants_in: "string?",
 
-        injectable_name: "string",
+        implants_out: "string?",
 
-        injectable_rv: "string",
+        implants_type: "string?",
 
-        iud_in_na: "string",
+        injectable_na: "string?",
 
-        iud_in_rv: "string",
+        injectable_name: "string?",
 
-        iud_out: "string",
+        injectable_rv: "string?",
 
-        modern_fp: "string",
+        iud_in_na: "string?",
 
-        new_acceptor: "string",
+        iud_in_rv: "string?",
 
-        oral_pill_name: "string",
+        iud_out: "string?",
 
-        parity: "int",
+        modern_fp: "string?",
 
-        phone_number: "string",
+        new_acceptor: "string?",
 
-        referral_source: "string",
+        oral_pill_name: "string?",
 
-        revisit: "string",
+        parity: "int?",
 
-        self_injectibles_name: "string",
+        phone_number: "string?",
 
-        sex: "string",
+        referral_source: "string?",
 
-        type_of_iud: "string",
+        revisit: "string?",
 
-        voluntary_sterilization: "string",
+        self_injectibles_name: "string?",
 
-        weight: "int",
+        sex: "string?",
+
+        type_of_iud: "string?",
+
+        voluntary_sterilization: "string?",
+
+        weight: "int?",
 
         createdBy : "string",
   }

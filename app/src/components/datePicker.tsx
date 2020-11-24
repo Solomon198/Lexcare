@@ -9,7 +9,7 @@ type DatePickerComponentProps = {
      title : string,
      placeholder : string,
      type :string,
-     required:string,
+     required?:string,
      state?:any,
      isAttendance?:boolean
 }
@@ -34,12 +34,15 @@ const DatePickerComponent   = (props:DatePickerComponentProps)=> {
 
   if(!initialize){
     if(props.state){
-      let date = new Date(props.state[props.name]);
-      let momentFormat = moment(date).format("L");
-      let splitFormat = momentFormat.split("/");
-      let finalDate = splitFormat[2] + "-" + splitFormat[0] + "-" + splitFormat[1]
-      setValue(finalDate)
-      setInitialize(true);
+      if(props.state[props.name]){
+        let date = new Date(props.state[props.name]);
+        let momentFormat = moment(date).format("L");
+        let splitFormat = momentFormat.split("/");
+        let finalDate = splitFormat[2] + "-" + splitFormat[0] + "-" + splitFormat[1]
+        setValue(finalDate)
+        setInitialize(true);
+      }
+
     }else{
       setInitialize(true);
     }

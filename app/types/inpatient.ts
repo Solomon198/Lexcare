@@ -18,7 +18,7 @@
 
   date: string,
 
-  disease: string,
+  diagnosis: string,
 
   dob: string,
 

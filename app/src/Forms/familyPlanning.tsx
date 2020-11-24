@@ -4,6 +4,9 @@ import Input from '../components/input';
 
 import DatePicker from '../components/datePicker';
 
+import MultiSelectAndSearch from "../components/multiSelectAndSearch"
+
+
 import SelectComponent from '../components/select';
 
 import TextArea from '../components/textArea';
@@ -351,9 +354,20 @@ class  FamilyPlanning extends React.Component<Props> {
                                 state={state}
                               />
 
-                            <RadioButton state={state}   name="implants_in" title="Condom RV (Revisit)" options={["NA", "RV"]}  />
 
-                             <RadioButton state={state}   name="implants_out" title="Implants (OUT)" options={["Yes", "No"]}  />
+                             <RadioButton
+                                  state={state}
+                                  name="implants_in"
+                                  title="Implants (IN)"
+                                  options={["NA", "RV"]}
+                            />
+
+                             <RadioButton
+                                  state={state}
+                                  name="implants_out"
+                                  title="Implants (OUT)"
+                                  options={["Yes", "No"]}
+                            />
 
                              <SelectComponent
 
@@ -364,9 +378,37 @@ class  FamilyPlanning extends React.Component<Props> {
                             state={state}
                             />
 
-                            {/* <h5>Natural Methods</h5> */}
+                            <h5>Natural Methods</h5>
 
-                            {/* create checkboxes here... */}
+                            <MultiSelectAndSearch
+
+                                  name="natural_methods_cb"
+                                  options={["NA", "RV"]}
+                                  title="Natural Methods(Cycle Beads)"
+                                  state={state}
+
+                              />
+
+
+                          <MultiSelectAndSearch
+
+                                name="natural_methods_others"
+                                options={["NA", "RV"]}
+                                title="Natural Methods(Others)"
+                                state={state}
+
+                           />
+
+                             <MultiSelectAndSearch
+
+                              name="natural_methods_referal"
+                              options={["OR", "IJ","IP","IUD","SR","MR"]}
+                              title="Referal"
+                              state={state}
+
+                              />
+
+
 
                           </StepWrapper>
 

@@ -7,7 +7,16 @@ type RadioButtonsComponentProps = {
       required?:any,
       title:string,
       options:any[],
-      state?: any
+      state?: any,
+       //fields for the depending fields
+       isDependable?:boolean,
+       dependableValue?:any,
+       recievedValue?:any,
+
+       //props for field that other fields depend on
+       hasDependable?:boolean,
+       onValueSelected?:(value:any)=>void
+
 
 }
 
@@ -25,7 +34,7 @@ const RadioButtonsComponent = (props:RadioButtonsComponentProps)=>{
 
 
 
-  const { title, type, required, name } = props
+  const { title, type, required, name,hasDependable,onValueSelected} = props
   const [isTouched, setIsTouched] = React.useState(false)
   const showError = !isValid && (isTouched || isSubmitted);
   const [initialize,setInitialize] = useState(false);
@@ -40,6 +49,13 @@ const RadioButtonsComponent = (props:RadioButtonsComponentProps)=>{
 
  }
 
+  const handleValueChange = (v)=>{
+    if(hasDependable){
+      onValueSelected(v);
+    }
+    setValue(v)
+  }
+
   return(
 
     <div className="form-group">
@@ -53,7 +69,7 @@ const RadioButtonsComponent = (props:RadioButtonsComponentProps)=>{
                 <div style={{flexDirection:'row',display:"flex",alignContent:'center',alignItems:'center'}}>
 
                     <input
-                       onChange={()=>setValue(val)}
+                       onChange={()=>handleValueChange(val)}
                        name={name}
                        onBlur={()=>setIsTouched(true)}
                        type="radio"

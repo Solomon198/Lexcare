@@ -3,7 +3,7 @@ import React from 'react';
 
 type StepIndicatorComponentProps = {
       stepNumber : number,
-      jumpToIndex : (step:string)=>void,
+      jumpToIndex : (step:string,stepNumber:number,active:number)=>void,
       active : number,
 }
 
@@ -16,7 +16,7 @@ const StepIndicatorComponent  = (props:StepIndicatorComponentProps)=> (
         { props.stepNumber != 1?
         Array(props.stepNumber).fill(null).map((_value:any,index:number)=>
 
-        <div onClick={()=>props.jumpToIndex("step"+(index+1))} className="stepwizard-step">
+        <div onClick={()=>props.jumpToIndex("step"+(index+1),(index + 1),props.active)} className="stepwizard-step">
 
           <a
 

@@ -78,7 +78,7 @@ export async function localLogin(phoneNumber:string,password:string){
                   return {status:false,message:"Invalid password"};
 
               }
-
+ 
                 localStorage.setItem(LOCAL_USER,_jsonify(user));
 
                 return {status:true,message:'success'}

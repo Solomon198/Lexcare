@@ -21,7 +21,7 @@ class OutPatient extends React.Component<Props> {
 
     state = {
 
-
+         ro:''
 
     }
 
@@ -89,7 +89,6 @@ class OutPatient extends React.Component<Props> {
                             name="sex"
                             title="Sex"
                             options={["Male","Female"]}
-                            required="Please select a sex"
                             state={state}
                             />
 
@@ -98,7 +97,6 @@ class OutPatient extends React.Component<Props> {
                             name="age"
                             title="Age"
                             options={["0 - 28 Days","29 - 11 months", "12 - 29 months","5 - 9 years"]}
-                            required="Please select age"
                             state={state}
                         />
 
@@ -107,7 +105,6 @@ class OutPatient extends React.Component<Props> {
                           name="date_of_birth"
                           title="Date of Birth"
                           placeholder=""
-                          required="Please select client date of birth"
                           state={state}
                         />
 
@@ -125,7 +122,6 @@ class OutPatient extends React.Component<Props> {
                         name="type_of_attendance"
                         options={["New","Follow Up"]}
                         title="Type of Attendance"
-                        required="Please select type of attendance"
                         state={state}
 
                     />
@@ -141,7 +137,6 @@ class OutPatient extends React.Component<Props> {
                           placeholder=""
                           name="weight"
                           title="Weight (Kg)"
-                          required="Please enter weight"
                           state={state}
 
                         />
@@ -152,7 +147,6 @@ class OutPatient extends React.Component<Props> {
                           placeholder=""
                           name="height"
                           title="Height (CM for children < 12 years) and (M for persons > 12 Years )"
-                          required="Please enter height"
                           state={state}
 
                         />
@@ -164,7 +158,6 @@ class OutPatient extends React.Component<Props> {
                               placeholder=""
                               name="bmi_weight"
                               title="BMI [Weight (Kg) / Height² (M²)]"
-                              required="Please enter height"
                               state={state}
 
                         />
@@ -186,7 +179,6 @@ class OutPatient extends React.Component<Props> {
                       name="complaint"
                       title="Presenting Complaint"
                       placeholder="Enter complaint"
-                      required="Please select an option"
                       state={state}
                     />
 
@@ -195,7 +187,6 @@ class OutPatient extends React.Component<Props> {
                        name="diagnosis"
                        title="Diagnosis"
                        options={Diseases}
-                       required='Please select an option'
                        state={state}
                     />
 
@@ -223,10 +214,23 @@ class OutPatient extends React.Component<Props> {
                           "Referred Out(RO)",
                           "Dead (D)"
                         ]}
+                        hasDependable
+                        onValueSelected={(v)=>this.setState({ro:v})}
                         state={state}
                         title="Outcome of Visits"
                         name="visit_outcome"
                     />
+
+                            <TextArea
+                                name="ro_reason"
+                                isDependable
+                                dependableValue="Referred Out(RO)"
+                                recievedValue={this.state.ro}
+                                placeholder="Please write condition that require referal"
+                                title="Please write condition that require referal"
+                                state={state}
+                            />
+
 
 
 
@@ -378,34 +382,48 @@ class OutPatient extends React.Component<Props> {
 
                     <CheckBox
                        title="Tested"
-                       name="tested_hepatitis"
+                       name="tested_hepatitis_b"
                        state={state}
                     />
 
                     <RadioButton
                       options={["Positive","Negative"]}
                       title="Result"
-                      name="result_hepatitis_test"
+                      name="result_hepatitis_b_test"
                       state={state}
+                    />
+
+                    <RadioButton
+                       title="Referred or Treated"
+                       name="hepatitis_b_refered_or_treated"
+                       options={["R","T"]}
+                       state={state}
                     />
 
                     <h5>
                        Hepatitis C Screening
                     </h5>
 
+                    <CheckBox
+                       title="Tested"
+                       name="tested_hepatitis_c"
+                       state={state}
+                    />
+
                     <RadioButton
                       options={["Positive","Negative"]}
                       title="Result"
-                      name="result_hepatitis_screening"
+                      name="result_hepatitis_c_test"
                       state={state}
                     />
 
                     <RadioButton
                        title="Referred or Treated"
-                       name="refered_or_treated"
+                       name="hepatitis_c_refered_or_treated"
                        options={["R","T"]}
                        state={state}
                     />
+
 
 
                 </StepWrapper>

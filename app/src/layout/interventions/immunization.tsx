@@ -12,9 +12,9 @@ export default class Immunization extends React.Component<props> {
     this.props.history.push("/add-immunization");
   }
 
-  edit(payload:any){
+  administerVaccine(payload:any){
     this.props.history.push({
-      pathname:"/add-immunization",
+      pathname:"/administerVaccine",
       state:payload
     })
   }
@@ -24,6 +24,7 @@ export default class Immunization extends React.Component<props> {
     window.scrollTo(0, 0)
 
   }
+
 
 
   render() {
@@ -38,6 +39,8 @@ export default class Immunization extends React.Component<props> {
 
                 <RenderData
                           editRecord={(payload)=>this.edit(payload)}
+                          isImmunization
+                          administerVaccine={(client)=>this.administerVaccine(client)}
                           SchemaName={Schema.Immunization.name}
                           addRecord={()=>this.addRecord()}
                           tableHead={

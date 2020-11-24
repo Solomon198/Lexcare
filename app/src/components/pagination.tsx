@@ -14,7 +14,11 @@ type paginationProps = {
      addRecord?:()=>void,
      editRecord?:(payload:any)=>void,
      dataField?:string,
-     ignoreFilter?:boolean
+     ignoreFilter?:boolean,
+     isTetanus?:boolean,
+     administerTD?:(client:any)=>void,
+     isImmunization?:boolean,
+     administerVaccine?:(client:any)=>void
 
 }
 
@@ -118,6 +122,29 @@ export default function PaginationComponent(props:paginationProps){
        handleSetActive(decrease);
    }
 
+   const EditBtn = (param) => (
+      <td>
+        <button onClick={()=>props.editRecord(param)} className="btn btn-primary btn-small">Edit</button>
+      </td>
+   )
+
+   const AdministerTD = (param) => (
+    <td>
+      <button onClick={()=>props.administerTD(param)} className="btn btn-primary btn-small">
+        Administer TD
+      </button>
+    </td>
+ )
+
+ const administerVaccine = (param) => (
+  <td>
+    <button onClick={()=>props.administerVaccine(param)} className="btn btn-primary btn-small">
+      Administer Vaccine
+    </button>
+  </td>
+)
+
+
    const searchDoc = ()=>{
        setStart(holdStart);
        setEnd(holdEnd);
@@ -168,7 +195,9 @@ export default function PaginationComponent(props:paginationProps){
                             {
                               props.addRecord?
                               <button onClick={()=>props.addRecord()}  className="btn btn-success">
-                              <i className="fa fa-plus" /> &nbsp; Add Record
+                                {/* <div className="os-icon os-icon-add" /> */}
+                              {/* <i className="fa fa-plus" /> &nbsp;  */}
+                              Add Record
                             </button>:null
                             }
                           </td>
@@ -213,10 +242,18 @@ export default function PaginationComponent(props:paginationProps){
                       }
 
                       {
-                        !props.hideEdit?
-                        <td>
-                        <button onClick={()=>props.editRecord(valz)} className="btn btn-primary btn-small">Edit</button>
-                      </td>:null
+                        props.isTetanus?
+                          AdministerTD(valz)
+                       :
+
+                         props.isImmunization?
+                         administerVaccine(valz)
+                         :
+                         !props.hideEdit?
+                         //
+                           EditBtn(valz)
+                         :
+                         null
                       }
 
 

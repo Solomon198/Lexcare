@@ -1,6 +1,5 @@
 import React from 'react';
 import Input from '../components/input'
-import DatePicker from '../components/datePicker';
 import SelectComponent from '../components/select'
 import StepWrapper from '../components/stepWrapper'
 import StepFormWrapper from '../components/stepFormWrapper';
@@ -90,7 +89,6 @@ class Antenatal extends React.Component<Props> {
                         placeholder="Enter actual age"
                         name="actual_age"
                         title="Actual Age"
-                        required="Please enter actual age"
                     />
 
                 </StepWrapper>
@@ -108,7 +106,6 @@ class Antenatal extends React.Component<Props> {
                         options={["1","2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"]}
                         title="Parity"
                         placeholder="Select Parity"
-                        required="Please select parity"
 
                     />
 
@@ -116,7 +113,6 @@ class Antenatal extends React.Component<Props> {
                        name="attendance_type"
                        title="ANC Attendance"
                        options={["N", "R"]}
-                       required="Please select an option"
                        state={state}
                     />
 
@@ -126,7 +122,6 @@ class Antenatal extends React.Component<Props> {
                         name="pregnancy_age"
                         title="Age of Preganancy (in weeks)"
                         state={state}
-                        required="Please select pregnancy age"
                     />
 
                     <Input
@@ -134,7 +129,6 @@ class Antenatal extends React.Component<Props> {
                           placeholder="Enter weight in kg"
                           name="weight"
                           title="Weight (in kg)"
-                          required="Please select weight"
                           state={state}
                     />
 
@@ -143,7 +137,6 @@ class Antenatal extends React.Component<Props> {
                         placeholder="Format xxx/xxx"
                         name="blood_pressure"
                         title="Blood Pressure"
-                        required="Plese enter bload presure"
                         state={state}
                     />
 
@@ -152,7 +145,6 @@ class Antenatal extends React.Component<Props> {
                         placeholder="Enter client number of visits"
                         name="visits"
                         title="No. of Antenatal clinic Visits to date"
-                        required="Please enter number of visits"
                         state={state}
                     />
 
@@ -169,14 +161,12 @@ class Antenatal extends React.Component<Props> {
                       name="hiv_testing"
                       title="HIV Testing Services"
                       options={["Yes", "No"]}
-                      required="Please select an option"
                     />
 
                     <RadioButton
                        name="fgm"
                        title="Female Genital Mutilation (FGM)"
                        options={["Yes", "No"]}
-                       required='Please select an option'
                        state={state}
                     />
 
@@ -184,7 +174,6 @@ class Antenatal extends React.Component<Props> {
                          name="family_planning"
                          title="Family Planning"
                          options={["Yes", "No"]}
-                         required="Please select an option"
                          state={state}
                        />
 
@@ -192,7 +181,6 @@ class Antenatal extends React.Component<Props> {
                       name="maternal_nutrition"
                       title="Maternal Nutrition"
                       options={["Yes", "No"]}
-                      required="Please select an option"
                       state={state}
                       />
 
@@ -201,7 +189,6 @@ class Antenatal extends React.Component<Props> {
                         title="Early Intiation of Breastfeeding"
                         options={["Yes", "No"]}
                         state={state}
-                        required="Please select an option"
                      />
 
                     <RadioButton
@@ -209,7 +196,6 @@ class Antenatal extends React.Component<Props> {
                        title="Exclusive Breastfeeding"
                        options={["Yes", "No"]}
                        state={state}
-                       required="Please select an option"
                      />
 
                 </StepWrapper>
@@ -223,7 +209,6 @@ class Antenatal extends React.Component<Props> {
                         name="syphilis_testing"
                         title="Syphilis Testing"
                         options={["Not Done", "Positive", "Negative"]}
-                        required="Please select an option"
                         state={state}
                     />
 
@@ -231,7 +216,6 @@ class Antenatal extends React.Component<Props> {
                        name="syphilis_treated"
                        title="Syphilis Treated"
                        options={["Yes", "No", "Referred"]}
-                       required="Please select an option"
                        state={state}
                        />
 
@@ -239,7 +223,6 @@ class Antenatal extends React.Component<Props> {
                          name="hepatitis_b_testing"
                          title="Hepatitis B Testing"
                          options={["Not Done", "Positive", "Negative"]}
-                         required="Please select an option"
                          state={state}
                          />
 
@@ -248,21 +231,21 @@ class Antenatal extends React.Component<Props> {
                          state={state}
                          title="Hepatitis B Treated"
                          options={["Not Done", "Positive", "Negative"]}
-                         required="Please select an option"/>
+                         />
 
                     <RadioButton
                         name="hepatitis_c_testing"
                         state={state}
                         title="Hepatitis C Testing"
                         options={["Not Done", "Positive", "Negative"]}
-                        required="Please select an option" />
+                         />
 
                     <RadioButton
                          name="hepatitis_c_treated"
                          state={state}
                          title="Hepatitis C Treated"
                          options={["Yes", "No", "Referred"]}
-                         required="Please select an option"
+
                      />
 
                 </StepWrapper>
@@ -278,7 +261,7 @@ class Antenatal extends React.Component<Props> {
                         name="anemia"
                         state={state}
                         title="HB/PCV (Anaemia)"
-                        required="Please enter HB/PCV (Anaemia"
+
                     />
 
                     <Input
@@ -287,7 +270,7 @@ class Antenatal extends React.Component<Props> {
                           placeholder="Enter clients sugar test result."
                           name="sugar_test_result"
                           title="Sugar (Gestational Diabetes)"
-                          required="Please enter sugar test result"
+
                     />
 
                     <h5>Urianalysis</h5>
@@ -298,7 +281,7 @@ class Antenatal extends React.Component<Props> {
                         placeholder="Enter clients test result."
                         name="urinalysis_sugar"
                         title="Sugar"
-                        required="Please enter client test result"
+
                     />
 
                     <Input
@@ -307,7 +290,7 @@ class Antenatal extends React.Component<Props> {
                         placeholder="Enter clients test result."
                         name="protein"
                         title="Protein"
-                        required="Please enter client test result"
+
                     />
 
                     <RadioButton
@@ -315,7 +298,7 @@ class Antenatal extends React.Component<Props> {
                           state={state}
                           title="LLIN Given"
                           options={["Yes", "No"]}
-                          required="Please select an option"
+
 
                       />
 
@@ -331,7 +314,7 @@ class Antenatal extends React.Component<Props> {
                          title="IPT1"
                          state={state}
                          options={["Yes", "No"]}
-                         required="Please select an option"
+
                     />
 
                     <RadioButton
@@ -339,7 +322,7 @@ class Antenatal extends React.Component<Props> {
                        title="IPT2"
                        state={state}
                        options={["Yes", "No"]}
-                       required="Please select an option"
+
 
                        />
 
@@ -348,20 +331,20 @@ class Antenatal extends React.Component<Props> {
                           state={state}
                           title="IPT3"
                           options={["Yes", "No"]}
-                          required="Please select an option"  />
+                            />
 
                     <RadioButton
                        name="ipt_greater_three"
                        state={state}
                        title="IPT > 3"
                        options={["Yes", "No"]}
-                       required="Please select an option"  />
+                         />
 
                     <SelectComponent
 
                         name="td"
                         state={state}
-                        required="Please select an option"
+
                         options={["TD1","TD2", "TD3", "TD4", "TD5"]}
                         title="TD"
                         placeholder="Select TD"
@@ -374,7 +357,7 @@ class Antenatal extends React.Component<Props> {
                           placeholder="Enter Associated Problems"
                           name="associated_problems"
                           title="Associated Problems"
-                          required="Please enter associated problems"
+
                     />
 
                     <SelectComponent
@@ -383,7 +366,7 @@ class Antenatal extends React.Component<Props> {
                         options={["NT","T", "A", "RO"]}
                         title="Visit Out"
                         placeholder="Select Visit Out"
-                        required="Please select an option"
+
 
                     />
 
@@ -393,13 +376,12 @@ class Antenatal extends React.Component<Props> {
                         placeholder="Enter Reason of referral"
                         name="referral_reason"
                         title="Reason of referral"
-                        required="Please enter reason of referal"
                         state={state}
                     />
 
                     <SelectComponent
                         name="transportation"
-                        required="Please select an option"
+
                         options={["Ambulance","Others"]}
                         title="Transportation"
                         placeholder="Select Transportation"

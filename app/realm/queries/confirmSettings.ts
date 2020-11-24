@@ -14,7 +14,7 @@ import { _APP_INSTANCE_ } from './dbConfig';
 import Schemas from '../schemas';
 import context from 'react-bootstrap/esm/AccordionContext';
 
-//check if configuration exist
+//check if configuration exist 
 
 export function checkIfAppIsConfig(){
   try{

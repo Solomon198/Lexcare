@@ -20,9 +20,17 @@ export type LabourAndDeliveryProperties = {
 
         client_names: string,
 
+        baby_condition:string,
+
+        live_status:string,
+
         client_type: string,
 
         cord_clamped_at: string,
+
+        gel_applied : string,
+
+        counselled : string,
 
         date: string,
 

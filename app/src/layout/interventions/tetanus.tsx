@@ -12,9 +12,9 @@ export default class Tetanus extends React.Component<props> {
     this.props.history.push("/add-tetanus")
   }
 
-  edit(payload:any){
+  administerTD(payload:any){
     this.props.history.push({
-      pathname:"/add-tetanus",
+      pathname:"/administerTD",
       state:payload,
     })
   }
@@ -25,6 +25,8 @@ export default class Tetanus extends React.Component<props> {
     window.scrollTo(0, 0)
 
   }
+
+
 
 
 
@@ -44,6 +46,8 @@ export default class Tetanus extends React.Component<props> {
                           SchemaName={Schema.Tetanus.name}
                           addRecord={()=>this.addRecord()}
                           dataField="date_of_visit"
+                          isTetanus
+                          administerTD={(value)=>this.administerTD(value)}
                           tableHead={
                             <thead>
                             <tr>

@@ -20,45 +20,45 @@ const PostNatal : PostNatalProps = {
 
        health_facility_id: "string",
 
-       age: "string",
+       age: "string?",
 
-       associated_problems: "string",
+       associated_problems: "string?",
 
-       client_card_number: "string",
+       client_card_number: "string?",
 
-       client_names: "string",
+       client_names: "string?",
 
        date: "date",
 
-       exact_age: "int",
+       exact_age: "int?",
 
-       hb_pvc_test: "string",
+       hb_pvc_test: "string?",
 
-       kmc: "string",
+       kmc: "string?",
 
        maternal_care: "string[]",
 
-       mother: "string",
+       mother: "string?",
 
        neonatal_complications: "string[]",
 
-       newborn: "string",
+       newborn: "string?",
 
-       outcome_of_visit: "string",
+       outcome_of_visit: "string?",
 
-       parity: "int",
+       parity: "int?",
 
-       pnc_clinic_attendance: "string",
+       pnc_clinic_attendance: "string?",
 
-       ro_reason: "string",
+       ro_reason: "string?",
 
        servies: "string[]",
 
-       sex_of_child: "string",
+       sex_of_child: "string?",
 
-       transportation_out: "string",
+       transportation_out: "string?",
 
-       urinal_test_result: "string",
+       urinal_test_result: "string?",
 
        createdBy : "string"
 
