@@ -41,6 +41,11 @@ type AdministerTetanusProperties = {
 
   td5_comment:string,
 
+  state_id:string,
+
+  lga_id: string,
+
+
 };
 
 export type AdministerTetanusProps = {

@@ -11,7 +11,7 @@ import Auth from '../queries/auth';
 
 import {showToast} from '../utils/utilsUI'
 
-import {getObjectId,hashPassword,generateRandomByte} from '../utils/utils'
+import {getObjectId,hashPassword,generateRandomByte, getLocationIDS} from '../utils/utils'
 
 import {_APP_INSTANCE_, _DATA_BASE_INSTACE_} from './dbConfig';
 
@@ -30,6 +30,13 @@ export async function createCommunityLeader(documents:any,isUpdate?:boolean){
     if(!isUpdate){
 
       documents._id = getObjectId();
+
+      const {phc_state,phc_lga} = getPHC_configSettings();
+
+      let {state_id,lga_id}  = getLocationIDS(phc_state,phc_lga);
+
+      documents["state_id"] = state_id;
+      documents["lga_id"] = lga_id;
 
       documents.health_facility_id = getPHC_configSettings().phc_id
 
@@ -82,53 +89,109 @@ export async function createCommunityLeader(documents:any,isUpdate?:boolean){
 
 
 
-export async function createPHC_Staff(documents:any){
+export async function createPHC_Staff(documents:any,isUpdate:boolean,isFirst?:boolean){
 
   try{
 
 
-    documents._id = getObjectId();
 
     let creds = hashPassword(documents.password);
 
+      const {phc_state,phc_lga} = getPHC_configSettings();
+
+      let {state_id,lga_id}  = getLocationIDS(phc_state,phc_lga);
+
+      documents["state_id"] = state_id;
+      documents["lga_id"] = lga_id;
+
     delete documents.password;
 
-    documents.health_facility_id = getPHC_configSettings().phc_id
 
     documents.salt = creds.salt;
 
     documents.hash  = creds.hash;
 
-    documents.staff_id = generateRandomByte();
+   if(!isUpdate){
+       documents.staff_id = generateRandomByte();
+       documents.health_facility_id = getPHC_configSettings().phc_id
+       documents._id = getObjectId();
+
+   }
 
 
 
-    const realm =  new Realm({
-      schema:[
+    let realm;
+
+    if(!isFirst){
+     realm = new Realm({
+        schema:[
 
 
-        Schemas.StaffSchema,
+          Schemas.StaffSchema,
 
 
 
-      ],
-      sync:{
-          user : _APP_INSTANCE_.currentUser,
-          partitionValue : getPHC_configSettings().phc_id,
-      }
-    });
+        ],
+        schemaVersion:1,
+        sync:{
+            user : _APP_INSTANCE_.currentUser,
+            partitionValue : getPHC_configSettings().phc_id,
+        }
+      });
 
 
-     realm.write(()=>{
+          realm.write(()=>{
 
-         realm.create(Schemas.StaffSchema.name,documents);
+          if(isUpdate){
+            realm.create(Schemas.StaffSchema.name,documents,true);
+          }else{
+            realm.create(Schemas.StaffSchema.name,documents);
+          }
 
-   })
+         })
 
 
-   setAdminExist("true");
+           setAdminExist("true");
 
-   return "success";
+           return "success";
+    }else{
+
+      realm = await  Realm.open({
+        schema:[
+
+
+          Schemas.StaffSchema,
+
+
+
+        ],
+        schemaVersion:1,
+        sync:{
+            user : _APP_INSTANCE_.currentUser,
+            partitionValue : getPHC_configSettings().phc_id,
+        }
+      })
+
+      realm.write(()=>{
+
+        if(isUpdate){
+          realm.create(Schemas.StaffSchema.name,documents,true);
+        }else{
+          realm.create(Schemas.StaffSchema.name,documents);
+        }
+
+       })
+
+
+         setAdminExist("true");
+
+         return "success";
+
+
+
+    }
+
+
 
   }catch(e){
      console.log(e)
@@ -152,14 +215,27 @@ export async  function createDailyAttendance(document:any,isUpdate?:boolean){
           }
 
 
+
+
+
           document.date = new Date(document.date);
+
+          const {phc_state,phc_lga} = getPHC_configSettings();
+
+          let {state_id,lga_id}  = getLocationIDS(phc_state,phc_lga);
+
+          document["state_id"] = state_id;
+
+          document["lga_id"] = lga_id;
+          document['health_facility_id'] = getPHC_configSettings().phc_id;
+          document["createdBy"]  = Auth.getCurrentUser().staff_id
 
 
           if(!isUpdate){
 
-                document['health_facility_id'] = getPHC_configSettings().phc_id;
 
-                document["createdBy"]  = Auth.getCurrentUser().staff_id
+
+
 
                 document._id = new BSON.ObjectID();
 
@@ -187,7 +263,9 @@ export async  function createDailyAttendance(document:any,isUpdate?:boolean){
                   client.next_of_kin_name = document.next_of_kin_name;
                   client.state_of_origin = document.state_of_origin
                   client.first_contact_with_facility = document.first_contact_with_facility
-                    client.reference_in = document.reference_in;
+                  client.reference_in = document.reference_in;
+                  client.state_id = document.state_id;
+                  client.lga_id = document.lga_id;
                });
 
 
@@ -207,6 +285,8 @@ export async  function createDailyAttendance(document:any,isUpdate?:boolean){
                     client.next_of_kin_name = document.next_of_kin_name;
                     client.first_contact_with_facility = document.first_contact_with_facility
                     client.reference_in = document.reference_in;
+                    client.state_id = document.state_id;
+                    client.lga_id = document.lga_id;
                })
 
            }else{
@@ -224,6 +304,8 @@ export async  function createDailyAttendance(document:any,isUpdate?:boolean){
 
       }catch(err){
 
+
+          console.log(err)
          return err
 
       }
@@ -234,6 +316,14 @@ export async  function createDailyAttendance(document:any,isUpdate?:boolean){
 export async function createBirthRegister(documents:any,isUpdate?:boolean){
 
   try{
+
+    const {phc_state,phc_lga} = getPHC_configSettings();
+
+    let {state_id,lga_id}  = getLocationIDS(phc_state,phc_lga);
+
+    documents["state_id"] = state_id;
+
+    documents["lga_id"] = lga_id;
 
 
     if(!isUpdate){
@@ -283,6 +373,14 @@ export async function createFacilityService(documents:any,isUpdate?:boolean){
 
   try{
 
+      const {phc_state,phc_lga} = getPHC_configSettings();
+
+      let {state_id,lga_id}  = getLocationIDS(phc_state,phc_lga);
+
+      documents["state_id"] = state_id;
+
+      documents["lga_id"] = lga_id;
+
 
     if(!isUpdate){
 
@@ -324,6 +422,13 @@ export async function createFacilityService(documents:any,isUpdate?:boolean){
 export async function createReferalOut(documents:any,isUpdate?:boolean){
 
   try{
+
+    const {phc_state,phc_lga} = getPHC_configSettings();
+
+    let {state_id,lga_id}  = getLocationIDS(phc_state,phc_lga);
+
+    documents["state_id"] = state_id;
+    documents["lga_id"] = lga_id;
 
 
     if(!isUpdate){
@@ -373,6 +478,14 @@ export async function createAntenatal(documents:any,isUpdate?:boolean){
 
     documents.dob = new Date();
 
+      const {phc_state,phc_lga} = getPHC_configSettings();
+
+      let {state_id,lga_id}  = getLocationIDS(phc_state,phc_lga);
+
+      documents["state_id"] = state_id;
+
+      documents["lga_id"] = lga_id;
+
     if(!isUpdate){
 
             documents.health_facility_id = getPHC_configSettings().phc_id;
@@ -410,7 +523,17 @@ export async function createFamilyPlaning(documents:any,isUpdate?:boolean){
 
   try{
 
+    if(!documents.natural_methods_cb) documents.natural_methods_cb = [" "]
+    if(!documents.natural_methods_others) documents.natural_methods_others = [" "]
+    if(!documents.natural_methods_referal) documents.natural_methods_referal = [" "]
 
+      const {phc_state,phc_lga} = getPHC_configSettings();
+
+      let {state_id,lga_id}  = getLocationIDS(phc_state,phc_lga);
+
+      documents["state_id"] = state_id;
+
+      documents["lga_id"] = lga_id;
 
     documents.date = new Date(documents.date);
 
@@ -457,6 +580,14 @@ export async function createInPatient(documents:any,isUpdate?:boolean){
 
 
     documents.date = new Date(documents.date);
+
+      const {phc_state,phc_lga} = getPHC_configSettings();
+
+      let {state_id,lga_id}  = getLocationIDS(phc_state,phc_lga);
+
+      documents["state_id"] = state_id;
+
+      documents["lga_id"] = lga_id;
 
     if(documents.dob){
       documents.dob = new Date(documents.dob);
@@ -508,6 +639,14 @@ export async function createLabourAndDelivery(documents:any,isUpdate?:boolean){
 
 
     documents.date = new Date(documents.date);
+
+      const {phc_state,phc_lga} = getPHC_configSettings();
+
+      let {state_id,lga_id}  = getLocationIDS(phc_state,phc_lga);
+
+      documents["state_id"] = state_id;
+
+      documents["lga_id"] = lga_id;
 
     if(documents.delivery_date){
       documents.delivery_date = new Date(documents.delivery_date);
@@ -561,6 +700,14 @@ export async function createPostNatal(documents:any,isUpdate?:boolean){
 
     documents.date = new Date(documents.date);
 
+       const {phc_state,phc_lga} = getPHC_configSettings();
+
+      let {state_id,lga_id}  = getLocationIDS(phc_state,phc_lga);
+
+      documents["state_id"] = state_id;
+
+      documents["lga_id"] = lga_id;
+
     if(!isUpdate){
 
       documents.health_facility_id = getPHC_configSettings().phc_id;
@@ -597,10 +744,18 @@ export async function _AdministerImmunizationVaccine(documents:any,isUpdate?:boo
 
   try{
 
+       const {phc_state,phc_lga} = getPHC_configSettings();
+
+      let {state_id,lga_id}  = getLocationIDS(phc_state,phc_lga);
+
+      documents["state_id"] = state_id;
+      documents["lga_id"] = lga_id;
 
     if(!isUpdate){
 
       documents.health_facility_id = getPHC_configSettings().phc_id;
+
+
 
       documents._id = getObjectId();
 
@@ -631,7 +786,12 @@ export async function _AdministerTD(documents:any,isUpdate?:boolean){
 
   try{
 
+    const {phc_state,phc_lga} = getPHC_configSettings();
 
+    let {state_id,lga_id}  = getLocationIDS(phc_state,phc_lga);
+
+    documents["state_id"] = state_id;
+    documents["lga_id"] = lga_id;
     if(!isUpdate){
 
       documents.health_facility_id = getPHC_configSettings().phc_id;
@@ -666,6 +826,12 @@ export async function createImmunization(documents:any,isUpdate?:boolean){
 
   try{
 
+      const {phc_state,phc_lga} = getPHC_configSettings();
+
+      let {state_id,lga_id}  = getLocationIDS(phc_state,phc_lga);
+
+      documents["state_id"] = state_id;
+      documents["lga_id"] = lga_id;
 
     documents.date = new Date(documents.date);
 
@@ -715,7 +881,14 @@ export async function createOutpatient(documents:any,isUpdate?:boolean){
   try{
 
 
-    documents.date = new Date(documents.date);
+      const {phc_state,phc_lga} = getPHC_configSettings();
+
+      let {state_id,lga_id}  = getLocationIDS(phc_state,phc_lga);
+
+      documents["state_id"] = state_id;
+      documents["lga_id"] = lga_id;
+
+      documents.date = new Date(documents.date);
 
     if(documents.date_of_birth){
 
@@ -765,6 +938,12 @@ export async function createNutrition(documents:any,isUpdate?:boolean){
 
   try{
 
+      const {phc_state,phc_lga} = getPHC_configSettings();
+
+      let {state_id,lga_id}  = getLocationIDS(phc_state,phc_lga);
+
+      documents["state_id"] = state_id;
+      documents["lga_id"] = lga_id;
 
     documents.date = new Date(documents.date);
 
@@ -814,8 +993,17 @@ export async function createTetanus(documents:any,isUpdate?:boolean){
 
   try{
 
+      const {phc_state,phc_lga} = getPHC_configSettings();
+
+      let {state_id,lga_id}  = getLocationIDS(phc_state,phc_lga);
+
+      documents["state_id"] = state_id;
+      documents["lga_id"] = lga_id;
 
     documents.date_of_visit = new Date(documents.date_of_visit);
+    if(!documents.email){
+      documents.email = " ";
+    }
 
     if(documents.date_of_birth){
       documents.date_of_birth = new Date(documents.date_of_birth);

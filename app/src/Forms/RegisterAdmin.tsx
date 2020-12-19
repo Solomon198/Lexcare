@@ -74,7 +74,6 @@ class AdminStaff extends React.Component<Props> {
                         placeholder="Enter Email Address"
                         name="email"
                         title="Email Address"
-                        required="Please enter email address"
                     />
 
                    <Input

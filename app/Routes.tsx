@@ -94,7 +94,7 @@ export default class Routes extends React.Component {
 
     async componentDidMount(){
 
-     // clearStorage();
+      //clearStorage();
       if(getPHC_configSettings()){
           this.setState({adminExist:"kdk"})
 
@@ -113,7 +113,7 @@ export default class Routes extends React.Component {
     validate(){
       const {email,password} = this.state;
       if(!email.trim()){
-        this.setState({error:"Please Provide a valid email"})
+        this.setState({error:"Please Provide a valid Phone number"})
       }else if(!password){
         this.setState({error:"Please enter a password"})
       }else{
@@ -135,7 +135,7 @@ export default class Routes extends React.Component {
     logout(){
           Auth.LogOut().then(()=>{
 
-               this.setState({error:"",loginStatus:"logout"})
+               this.setState({error:"",loginStatus:"logout",email:"",password:""})
 
            }).catch((e)=>{
 
@@ -147,7 +147,7 @@ export default class Routes extends React.Component {
     async createAdmin(info:any){
 
 
-         createPHC_Staff(info).then((val)=>{
+         createPHC_Staff(info,false,true).then((val)=>{
             this.setState({adminExist: "kd"})
 
 

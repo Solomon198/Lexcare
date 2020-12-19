@@ -36,15 +36,12 @@ export default class CommunityLeaders extends React.Component<props> {
               <h6 className="element-header">Commuunity Leaders</h6>
               <div className="element-box">
                 <h5 className="form-header">All Commuunity Leaders</h5>
-                <div className="form-desc">
-                <button onClick={()=>this.addRecord()}  className="btn btn-success">
-                              <i className="fa fa-plus" /> &nbsp; Add Record
-                            </button>
-                </div>
+
 
                 <RenderData
                           SchemaName={schemas.CommunityLeaders.name}
                           ignoreFilter
+                          addRecord={()=>this.addRecord()}
                           editRecord={(record)=>this.edit(record)}
                           tableHead={
                             <thead>

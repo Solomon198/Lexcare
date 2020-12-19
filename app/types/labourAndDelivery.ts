@@ -6,6 +6,10 @@ export type LabourAndDeliveryProperties = {
 
         health_facility_id: string,
 
+        state_id:string,
+
+        lga_id: string,
+
         abortion: string,
 
         age: string,

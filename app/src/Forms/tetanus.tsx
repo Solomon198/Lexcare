@@ -17,7 +17,7 @@ class Tetanus extends React.Component<Props> {
 
     state = {
 
-
+      client: null
 
     }
 
@@ -81,6 +81,7 @@ class Tetanus extends React.Component<Props> {
                         <SelectClient
                               name="client_name"
                               name2="card_no"
+                              onValueSelected={(value)=>this.setState({client:value})}
                               title="Select Client"
                               required="please select client"
                               date_name="date_of_visit"

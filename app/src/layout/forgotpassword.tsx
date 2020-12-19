@@ -56,15 +56,15 @@ type Props = {
       return (
         <div  className="container-fluid card">
         <div className="row no-gutter">
-          <div className="col-md-6 col-lg-5" style={{marginTop:20}}>
-            <div className="login d-flex align-items-center py-5 ">
+          <div className="col-md-6 col-lg-5 my-auto">
+            <div className="login d-flex align-items-center">
               <div className="container">
                 <div className="row">
                   <div className="col-md-9 col-lg-8 mx-auto">
                       <button onClick={()=>this.props.Switch()} className="btn-sm btn btn-primary">
                          Cancel
                       </button>
-                      <div className="text-center" style={{marginTop:80,marginBottom:20}}>
+                      <div className="text-center" style={{marginBottom:20}}>
                       <img style={{width:120,height:80}} src={image}/>
                       </div>
 
@@ -121,7 +121,7 @@ type Props = {
               </div>
             </div>
           </div>
-          <div style={{minHeight:720}} className="d-none d-md-flex col-md-6 col-lg-7 bg-image "></div>
+          <div style={{minHeight:window.innerHeight}} className="d-none d-md-flex col-md-6 col-lg-7 bg-image "></div>
         </div>
       </div>
       )

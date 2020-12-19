@@ -18,7 +18,11 @@ const Services : ServicesProps = {
 
       service_description:"string?",
 
-      service_name: "string?"
+      service_name: "string?",
+
+      state_id:"string?",
+
+      lga_id: "string?",
 
      }
 

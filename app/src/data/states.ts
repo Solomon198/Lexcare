@@ -13,7 +13,7 @@
   "Edo",
   "Ekiti",
   "Enugu",
-  "Abuja",
+  "FCT Abuja",
   "Gombe",
   "Imo",
   "Jigawa",

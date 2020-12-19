@@ -12,6 +12,10 @@ import Bson from 'bson'
 
   any_referal_documents: string,
 
+  state_id:string,
+
+  lga_id: string,
+
   client_address:string,
 
   client_name: string,

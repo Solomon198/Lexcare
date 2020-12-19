@@ -50,7 +50,7 @@ const LabourAndDelivery : LabourAndDeliveryProps = {
 
         delivery_time: "string?",
 
-        exact_age: "int?",
+        exact_age: "string?",
 
         live_birth: "string?",
 
@@ -91,6 +91,10 @@ const LabourAndDelivery : LabourAndDeliveryProps = {
         live_status : "string[]",
 
         createdBy : "string",
+
+        state_id:"string?",
+
+        lga_id: "string?",
 
   }
 

@@ -14,7 +14,7 @@ import { _APP_INSTANCE_ } from './dbConfig';
 import Schemas from '../schemas';
 import context from 'react-bootstrap/esm/AccordionContext';
 
-//check if configuration exist 
+//check if configuration exist
 
 export function checkIfAppIsConfig(){
   try{
@@ -53,6 +53,8 @@ export async function checkIfAdminExist(){
 export async function checkIfStaffExist(phc_id?:string){
   try{
 
+
+
       const appSetting = getPHC_configSettings();
 
       const realm = await Realm.open({
@@ -60,12 +62,49 @@ export async function checkIfStaffExist(phc_id?:string){
         schema:[
 
 
+          Schemas.BirthRegister,
+
+          Schemas.DailyAttendanceSchema,
+
+          Schemas.ClientSchema,
+
+          Schemas.CommunityLeaders,
+
+          Schemas.ReferalOut,
+
+          Schemas.Antenatal,
+
+          Schemas.FamilyPlaning,
+
+          Schemas.Inpatient,
+
+          Schemas.LabourAndDelivery,
+
+          Schemas.PostNatal,
+
+          Schemas.Immunization,
+
+          Schemas.OutPatient,
+
+          Schemas.Nutrition,
+
+          Schemas.Tetanus,
+
+          Schemas.Services,
+
+          Schemas.AdministerVaccine,
+
+          Schemas.TetanusAdministration,
+
 
           Schemas.StaffSchema,
 
 
 
         ],
+
+        schemaVersion:1,
+
 
         sync:{
 
@@ -80,18 +119,23 @@ export async function checkIfStaffExist(phc_id?:string){
       let obj = realm.objects(Schemas.StaffSchema.name);
       let staffs = getRealmObjectCollection(obj);
 
-      // console.log(staffs);
-      // console.log("phc user called")
+      console.log(staffs);
+      console.log("phc user called")
 
       if(staffs.length > 0){
+        console.log("staff exist")
         return true;
       }else{
+        console.log("staff does not exist")
          return false
       }
 
 
   }catch(e){
-       return e.message;
+       console.log("caught error");
+       console.log(e);
+      return e;
+
   }
 }
 

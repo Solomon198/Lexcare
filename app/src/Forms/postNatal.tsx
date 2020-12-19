@@ -11,6 +11,7 @@ import SelectClient from '../components/selectClient';
 import RadioButton from '../components/radioButtons';
 import {createPostNatal} from '../../realm/queries/writeQueries';
 import schemas from '../../realm/schemas';
+import { AgeRange } from '../../realm/utils/utils';
 
 
 
@@ -27,7 +28,8 @@ class PostNatal extends React.Component<Props> {
           months:[],
           years:[],
           services:[],
-          ro:""
+          ro:"",
+          client:null
 
 
 
@@ -92,6 +94,7 @@ class PostNatal extends React.Component<Props> {
                                   name="client_names"
                                   name2="client_card_number"
                                   title="Select Client"
+                                  onValueSelected={(value)=>this.setState({client:value})}
                                   required="please select client"
                                   date_name="date"
                                   date_title="Select registration date"
@@ -113,7 +116,7 @@ class PostNatal extends React.Component<Props> {
                             />
 
                             <Input
-                                type="number"
+                                type="string"
                                 placeholder="Enter the exact age of client"
                                 name="exact_age"
                                 state={state}
@@ -128,8 +131,11 @@ class PostNatal extends React.Component<Props> {
                                 state={state}
                               />
 
-                        <RadioButton state={state}        name="pnc_clinic_attendance"  title="Postnatal Clinic Attendance<"
-                              options={["10 - 14 years", "15 - 19 years", "20 - 24 years", "25 - 49 years", "≥ 50 years"]}
+                        <RadioButton
+                             state={state}
+                             name="pnc_clinic_attendance"
+                             title="Postnatal Clinic Attendance<"
+                              options={AgeRange().postNatal}
 
                             />
 
@@ -154,7 +160,13 @@ class PostNatal extends React.Component<Props> {
 
                             <RadioButton state={state} name="newborn" title="Newborn" options={["1 Day", "2 - 3 Days", "4 - 7 Days", "> 7 Days"]}  />
 
-                            <RadioButton state={state} name="sex_of_child" title="Sex of Child" options={["Male", "Female"]}  />
+                            <RadioButton
+                                state={state}
+                                name="sex_of_child"
+                                title="Sex of Child"
+                                options={["Male", "Female"]}
+                                required="Please enter Childs Sex"
+                                />
 
                              <MultiSelectAndSearchComponent
                                  state={state}

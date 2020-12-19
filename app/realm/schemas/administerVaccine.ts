@@ -20,6 +20,10 @@ const AdministerVaccineSchema : AdministerVaccine = {
 
       immunization_record_id:"objectId",
 
+      state_id:"string?",
+
+      lga_id: "string?",
+
 
         hepB0:"string?",
 

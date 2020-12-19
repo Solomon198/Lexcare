@@ -21,7 +21,9 @@ const AdministerTetanusSchema : AdministerTetanusProps = {
 
       tetanus_record_id: "objectId",
 
+      state_id:"string?",
 
+      lga_id: "string?",
 
       td1:"string?",
 

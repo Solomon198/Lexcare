@@ -30,7 +30,7 @@ const PostNatal : PostNatalProps = {
 
        date: "date",
 
-       exact_age: "int?",
+       exact_age: "string?",
 
        hb_pvc_test: "string?",
 
@@ -60,7 +60,11 @@ const PostNatal : PostNatalProps = {
 
        urinal_test_result: "string?",
 
-       createdBy : "string"
+       createdBy : "string",
+
+       state_id:"string?",
+
+       lga_id: "string?",
 
 
 

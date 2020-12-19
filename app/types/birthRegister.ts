@@ -7,6 +7,10 @@ import Bson from 'bson'
 
   health_facility_id: string,
 
+  state_id:string,
+
+  lga_id: string,
+
   certificate_collection_date: string,
 
   certificate_collector_name: string,

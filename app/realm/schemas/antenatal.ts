@@ -20,7 +20,7 @@ const Antenatal : AntenatalProps = {
 
         health_facility_id: "string",
 
-        actual_age: "int?",
+        actual_age: "string?",
 
         age: "string?",
 
@@ -99,6 +99,9 @@ const Antenatal : AntenatalProps = {
         createdBy : "string",
 
 
+        state_id:"string?",
+
+       lga_id: "string?",
 
 
   }

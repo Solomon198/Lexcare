@@ -9,6 +9,7 @@ import SelectClient from '../components/selectClient';
 import {createLabourAndDelivery} from '../../realm/queries/writeQueries'
 import schemas from '../../realm/schemas';
 import CheckBox from '../components/checkBox'
+import { AgeRange } from '../../realm/utils/utils';
 
 
 
@@ -25,7 +26,8 @@ class  LabourAndDelivery extends React.Component<Props> {
           months:[],
           years:[],
           aliveStatus:"",
-          transportationOut:""
+          transportationOut:"",
+          client:null
 
 
 
@@ -82,6 +84,7 @@ class  LabourAndDelivery extends React.Component<Props> {
                                     name="client_names"
                                     name2="client_card_number"
                                     title="Select Client"
+                                    onValueSelected={(value)=>this.setState({client:value})}
                                     required="please select client"
                                     date_name="date"
                                     date_title="Date"
@@ -96,7 +99,7 @@ class  LabourAndDelivery extends React.Component<Props> {
                             <SelectComponent
 
                             name="age"
-                            options={["0 - 28 Days", "29 days - 11 Months", "12 - 59 Months", "5 - 9 Years", "10 - 19 Years", "> 20 Years"]}
+                            options={AgeRange().labourAndDelivery}
                             title="Age"
                             placeholder="Select Age"
                             state={state}
@@ -105,7 +108,7 @@ class  LabourAndDelivery extends React.Component<Props> {
                             />
 
                             <Input
-                                type="number"
+                                type="string"
                                 placeholder="Enter the exact age of client"
                                 name="exact_age"
                                 title="Write Exact Age"

@@ -23,6 +23,7 @@ import SelectClient from '../components/selectClient';
 
 import {createFamilyPlaning} from '../../realm/queries/writeQueries';
 import schemas from '../../realm/schemas';
+import { AgeRange } from '../../realm/utils/utils';
 
 
 
@@ -38,6 +39,7 @@ class  FamilyPlanning extends React.Component<Props> {
           days:[],
           months:[],
           years:[],
+          client:null
 
 
 
@@ -100,6 +102,7 @@ class  FamilyPlanning extends React.Component<Props> {
                                 <SelectClient
                                     name="client_name"
                                     name2="client_card_number"
+                                    onValueSelected={(value)=>this.setState({client:value})}
                                     title="Select Client"
                                     required="please select client"
                                     date_name="date"
@@ -137,7 +140,7 @@ class  FamilyPlanning extends React.Component<Props> {
                             state={state}
                             />
 
-                            <RadioButton state={state} name="age" title="Age" options={["10 - 14 years", "15 - 19 years", "20 - 24 years", "25 - 49 years", "≥ 50 years"]} />
+                            <RadioButton state={state} name="age" title="Age" options={AgeRange().familyPlaning} />
 
                             <Input
                                 type="number"

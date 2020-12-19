@@ -7,6 +7,7 @@ import StepFormWrapper from '../components/stepFormWrapper';
 
 type Props = {
     history: any,
+    location:any,
 }
 
 class BirthRegister extends React.Component<Props> {
@@ -35,7 +36,12 @@ class BirthRegister extends React.Component<Props> {
     }
 
     async createAdmin(info:any){
-      createPHC_Staff(info).then((val)=>{
+      const state = this.props.location.state;
+      const isUpdate = state ? true : false;
+      if(state){
+        info._id = state._id
+      }
+      createPHC_Staff(info,isUpdate).then((val)=>{
 
         this.props.history.push("/phc-staff");
 
@@ -46,6 +52,8 @@ class BirthRegister extends React.Component<Props> {
       })
  }
     render() {
+
+      const state = this.props.location.state;
 
         return (
             <StepFormWrapper
@@ -67,6 +75,7 @@ class BirthRegister extends React.Component<Props> {
                     name="full_name"
                     title="Full Name"
                     required="Please enter full name"
+                    state={state}
 
                     />
 
@@ -76,6 +85,7 @@ class BirthRegister extends React.Component<Props> {
                     placeholder="Enter phone number"
                     name="phone_number"
                     title="Phone Number"
+                    state={state}
                     required="Please enter phone number"
                     />
 
@@ -85,6 +95,7 @@ class BirthRegister extends React.Component<Props> {
                     name="password"
                     title="Password"
                     required="Please Enter Password"
+                    state={state}
                     />
 
                    <Input
@@ -92,7 +103,7 @@ class BirthRegister extends React.Component<Props> {
                     placeholder="Enter Email"
                     name="email"
                     title="Email"
-                    required="Please Enter Email"
+                    state={state}
                     />
 
 
@@ -103,6 +114,7 @@ class BirthRegister extends React.Component<Props> {
                     title="Role"
                     placeholder="Select Role"
                     required="Please select a role"
+                    state={state}
                     />
 
                 </StepWrapper>

@@ -9,6 +9,10 @@ import Bson from 'bson'
 
         health_facility_id: string,
 
+        state_id:string,
+
+        lga_id: string,
+
         age: string,
 
         blood_pressure: string,

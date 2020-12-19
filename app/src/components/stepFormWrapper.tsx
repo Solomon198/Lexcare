@@ -68,12 +68,16 @@ type StepFormWrapperProps = {
                                         {props.title}
                                       </h5>
 
-                                        <StepIndicatorComponent
-                                          jumpToIndex={(step:string,stepNumber,active)=> gotoStep(step,stepNumber,active)}
-                                          stepNumber={props.steps}
-                                          active = {MyForm.currentStep.index}
-                                        />
+                                           {
+                                             props.steps != 1?
+                                             <StepIndicatorComponent
+                                             jumpToIndex={(step:string,stepNumber,active)=> gotoStep(step,stepNumber,active)}
+                                             stepNumber={props.steps}
+                                             active = {MyForm.currentStep.index}
+                                           />
+                                           :null
 
+                                           }
                                            <form // create an html form
                                               noValidate // Disable native html validation
                                               onSubmit={MyForm.submitStep} // Pass the Formiz submit to the onSubmit

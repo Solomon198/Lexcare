@@ -5,6 +5,8 @@ import BSON from 'bson';
 
 import crypto from 'crypto';
 
+import {_STATES_} from './data'
+
 export function _jsonify(data:any){
 
    return JSON.stringify(data);
@@ -15,6 +17,39 @@ export function _unwrapJson(data:any){
 
     return JSON.parse(data);
 
+}
+
+
+export const AgeRange = ()=>({
+
+  atenatalRange:["10 - 14 years", "15 - 19 years", "20 - 24 years", "25 - 49 years", "≥ 50 years"],
+  dailyAttendance:["0 - 28 Days","29 Days - 11 Months","12 - 59 Months","5 - 9 Years","10 - 19 Years", "> 20 Years"],
+  outPatient:["0 - 28 Days","29 Days - 11 Months","12 - 59 Months","5 - 9 Years","10 - 19 Years", "> 20 Years"],
+  familyPlaning:["10 - 14 years", "15 - 19 years", "20 - 24 years", "25 - 49 years", "≥ 50 years"],
+  inPatient:["0 - 28 Days", "29 days - 11 Months", "12 - 59 Months", "5 - 9 Years", "10 - 19 Years", "> 20 Years"],
+  labourAndDelivery:["0 - 28 Days", "29 days - 11 Months", "12 - 59 Months", "5 - 9 Years", "10 - 19 Years", "> 20 Years"],
+  nutrition:["0 - 5 months","6 - 23 months", "24 - 59 months"],
+  postNatal:["10 - 14 years", "15 - 19 years", "20 - 24 years", "25 - 49 years", "≥ 50 years"],
+
+})
+
+
+export function getLocationIDS(state_name:string,_lga:string){
+
+   let ids:{state_id?:string,lga_id?:string} = {};
+
+   _STATES_.forEach((state)=>{
+      if(state.state.name == state_name){
+        ids["state_id"] = state.state.id + "";
+        state.state.locals.forEach((lga)=>{
+          if(lga.name == _lga){
+          ids["lga_id"] = lga.id + '';
+          }
+        })
+      }
+   })
+
+   return ids;
 }
 
 export async function sendAxiosPostRequest(url:string,data:any){

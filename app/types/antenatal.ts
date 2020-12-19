@@ -7,6 +7,10 @@ import Bson from 'bson'
 
     _id : string,
 
+    state_id:string,
+
+    lga_id: string,
+
     health_facility_id: string,
 
     actual_age: string,

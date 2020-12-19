@@ -93,6 +93,10 @@ const OutPatient : OutPatientProps = {
 
         createdBy : "string?",
 
+        state_id:"string?",
+
+        lga_id: "string?",
+
   }
 
 }

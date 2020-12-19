@@ -7,6 +7,7 @@ import RadioButton from '../components/radioButtons';
 import SelectClient from '../components/selectClient'
 import {createAntenatal} from '../../realm/queries/writeQueries'
 import schemas from '../../realm/schemas';
+import { AgeRange } from '../../realm/utils/utils';
 
 type Props = {
     history: any,
@@ -16,7 +17,7 @@ type Props = {
 class Antenatal extends React.Component<Props> {
 
     state = {
-
+         client:{}
     }
 
     componentDidMount(){
@@ -65,6 +66,7 @@ class Antenatal extends React.Component<Props> {
                     <SelectClient
                       name="client_names"
                       name2="mothers_card_no"
+                      onValueSelected={(value)=>this.setState({client:value})}
                       title="Select Client"
                       required="please select client"
                       date_name="date"
@@ -79,13 +81,13 @@ class Antenatal extends React.Component<Props> {
                         state={state}
                         name="age"
                         title="Age Range"
-                        options={["10 - 14 years", "15 - 19 years", "20 - 24 years", "25 - 49 years", "≥ 50 years"]}
+                        options={AgeRange().atenatalRange}
                         required="Please select date range"
                      />
 
                     <Input
                         state={state}
-                        type="number"
+                        type="string"
                         placeholder="Enter actual age"
                         name="actual_age"
                         title="Actual Age"
@@ -103,7 +105,7 @@ class Antenatal extends React.Component<Props> {
                         state={state}
                         type="number"
                         name="parity"
-                        options={["1","2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"]}
+                        options={["0","1","2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"]}
                         title="Parity"
                         placeholder="Select Parity"
 

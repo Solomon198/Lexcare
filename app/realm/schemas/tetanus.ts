@@ -28,7 +28,11 @@ const Tetanus : TetanusProps = {
 
       phone_number: "string?",
 
-      createdBy:"string"
+      createdBy:"string",
+
+      state_id:"string?",
+
+      lga_id: "string?",
 
 
 

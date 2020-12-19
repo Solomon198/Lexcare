@@ -9,6 +9,7 @@ import RadioButton from '../components/radioButtons'
 import SelectClient from '../components/selectClient'
 import {createNutrition} from '../../realm/queries/writeQueries'
 import schemas from '../../realm/schemas';
+import { AgeRange } from '../../realm/utils/utils';
 
 type Props = {
     history: any,
@@ -20,7 +21,7 @@ class Nutrition extends React.Component<Props> {
     state = {
 
 
-
+       client:null
     }
 
 
@@ -78,6 +79,7 @@ class Nutrition extends React.Component<Props> {
                             title="Select Client"
                             required="please select client"
                             date_name="date"
+                            onValueSelected={(value)=>this.setState({client:value})}
                             date_title="Client Date of Visit"
                             date_required="Please select a date"
                             state={state}
@@ -116,7 +118,7 @@ class Nutrition extends React.Component<Props> {
                     <RadioButton
 
                         name="age_in_months"
-                        options={["0 - 5 months","6 - 23 months", "24 - 59 months"]}
+                        options={AgeRange().nutrition}
                         title="Age in Months"
                         state={state}
 

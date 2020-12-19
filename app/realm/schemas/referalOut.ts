@@ -60,7 +60,11 @@ const Client : RefreralOutProps = {
 
       treatment_given: "string?",
 
-      createdBy : "string"
+      createdBy : "string",
+
+      state_id:"string?",
+
+      lga_id: "string?",
 
 
 

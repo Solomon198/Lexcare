@@ -12,6 +12,10 @@ type OutpatientProperties = {
 
   age: string,
 
+  state_id:string,
+
+  lga_id: string,
+
   bmi_weight: string,
 
   card_number: string,

@@ -11,6 +11,7 @@ import {createDailyAttendance} from '../../realm/queries/writeQueries';
 import SelectCommunityLeader from '../components/selectCommunityLeader';
 import NigeriaStates from '../data/states'
 import 'toasted-notes/src/styles.css';
+import { AgeRange } from '../../realm/utils/utils';
 
 
 
@@ -34,6 +35,9 @@ class  DailyAttendance extends React.Component<Props> {
    SubmitRealm(info:any){
     const state = this.props.location.state;
     const isUpdate = state ? true : false;
+    if(state){
+      info._id = state._id
+    }
      createDailyAttendance(info,isUpdate).then((val)=>{
 
           if(val == "success"){
@@ -149,7 +153,7 @@ class  DailyAttendance extends React.Component<Props> {
 
                               <SelectComponent
                                 name="age"
-                                options={["0 - 28 Days","29 Days - 11 Months","12 - 59 Months","5 - 9 Years","10 - 19 Years","20 Years and Above"]}
+                                options={AgeRange().dailyAttendance}
                                 title="Age"
                                 placeholder="Select Age Range"
                                 required="Please select age range"
@@ -158,7 +162,7 @@ class  DailyAttendance extends React.Component<Props> {
                                 />
 
                               <Input
-                                type="number"
+                                type="text"
                                 placeholder="Enter the exact age of client"
                                 name="exact_age"
                                 title="Write Exact Age"
@@ -261,10 +265,9 @@ class  DailyAttendance extends React.Component<Props> {
 
                               />
 
-                            <SelectComponent
-
+                            <Input
+                                  type="text"
                                   name="kin_relationship_with_client"
-                                  options={["Mother","Father","Brother","Sister","Aunty","Uncle","Cousin","Niece","Nephew"]}
                                   title="Relationship"
                                   placeholder="Please Select Relationship"
                                   state={state}

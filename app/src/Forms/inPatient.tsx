@@ -12,6 +12,7 @@ import schemas from '../../realm/schemas';
 import MultiSelectAndSearch from "../components/multiSelectAndSearch"
 import Diseases from '../data/diseases'
 import {getDocuments} from '../../realm/queries/readQueries'
+import { AgeRange } from '../../realm/utils/utils';
 
 
 type Props = {
@@ -32,6 +33,7 @@ class  InPatient extends React.Component<Props> {
       months:[],
       years:[],
       services:[],
+      client:null
 
 
 
@@ -106,6 +108,7 @@ class  InPatient extends React.Component<Props> {
                                   state={state}
                                   name="client_names"
                                   name2="card_number"
+                                  onValueSelected={(value)=>this.setState({client:value})}
                                   title="Select Client"
                                   required="please select client"
                                   date_name="date"
@@ -128,7 +131,7 @@ class  InPatient extends React.Component<Props> {
                             <SelectComponent
 
                             name="age"
-                            options={["0 - 28 Days", "29 days - 11 Months", "12 - 59 Months", "5 - 9 Years", "10 - 19 Years", "> 20 Years"]}
+                            options={AgeRange().inPatient}
                             title="Age"
                             placeholder="Select Age"
                             state={state}

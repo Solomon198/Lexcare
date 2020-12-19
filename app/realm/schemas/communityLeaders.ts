@@ -17,7 +17,11 @@ type CommunityLeadersProperties = {
 
    phone_number:string,
 
-   leader_id:string
+   leader_id:string,
+
+   state_id:string,
+
+  lga_id: string,
 }
 
 type CommunityLeadersProps = {
@@ -57,6 +61,10 @@ const CommunityLeaders : CommunityLeadersProps = {
        home_address: "string?",
 
        phone_number: "string?",
+
+       state_id:"string?",
+
+       lga_id: "string?",
 
   }
 

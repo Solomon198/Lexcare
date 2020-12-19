@@ -14,6 +14,10 @@ type PostNatalProperties = {
 
        client_card_number: string,
 
+       state_id:string,
+
+       lga_id: string,
+
        client_names: string,
 
        date: string,

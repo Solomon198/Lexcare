@@ -7,6 +7,10 @@ export type dailyAttendanceProperties = {
 
   _id : string,
 
+  state_id:string,
+
+  lga_id: string,
+
   // healthCareFacility: unknown,
 
   // client_id: string,

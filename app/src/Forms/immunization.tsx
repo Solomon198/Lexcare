@@ -24,6 +24,7 @@ class  PostNatal extends React.Component<Props> {
           days:[],
           months:[],
           years:[],
+          client:null
 
 
 
@@ -84,6 +85,7 @@ class  PostNatal extends React.Component<Props> {
 
                                   name="child_name"
                                   state={state}
+                                  onValueSelected={(value)=>this.setState({client:value})}
                                   name2="child_card_no"
                                   title="Select Client"
                                   required="please select client"

@@ -20,38 +20,14 @@ export async function localLogin(phoneNumber:string,password:string){
          const realm = new Realm({
           schema:[
 
-            Schemas.BirthRegister,
 
-            Schemas.DailyAttendanceSchema,
 
             Schemas.StaffSchema,
 
-            Schemas.ClientSchema,
-
-            Schemas.CommunityLeaders,
-
-            Schemas.ReferalOut,
-
-            Schemas.Antenatal,
-
-            Schemas.FamilyPlaning,
-
-            Schemas.Inpatient,
-
-            Schemas.LabourAndDelivery,
-
-            Schemas.PostNatal,
-
-            Schemas.Immunization,
-
-            Schemas.OutPatient,
-
-            Schemas.Nutrition,
-
-            Schemas.Tetanus,
 
 
           ],
+          schemaVersion:1,
           sync:{
               user : _APP_INSTANCE_.currentUser,
               partitionValue : getPHC_configSettings().phc_id,
@@ -78,7 +54,7 @@ export async function localLogin(phoneNumber:string,password:string){
                   return {status:false,message:"Invalid password"};
 
               }
- 
+
                 localStorage.setItem(LOCAL_USER,_jsonify(user));
 
                 return {status:true,message:'success'}

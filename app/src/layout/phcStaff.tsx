@@ -17,6 +17,12 @@ export default class PhcStaffs extends React.Component<props> {
     this.props.history.push("/add-phc-staff");
   }
 
+  edit(payload:any){
+    this.props.history.push({
+      pathname:"/add-phc-staff",
+      state:payload,
+    })
+  }
 
   componentDidMount(){
 
@@ -34,14 +40,13 @@ export default class PhcStaffs extends React.Component<props> {
               <h6 className="element-header">Primary Healthcare Staff</h6>
               <div className="element-box">
                 <h5 className="form-header">All Staff</h5>
-                <div className="form-desc">
-                <button onClick={()=>this.addRecord()}  className="btn btn-success">
-                  <i className="fa fa-plus" /> &nbsp; Add Record
-                </button>
-                </div>
+
                          <RenderData
+
                           SchemaName={schemas.StaffSchema.name}
+                          editRecord={(payload)=>this.edit(payload)}
                           ignoreFilter={true}
+                          addRecord={()=>this.addRecord()}
                           tableHead={
                             <thead>
                               <tr>
@@ -50,6 +55,7 @@ export default class PhcStaffs extends React.Component<props> {
                                 <th>Phone Number</th>
                                 <th>Email</th>
                                 <th>Role</th>
+                                <th>Action</th>
                               </tr>
                             </thead>}
                           properties={[
@@ -60,7 +66,6 @@ export default class PhcStaffs extends React.Component<props> {
                             {key:"role"},
 
                            ]}
-                           hideEdit={true}
                            />
 
               </div>

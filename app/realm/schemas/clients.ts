@@ -30,7 +30,7 @@ const Client : ClientTypes = {
 
        age: "string?",
 
-       exact_age: "int?",
+       exact_age: "string?",
 
        contact_address: "string?",
 
@@ -50,7 +50,11 @@ const Client : ClientTypes = {
 
        kin_phone: "string?",
 
-       createdBy : "string"
+       createdBy : "string",
+
+       state_id:"string?",
+
+       lga_id: "string?",
 
 
 

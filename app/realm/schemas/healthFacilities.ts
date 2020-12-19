@@ -20,6 +20,11 @@ const healthFacility : HealthCareFacilityTypes = {
 
           zone : "string?",
 
+
+          state_id:"string?",
+
+          lga_id: "string?",
+
      }
 
 }

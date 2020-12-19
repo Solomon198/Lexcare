@@ -67,6 +67,10 @@ const Nutrition : NutritionProps = {
 
         createdBy : "string",
 
+        state_id:"string?",
+
+        lga_id: "string?",
+
   }
 
 }

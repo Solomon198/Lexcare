@@ -28,7 +28,11 @@ const STAFFS : PHC_STAFFS = {
 
       hash : "string",
 
-      salt : "string"
+      salt : "string",
+
+      state_id:"string?",
+
+      lga_id: "string?",
 
 
 

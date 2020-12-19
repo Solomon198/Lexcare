@@ -12,6 +12,7 @@ import SelectClient from '../components/selectClient';
 import {createOutpatient} from '../../realm/queries/writeQueries'
 import schemas from '../../realm/schemas';
 import Diseases from '../data/diseases'
+import { AgeRange } from '../../realm/utils/utils';
 type Props = {
     history: any,
     location:any
@@ -21,7 +22,8 @@ class OutPatient extends React.Component<Props> {
 
     state = {
 
-         ro:''
+         ro:'',
+         client:null
 
     }
 
@@ -79,6 +81,7 @@ class OutPatient extends React.Component<Props> {
                               required="please select client"
                               date_name="date"
                               date_title="Client Date of Visit"
+                              onValueSelected={(value)=>this.setState({client:value})}
                               date_required="Please select a date"
                               intervention={schemas.OutPatient.name}
                               state={state}
@@ -90,14 +93,16 @@ class OutPatient extends React.Component<Props> {
                             title="Sex"
                             options={["Male","Female"]}
                             state={state}
+                            required
                             />
 
 
                         <RadioButton
                             name="age"
                             title="Age"
-                            options={["0 - 28 Days","29 - 11 months", "12 - 29 months","5 - 9 years"]}
+                            options={AgeRange().outPatient}
                             state={state}
+                            required
                         />
 
                         <DatePicker

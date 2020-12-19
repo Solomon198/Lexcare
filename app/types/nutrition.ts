@@ -6,6 +6,10 @@
 
       health_facility_id: string,
 
+      state_id:string,
+
+      lga_id: string,
+
       age_in_months: string,
 
       bilateral_oedema: string,

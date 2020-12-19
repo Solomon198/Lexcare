@@ -131,9 +131,12 @@ export function openSyncronizedRealm(){
 
                 ],
 
+            schemaVersion:1,
+
              sync:{
 
                partitionValue:getPHC_configSettings().phc_id,
+
 
                user:_APP_INSTANCE_.currentUser,
 

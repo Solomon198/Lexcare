@@ -38,6 +38,7 @@ type MultiSelectAndSearchComponentProps = {
   date_name :string,
   date_title : string,
   date_required: string,
+  onValueSelected:(value:any)=>void
 
   intervention:string,
 
@@ -193,6 +194,8 @@ const MultiSelectAndSearchComponent = (props:MultiSelectAndSearchComponentProps)
       setValue(valz[0].label);
       setSelected(valz);
       setCardNumber(valz[0].client_card_number)
+      props.onValueSelected(valz[0]);
+
   }
 
 

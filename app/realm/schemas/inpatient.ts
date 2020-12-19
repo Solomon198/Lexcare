@@ -41,6 +41,10 @@ const InPatient : InPatientProps = {
 
         createdBy : "string",
 
+        state_id:"string?",
+
+        lga_id: "string?",
+
   }
 
 }

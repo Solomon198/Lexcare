@@ -5,6 +5,10 @@ type AdministerVaccineProps = {
 
   _id : string,
 
+  state_id:string,
+
+  lga_id: string,
+
   health_facility_id: string,
 
   child_card_no: string,

@@ -100,6 +100,10 @@ const FamilyPlaning : FamilyPlaningProps = {
         weight: "int?",
 
         createdBy : "string",
+
+        state_id:"string?",
+
+        lga_id: "string?",
   }
 
 }

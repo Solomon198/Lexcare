@@ -15,6 +15,10 @@ type PHC_STAFFS = {
 
       role : string,
 
+      state_id:string,
+
+      lga_id: string,
+
       full_name  : string,
 
       health_facility_id : string ,
