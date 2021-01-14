@@ -31,6 +31,11 @@ export default {
     ],
   },
 
+  entry: {
+    renderer: Object.keys(externals || {}),
+  },
+
+
   output: {
     path: path.join(__dirname, '..', 'app'),
     // https://github.com/webpack/webpack/issues/1114
