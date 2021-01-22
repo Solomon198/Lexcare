@@ -1046,6 +1046,105 @@ export async function createTetanus(documents:any,isUpdate?:boolean){
 
 
 
+export async function createVaccineUtilRecord(documents:any,isUpdate?:boolean){
+
+  try{
+
+
+      const {phc_state,phc_lga} = getPHC_configSettings();
+
+      let {state_id,lga_id}  = getLocationIDS(phc_state,phc_lga);
+
+      documents["state_id"] = state_id || "12";
+      documents["lga_id"] = lga_id || "13";
+      let formatDate = new Date(documents.date);
+      formatDate.setDate(1);
+      documents.date = new Date(formatDate);
+
+
+    if(!isUpdate){
+
+      documents.health_facility_id = getPHC_configSettings().phc_id;
+
+      documents._id = getObjectId();
+
+    }
+
+
+    const realm = _DATA_BASE_INSTACE_;
+
+    realm.write(()=>{
+
+         if(!isUpdate){
+          realm.create(Schemas.Vaccine.name,documents);
+         }else{
+          realm.create(Schemas.Vaccine.name,documents,true);
+         }
+
+   })
+
+
+    return "success";
+
+  }catch(e){
+     console.log(e)
+     return e;
+
+  }
+}
+
+
+export async function createDeviceRecord(documents:any,isUpdate?:boolean){
+
+  try{
+
+
+      const {phc_state,phc_lga} = getPHC_configSettings();
+
+      let {state_id,lga_id}  = getLocationIDS(phc_state,phc_lga);
+
+      documents["state_id"] = state_id || "12";
+      documents["lga_id"] = lga_id || "13";
+
+      let formatDate = new Date(documents.date);
+
+      documents.date = new Date(formatDate);
+
+
+    if(!isUpdate){
+
+      documents.health_facility_id = getPHC_configSettings().phc_id;
+
+      documents._id = getObjectId();
+
+    }
+
+
+    const realm = _DATA_BASE_INSTACE_;
+
+     realm.write(()=>{
+
+         if(!isUpdate){
+          realm.create(Schemas.Device.name,documents);
+         }else{
+          realm.create(Schemas.Device.name,documents,true);
+         }
+
+   })
+
+
+    return "success";
+
+  }catch(e){
+     console.log(e)
+     return e;
+
+  }
+}
+
+
+
+
 
 
 

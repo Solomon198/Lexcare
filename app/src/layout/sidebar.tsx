@@ -93,36 +93,6 @@ const SideBar = (props) => (
         </li>
 
         <li className="selected ">
-          <Link to="/antigens">
-            <div className="icon-w">
-              <div className="os-icon os-icon-ui-55" />
-            </div>
-
-            <span>Antigens</span>
-          </Link>
-        </li>
-
-        <li className="selected ">
-          <Link to="/doses-discarded">
-            <div className="icon-w">
-              <div className="os-icon os-icon-ui-55" />
-            </div>
-
-            <span>Doses Discarded</span>
-          </Link>
-        </li>
-
-        <li className="selected ">
-          <Link to="equipments">
-            <div className="icon-w">
-              <div className="os-icon os-icon-file-text" />
-            </div>
-
-            <span>Equipments</span>
-          </Link>
-        </li>
-
-        <li className="selected ">
           <Link to="/clients">
             <div className="icon-w">
               <div className="os-icon os-icon-ui-55" />
@@ -162,6 +132,42 @@ const SideBar = (props) => (
             <span>NHIS Referal Out</span>
           </Link>
         </li>
+
+        <li className="sub-header">
+          <span>Monthly Summaries</span>
+        </li>
+
+        <li className="selected ">
+          <Link to="/antigens">
+            <div className="icon-w">
+              <div className="os-icon os-icon-ui-55" />
+            </div>
+
+            <span>Antigens</span>
+          </Link>
+        </li>
+
+        <li className="selected ">
+          <Link to="/doses-discarded">
+            <div className="icon-w">
+              <div className="os-icon os-icon-ui-55" />
+            </div>
+
+            <span>Doses Discarded</span>
+          </Link>
+        </li>
+
+        <li className="selected ">
+          <Link to="equipments">
+            <div className="icon-w">
+              <div className="os-icon os-icon-file-text" />
+            </div>
+
+            <span>Equipments</span>
+          </Link>
+        </li>
+
+
 
         <li className="sub-header">
           <span>Others</span>

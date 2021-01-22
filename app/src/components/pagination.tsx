@@ -11,6 +11,7 @@ type paginationProps = {
      hideEdit?:boolean,
      showDetails?:boolean,
      SchemaName:string,
+     onlyMonth?:boolean,
      addRecord?:()=>void,
      editRecord?:(payload:any)=>void,
      dataField?:string,
@@ -43,11 +44,14 @@ export default function PaginationComponent(props:paginationProps){
 
 
 
+
+
+
    useEffect(()=>{
 
       let timer = setInterval(()=>{
 
-        setData(getDocuments(props.SchemaName,props.dataField,start,end,props.ignoreFilter?true:false));
+        setData(getDocuments(props.SchemaName,props.dataField,start,end,props.ignoreFilter?true:false,"",props.onlyMonth));
         handleSetActive(active);
       },100)
 
@@ -176,13 +180,23 @@ export default function PaginationComponent(props:paginationProps){
                                placeholder="Select start date"
                                onChange={(value)=> setHoldStart(value)}
                             />
+                            <br/>
+                            {
+                              props.onlyMonth?
+                              <span style={{fontSize:12}} className="text-danger">
+                                Note: only month and year is used.
+                              </span>:null
+                            }
                           </td>
                           <td>
-                              <DatePicker
-                                  disabled={!holdStart ? true :false}
-                                  placeholder="Select end date (Optional)"
-                                  onChange={(value)=> setHoldEnd(value)}
-                                />
+                              {
+                                !props.onlyMonth?
+                                <DatePicker
+                                disabled={!holdStart ? true :false}
+                                placeholder="Select end date (Optional)"
+                                onChange={(value)=> setHoldEnd(value)}
+                              />:null
+                              }
                           </td>
                           <td>
                             <button
@@ -228,7 +242,11 @@ export default function PaginationComponent(props:paginationProps){
                        properties.map((objKey:any,indexx:any)=>
 
                          <td>
-                           {objKey.isDate?moment(valz[objKey.key]).format("l"):valz[objKey.key]}
+                           {objKey.isDate ?
+                             props.onlyMonth?
+                             moment(valz[objKey.key]).format("LL").split(" ")[0] + "/" + moment(valz[objKey.key]).format("LL").split(" ")[2]:
+                             moment(valz[objKey.key]).format("l")
+                           :valz[objKey.key]}
                          </td>
 
                        )

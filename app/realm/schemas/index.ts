@@ -16,6 +16,8 @@ import Tetanus from './tetanus'
 import Services  from './Services'
 import TetanusAdministration from './administerTD';
 import AdministerVaccine from './administerVaccine';
+import Vaccine from './vacinnes';
+import Device from './devices'
 
 export default {
 
@@ -36,7 +38,9 @@ export default {
     Tetanus,
     Services,
     TetanusAdministration,
-    AdministerVaccine
+    AdministerVaccine,
+    Vaccine,
+    Device
 
 
 }

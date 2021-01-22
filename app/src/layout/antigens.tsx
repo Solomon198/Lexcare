@@ -38,34 +38,33 @@ export default class Antigens extends React.Component<props> {
         <div className="content-i">
           <div className="content-box">
             <div className="element-wrapper">
-              <h6 className="element-header">Antigen</h6>
+              <h6 className="element-header">Vaccine Utilization</h6>
               <div className="element-box">
-                <h5 className="form-header">All Antigen Records</h5>
+                <h5 className="form-header">All Vaccine Utilization Records</h5>
 
                 <RenderData
                   dataField="date"
+                  onlyMonth={true}
                   addRecord={() => this.addRecord()}
                   editRecord={(payload) => this.edit(payload)}
-                  SchemaName={schemas.DailyAttendanceSchema.name}
+                  SchemaName={schemas.Vaccine.name}
                   tableHead={
                     <thead>
                       <tr>
                         <th>#</th>
-                        <th>Date</th>
-                        <th>Category</th>
+                        <th>Month / Year</th>
+                        <th>Vaccine</th>
                         <th>MAX Stock</th>
-                        <th>MIX Stock</th>
+                        <th>MIN Stock</th>
                         <th>Action</th>
                       </tr>
                     </thead>
                   }
                   properties={[
                     { key: 'date', isDate: true },
-                    { key: 'client_name' },
-                    { key: 'client_card_number' },
-                    { key: 'date_of_birth', isDate: true },
-                    { key: 'sex' },
-                    { key: 'first_contact_with_facility' },
+                    { key: 'vaccine' },
+                    { key: 'max_stock' },
+                    { key: 'min_stock' },
                   ]}
                 />
               </div>

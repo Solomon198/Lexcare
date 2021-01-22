@@ -7,6 +7,7 @@ type InputComponentProps = {
   type: any;
   placeholder: string;
   value?: string;
+  disabled?:boolean;
   state?: any;
   hideSubtxt?: boolean;
   onChange: (value: any) => void;
@@ -29,6 +30,7 @@ const InputComponent = (props: InputComponentProps) => {
           defaultValue={0}
           value={props.value ? props.value : ''}
           name={props.name}
+          disabled={props.disabled}
           id={props.name}
           style={{ borderWidth: 1 }}
           //   placeholder={props.placeholder}
@@ -37,7 +39,7 @@ const InputComponent = (props: InputComponentProps) => {
         />
       </div>
       {!props.hideSubtxt ? (
-        <span style={{ fontSize: 10, lineHeight: 0.5, textAlign: 'center' }}>
+        <span style={{ fontSize: 10, lineHeight: 0.5, textAlign: 'center',marginLeft:10}}>
           {props.placeholder}
         </span>
       ) : null}

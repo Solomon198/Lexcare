@@ -10,6 +10,8 @@ type SelectComponentProps = {
   options: any[];
   state?: any;
   value: string;
+  disabled?:boolean;
+  hideSubtxt?:boolean;
   onSelected: (value: any) => void;
 };
 
@@ -28,9 +30,11 @@ const SelectComponent = (props: SelectComponentProps) => {
           <select
             onChange={(e) => handleChange(e.target.value)}
             style={{ borderWidth: 1 }}
+            disabled={props.disabled}
+            value={props.value}
             className="demo-input form-control"
           >
-            <option>---select option----</option>
+            <option>-select option-</option>
 
             {props.options.map((val: string) => (
               // eslint-disable-next-line react/jsx-key
@@ -40,6 +44,11 @@ const SelectComponent = (props: SelectComponentProps) => {
             ))}
           </select>
         </div>
+        {!props.hideSubtxt ? (
+        <span style={{ fontSize: 10, lineHeight: 0.5, textAlign: 'center',marginLeft:10 }}>
+          {props.placeholder}
+        </span>
+      ) : null}
       </div>
     </>
   );

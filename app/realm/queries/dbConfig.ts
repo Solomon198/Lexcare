@@ -84,8 +84,6 @@ export function openSyncronizedRealm(){
      if(_APP_INSTANCE_.currentUser){
 
 
-
-
             _DATA_BASE_INSTACE_ = new  Realm({
 
             schema:[
@@ -126,28 +124,30 @@ export function openSyncronizedRealm(){
 
                   Schemas.TetanusAdministration,
 
+                  Schemas.Vaccine,
 
+                  Schemas.Device
 
 
                 ],
 
-            schemaVersion:1,
+            // schemaVersion:1,
 
-             sync:{
+            //  sync:{
 
-               partitionValue:getPHC_configSettings().phc_id,
-
-
-               user:_APP_INSTANCE_.currentUser,
-
-               error:(error)=>{
-
-                 console.log(error)
-
-               },
+            //    partitionValue:getPHC_configSettings().phc_id,
 
 
-             }
+            //    user:_APP_INSTANCE_.currentUser,
+
+            //    error:(error)=>{
+
+            //      console.log(error)
+
+            //    },
+
+
+            //  }
 
           })
 

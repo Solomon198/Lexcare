@@ -2,7 +2,7 @@
 
 import  {_DATA_BASE_INSTACE_,reInitializApplicationConfigs} from './dbConfig';
 
-import {startOfDay,endOfDay} from 'date-fns'
+import {startOfDay,endOfDay,startOfMonth,endOfMonth} from 'date-fns'
 
 import {getRealmObjectCollection,_unwrapJson} from '../utils/utils'
 
@@ -107,9 +107,7 @@ export function getStatistics(){
 
 }
 
-export function getDocuments(SchemaName:string,dateField="date",startDate?:string,endDate?:string,ignoreFilter?:boolean,searchValue?:any){
-
-
+export function getDocuments(SchemaName:string,dateField="date",startDate?:string,endDate?:string,ignoreFilter?:boolean,searchValue?:any,onlyMonth?:boolean){
 
        if(!_DATA_BASE_INSTACE_){
 
@@ -125,15 +123,42 @@ export function getDocuments(SchemaName:string,dateField="date",startDate?:strin
 
           defaultEndDate.setDate(defaultEndDate.getDate() + 1);
 
-          let start = startDate ? startOfDay(new Date(startDate)) : startOfDay(new Date());
+          let start;
+          let end;
 
-          let end = endDate ? endOfDay(new Date(endDate)) : startOfDay(defaultEndDate);
+
+          if(!onlyMonth){
+           start =   startDate ? startOfDay(new Date(startDate)) : startOfDay(new Date());
+           end = endDate ? endOfDay(new Date(endDate)) : startOfDay(defaultEndDate);
+          }else{
+            start = startDate ? startOfMonth(new Date(startDate)) : startOfMonth(new Date());
+            end = endDate ? endOfMonth(new Date(startDate)) : endOfMonth(new Date());
+          }
+
+          console.log(start,end)
 
           if(!searchValue){
             let obj = ignoreFilter ? realm.objects(SchemaName) : realm.objects(SchemaName).filtered(`${dateField} >= $0 && ${dateField} < $1`,start,end);
 
 
             let documents = getRealmObjectCollection(obj);
+
+
+             if(onlyMonth){
+               documents.forEach((doc)=>{
+                    let docArr = [];
+                    doc.records.forEach((recordVal)=>{
+                      let formatt = JSON.parse(recordVal)
+                      docArr.push(formatt)
+                    })
+
+                    delete doc.records;
+
+                    doc['records'] = docArr;
+
+               })
+
+             }
 
             return documents;
           }else{

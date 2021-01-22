@@ -8,11 +8,12 @@ import TextArea from '../components/textArea';
 import StepWrapper from '../components/stepWrapper';
 import StepFormWrapper from '../components/stepFormWrapper';
 import { getPHC_configSettings } from '../../realm/queries/readQueries';
-import { createDailyAttendance } from '../../realm/queries/writeQueries';
+import { createVaccineUtilRecord,createDeviceRecord } from '../../realm/queries/writeQueries';
 import SelectCommunityLeader from '../components/selectCommunityLeader';
 import NigeriaStates from '../data/states';
 import 'toasted-notes/src/styles.css';
 import { AgeRange } from '../../realm/utils/utils';
+import moment from 'moment'
 import InputFree from '../components/component-free/input';
 
 type Props = {
@@ -22,18 +23,20 @@ type Props = {
 class Antigen extends React.Component<Props> {
   state = {
     categoryOption: [],
+
     selectedForm: '',
-    categoryCollection: [],
     selectedCategory: '',
-    form_type: ['Vaccine Utilization', 'Devices Utilization'],
-    max_stock: null,
-    min_stock: null,
+    max_stock: "",
+    date:null,
+    min_stock: "",
     day_of_month: null,
     opening_balance: null,
     received: null,
     doses_opened: null,
     ending_balance: null,
     qty_ret_lga: null,
+    categoryCollection: [],
+
     antigen_diluent: [
       'BCG Vaccine',
       'BCG Diluent',
@@ -59,21 +62,76 @@ class Antigen extends React.Component<Props> {
       '5 ml syringes',
       'Safety boxes',
     ],
+    days:[],
   };
 
-  handleFormTypeSelected(value) {
-    if (value == this.state.form_type[0]) {
-      this.setState({
-        categoryOption: this.state.antigen_diluent,
-        selectedForm: value,
-      });
-    } else {
-      this.setState({
-        categoryOption: this.state.devices,
-        selectedForm: value,
-      });
+
+  _submit(){
+
+    let {categoryCollection,max_stock,min_stock,date,selectedCategory,selectedForm} = this.state;
+    let stringifyCategoryCollection:string[] = [];
+    categoryCollection.forEach((val)=>{
+      let strValue = JSON.stringify(val);
+      stringifyCategoryCollection.push(strValue)
+    })
+    let data:any = {
+       records : stringifyCategoryCollection,
+       max_stock:parseInt(max_stock),
+       min_stock : parseInt(min_stock),
+       date : date ,
     }
+
+    const state = this.props.location.state;
+    const isUpdate = state ? true : false;
+    if (state) {
+      data._id = state._id;
+      data.health_facility_id = state.health_facility_id;
+    }
+
+
+
+       data["vaccine"] = selectedCategory;
+
+       createVaccineUtilRecord(data, isUpdate)
+         .then((val) => {
+           if (val == 'success') {
+             this.props.history.goBack();
+             window.scrollTo(0, 0);
+           }
+         })
+         .catch((err) => {
+           console.log(err);
+         });
+
+      // data['device'] = selectedCategory;
+      // createDeviceRecord(data, isUpdate)
+      // .then((val) => {
+      //   if (val == 'success') {
+      //     this.props.history.goBack();
+      //     window.scrollTo(0, 0);
+      //   }
+      // })
+      // .catch((err) => {
+      //   console.log(err);
+      // });
+
+
   }
+
+  resetSelectionsOnDeviceOrFormChanged(){
+    this.setState({
+        day_of_month: null,
+        opening_balance: null,
+        received: null,
+        doses_opened: null,
+        ending_balance: null,
+        qty_ret_lga: null,
+        categoryCollection:[],
+        max_stock:null,
+        mix_stock:null,
+    })
+  }
+
 
   _add = () => {
     const {
@@ -96,36 +154,103 @@ class Antigen extends React.Component<Props> {
       qty_ret_lga: qty_ret_lga,
     };
 
+    let days = Object.assign([],this.state.days);
+    let indexOfDay = days.indexOf(parseInt(day_of_month));
+    days.splice(indexOfDay,1);
+
     categoryCollection.push(newObj);
 
-    this.setState({ categoryCollection: categoryCollection });
+
+
+
+    this.setState({
+       categoryCollection: categoryCollection,
+       day_of_month: null,
+       opening_balance: null,
+       received: null,
+       doses_opened: null,
+       ending_balance: null,
+       qty_ret_lga: null,
+       days:days
+       });
+  };
+
+
+  _edit = (col,index) => {
+    let categoryCollection = Object.assign([], this.state.categoryCollection);
+
+    let editedItem =  categoryCollection.splice(index, 1);
+    let day = parseInt(editedItem[0].day_of_month);
+    let days = Object.assign([],this.state.days);
+    days.push(day);
+    days.sort((a,b)=>{
+      return a-b;
+    })
+
+    this.setState({
+       categoryCollection,
+       day_of_month: col.day_of_month,
+       opening_balance: col.opening_balance,
+       received: col.received,
+       doses_opened: col.doses_opened,
+       ending_balance: col.ending_balance,
+       qty_ret_lga: col.qty_ret_lga,
+       days:days
+      });
+
   };
 
   _remove = (index) => {
     let categoryCollection = Object.assign([], this.state.categoryCollection);
-    categoryCollection.splice(index, 1);
-    this.setState({ categoryCollection });
+
+    let deletedItem = categoryCollection.splice(index, 1);
+    console.log(deletedItem)
+    let dayOfMonth = deletedItem[0].day_of_month;
+    let days = Object.assign([],this.state.days);
+    days.push(parseInt(dayOfMonth));
+    days.sort((a,b)=>{
+      return a-b;
+    });
+
+    this.setState({ categoryCollection,days:days });
   };
 
-  SubmitRealm(info: any) {
-    const state = this.props.location.state;
-    const isUpdate = state ? true : false;
-    if (state) {
-      info._id = state._id;
-    }
-    createDailyAttendance(info, isUpdate)
-      .then((val) => {
-        if (val == 'success') {
-          this.props.history.push('/daily-attendance');
-          window.scrollTo(0, 0);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
+
 
   componentDidMount() {
+    let days = [];
+
+    for(let i = 1; i <= 31; i++){
+      days.push(i);
+    }
+
+    const state = this.props.location.state;
+
+    let {max_stock,min_stock,date,categoryCollection,selectedCategory} = this.state;
+    if(state){
+       max_stock = state.max_stock;
+       min_stock = state.min_stock;
+       let formattDate = moment(state.date).format("L").split("/");
+
+       date = formattDate[2] + "-" + formattDate[0] + "-" + formattDate[1];
+
+       categoryCollection = state.records;
+
+       state.records.forEach((val)=>{
+           let searchDate = days.indexOf(parseInt(val.day_of_month));
+           if(searchDate != -1 ){
+             days.splice(searchDate,1);
+           }
+       })
+
+       selectedCategory = state.vaccine;
+
+       this.setState({max_stock,min_stock,date,categoryCollection,selectedCategory,days:days})
+    }else{
+      this.setState({days:days});
+    }
+
+
     window.scrollTo(0, 0);
   }
 
@@ -134,52 +259,74 @@ class Antigen extends React.Component<Props> {
 
     const {
       max_stock,
-      mix_stock,
+      min_stock,
       day_of_month,
       opening_balance,
       received,
       doses_opened,
       ending_balance,
       qty_ret_lga,
+      date,
+      selectedCategory
     } = this.state;
+
+    let disabled = true;
+    if(
+       max_stock &&
+       min_stock &&
+       day_of_month &&
+       opening_balance &&
+       received &&
+       doses_opened &&
+       ending_balance &&
+       qty_ret_lga &&
+       date &&
+       selectedCategory
+       ){
+           disabled = false
+       }
+
+       let disabledSubmit = this.state.categoryCollection.length == 0 ? true : false;
+
+
 
     return (
       <div
         className="card"
         style={{
-          paddingRight: 40,
-          paddingLeft: 40,
+          paddingRight: 80,
+          paddingLeft: 80,
           paddingTop: 20,
           marginTop: 10,
           marginRight: 10,
           marginLeft: 10,
         }}
       >
-        <h3>Add Antigen</h3>
-        <SelectComponentFree
-          name="form_type"
-          options={this.state.form_type}
-          title="Form Type"
-          onSelected={(value) => this.handleFormTypeSelected(value)}
-          placeholder="Select Form Type"
-          required="Please select form type"
-          state={state}
-        />
+        <h5 style={{marginLeft:10,marginBottom:20,marginTop:20}}>
+          Add Vaccine Utilization
+        </h5>
+        <hr className="mx-3"/>
+
 
         <InputFree
           type="date"
           placeholder="Enter date"
           name="date"
+          disabled={state}
           title="Date"
           hideSubtxt={true}
+          value={this.state.date}
+          onChange={(v)=>this.setState({date:v})}
         />
 
         <SelectComponentFree
           name="category"
-          options={this.state.categoryOption}
+          options={this.state.antigen_diluent}
           title="Category"
-          placeholder="Select Category"
-          onSelected={(value) => this.setState({ selectedCategory: value })}
+          disabled={state}
+          value={this.state.selectedCategory}
+          placeholder="Select Vaccine"
+          onSelected={(value) => this.setState({ selectedCategory: value },()=>this.resetSelectionsOnDeviceOrFormChanged())}
           required="Please select categroy"
           state={state}
         />
@@ -196,23 +343,27 @@ class Antigen extends React.Component<Props> {
 
         <InputFree
           type="number"
-          placeholder="Enter MIX Stock"
-          name="mix_stock"
-          title="MIX STOCK"
+          placeholder="Enter MIN Stock"
+          name="min_stock"
+          title="MIN STOCK"
           hideSubtxt={true}
-          onChange={(value) => this.setState({ mix_stock: value })}
-          value={mix_stock}
+          onChange={(value) => this.setState({ min_stock: value })}
+          value={min_stock}
         />
 
         <div className="d-flex align-items-center justify-content-center">
-          <InputFree
-            type="number"
-            placeholder="Enter DOM"
-            name="day_of_month"
-            title="Day"
-            value={day_of_month}
-            onChange={(value) => this.setState({ day_of_month: value })}
-          />
+
+            <SelectComponentFree
+              name="day_of_month"
+              options={this.state.days}
+              title="Day"
+              placeholder="Select Day"
+              value={day_of_month}
+              onSelected={(value) => this.setState({ day_of_month: value })}
+              required="Please select day"
+              state={state}
+            />
+
 
           <InputFree
             type="number"
@@ -264,22 +415,22 @@ class Antigen extends React.Component<Props> {
             state={state}
           />
           <div className="">
-            <span onClick={() => this._add()} className="btn btn-secondary">
+            <button type="button" disabled={disabled} onClick={() => this._add()} className="btn btn-secondary">
               Add
-            </span>
+            </button>
           </div>
         </div>
 
         <div>
           <table className="table table-striped table-bordered">
             <tr>
-              <th>Day of Month</th>
-              <th>Opening Balance</th>
-              <th>Received</th>
-              <th>Doses Opened</th>
-              <th>Ending Balance</th>
-              <th>Quatity Returned to LGA</th>
-              <th>Action</th>
+              <td style={{fontSize:12,fontWeight:'bold'}}>Day of Month</td>
+              <td style={{fontSize:12,fontWeight:'bold'}}>Opening Balance</td>
+              <td style={{fontSize:12,fontWeight:'bold'}}>Received</td>
+              <td style={{fontSize:12,fontWeight:'bold'}}>Doses Opened</td>
+              <td style={{fontSize:12,fontWeight:'bold'}}>Ending Balance</td>
+              <td style={{fontSize:12,fontWeight:'bold'}}>Quatity Returned to LGA</td>
+              <td style={{fontSize:12,fontWeight:'bold'}}>Action</td>
             </tr>
             {this.state.categoryCollection.map((col, index) => (
               <tr>
@@ -292,15 +443,24 @@ class Antigen extends React.Component<Props> {
                 <td>
                   <button
                     onClick={() => this._remove(index)}
-                    className="btn btn-danger btn-sm"
+                    className="btn btn-danger btn-sm mr-1"
                   >
                     Remove
+                  </button>
+                  <button
+                    onClick={() => this._edit(col,index)}
+                    className="btn btn-primary btn-sm"
+                  >
+                    Edit
                   </button>
                 </td>
               </tr>
             ))}
           </table>
         </div>
+        <button onClick={()=>this._submit()} disabled={disabledSubmit} style={{marginTop:10,marginBottom:10,width:100}} type="button" className="btn btn-primary">
+             SUBMIT
+        </button>
       </div>
     );
   }
