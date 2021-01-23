@@ -2,6 +2,8 @@ import React from 'react';
 import Input from '../components/input';
 import DatePicker from '../components/datePicker';
 import SelectComponent from '../components/select';
+import SelectComponentFree from '../components/component-free/select';
+import InputFree from '../components/component-free/input';
 import Auth from '../../realm/queries/auth';
 import TextArea from '../components/textArea';
 import StepWrapper from '../components/stepWrapper';
@@ -46,16 +48,34 @@ class DoseDiscarded extends React.Component<Props> {
     const state = this.props.location.state;
 
     return (
-      <StepFormWrapper
-        onSubmit={(info: any) => this.SubmitRealm(info)}
-        title="Add Dose Discarded"
-        steps={1} // holds total number of steps required
+      <div
+        className="card"
+        style={{
+          paddingRight: 80,
+          paddingLeft: 80,
+          paddingTop: 20,
+          marginTop: 10,
+          marginRight: 10,
+          marginLeft: 10,
+        }}
       >
-        <StepWrapper
-          position={1} // the current step position
-          title="Dose Discarded" // title of the step
-        >
-          <DatePicker
+        <h5 style={{ marginLeft: 10, marginBottom: 20, marginTop: 20 }}>
+          Add Doses Discarded
+        </h5>
+        <hr className="mx-3" />
+
+        <InputFree
+          type="date"
+          placeholder="Enter date"
+          name="date"
+          disabled={state}
+          title="Date"
+          hideSubtxt={true}
+          value={''} // value={this.state.date}
+          onChange={(v) => v} // onChange={(v) => this.setState({ date: v }, () => this.getDays(v))}
+        />
+
+        {/* <DatePicker
             type="date"
             placeholder="Select registration date Y-m-d"
             name="date"
@@ -63,84 +83,115 @@ class DoseDiscarded extends React.Component<Props> {
             state={state}
             title="Date"
             required="please select date"
-          />
+          /> */}
 
-          <Input
-            type="text"
-            placeholder="Enter Antigen/Diluent"
-            name="antigen_diluent"
-            title="Antigen / Diluent"
-            required="Please enter antigen/diluent"
+        <InputFree
+          type="text"
+          placeholder="Enter Antigen/Diluent"
+          name="antigen_diluent"
+          title="Antigen / Diluent"
+          hideSubtxt={true}
+          value={''}
+          onChange={(value) => value}
+          state={state}
+        />
+
+        <h4>Quantity (doses) Discarded Due To:</h4>
+        <div
+          className="
+          d-flex
+          align-items-center
+          justify-content-center"
+        >
+          <InputFree
+            type="number"
+            placeholder="Enter Expiry Date"
+            name="expiry"
+            title="Expiry"
+            hideSubtxt={true}
+            value={''}
+            onChange={(value) => value}
             state={state}
           />
 
-          <h4>Quantity (doses) Discarded Due To:</h4>
-          <div className="row">
-            <Input
-              type="number"
-              placeholder="Enter Expiry Date"
-              name="expiry"
-              title="Expiry"
-              required="Please enter expiry date"
-              state={state}
-            />
+          <InputFree
+            type="number"
+            placeholder="Enter Breakage"
+            name="breakage"
+            title="Breakage"
+            hideSubtxt={true}
+            value={''}
+            onChange={(value) => value}
+            state={state}
+          />
 
-            <Input
-              type="number"
-              placeholder="Enter Breakage"
-              name="breakage"
-              title="Breakage"
-              required="Please enter breakage"
-              state={state}
-            />
+          <InputFree
+            type="number"
+            placeholder="Enter VVM Change"
+            name="vvm_change"
+            title="VVM Change"
+            hideSubtxt={true}
+            value={''}
+            onChange={(value) => value}
+            state={state}
+          />
 
-            <Input
-              type="number"
-              placeholder="Enter VVM Change"
-              name="vvm_change"
-              title="VVM Change"
-              required="Please enter VVM Change"
-              state={state}
-            />
+          <InputFree
+            type="number"
+            placeholder="Enter Freezing"
+            name="freezing"
+            title="Freezing"
+            hideSubtxt={true}
+            value={''}
+            onChange={(value) => value}
+            state={state}
+          />
 
-            <Input
-              type="number"
-              placeholder="Enter Freezing"
-              name="freezing"
-              title="Freezing"
-              required="Please enter freezing"
-              state={state}
-            />
+          <InputFree
+            type="number"
+            placeholder="Enter Label Removed"
+            name="label_emoved"
+            title="Label Rmvd"
+            hideSubtxt={true}
+            value={''}
+            onChange={(value) => value}
+            state={state}
+          />
 
-            <Input
-              type="number"
-              placeholder="Enter Label Removed"
-              name="label_emoved"
-              title="Label Removed"
-              required="Please enter label removed"
-              state={state}
-            />
+          <InputFree
+            type="number"
+            placeholder="Enter Other"
+            name="other"
+            title="Other"
+            hideSubtxt={true}
+            value={''}
+            onChange={(value) => value}
+            state={state}
+          />
 
-            <Input
-              type="number"
-              placeholder="Enter Other"
-              name="other"
-              title="Other"
-              required="Please enter other"
-              state={state}
-            />
+          <InputFree
+            type="number"
+            placeholder="Enter Total"
+            name="total"
+            title="Total"
+            hideSubtxt={true}
+            value={''}
+            onChange={(value) => value}
+            state={state}
+          />
 
-            <Input
-              type="number"
-              placeholder="Enter Total"
-              name="total"
-              title="Total"
-              required="Please enter total"
-              state={state}
-            />
+          <div className="">
+            <button
+              type="button"
+              // disabled={disabled}
+              // onClick={() => this._add()}
+              className="btn btn-secondary"
+            >
+              Add
+            </button>
           </div>
-        </StepWrapper>
-      </StepFormWrapper>
+        </div>
+      </div>
     );
   }
 }

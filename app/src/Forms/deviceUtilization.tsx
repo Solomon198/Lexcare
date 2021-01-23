@@ -3,6 +3,7 @@ import Input from '../components/input';
 import DatePicker from '../components/datePicker';
 import SelectComponent from '../components/select';
 import SelectComponentFree from '../components/component-free/select';
+import InputFree from '../components/component-free/input';
 import Auth from '../../realm/queries/auth';
 import TextArea from '../components/textArea';
 import StepWrapper from '../components/stepWrapper';
@@ -17,7 +18,6 @@ import NigeriaStates from '../data/states';
 import 'toasted-notes/src/styles.css';
 import { AgeRange, getDaysInAMonth } from '../../realm/utils/utils';
 import moment from 'moment';
-import InputFree from '../components/component-free/input';
 
 type Props = {
   history: any;
