@@ -138,12 +138,22 @@ const SideBar = (props) => (
         </li>
 
         <li className="selected ">
-          <Link to="/antigens">
+          <Link to="/vaccine-utilization">
             <div className="icon-w">
               <div className="os-icon os-icon-ui-55" />
             </div>
 
-            <span>Antigens</span>
+            <span>Vaccine Utilization</span>
+          </Link>
+        </li>
+
+        <li className="selected ">
+          <Link to="/device-utilization">
+            <div className="icon-w">
+              <div className="os-icon os-icon-ui-55" />
+            </div>
+
+            <span>Device Utilization</span>
           </Link>
         </li>
 
@@ -166,8 +176,6 @@ const SideBar = (props) => (
             <span>Equipments</span>
           </Link>
         </li>
-
-
 
         <li className="sub-header">
           <span>Others</span>

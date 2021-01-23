@@ -5,7 +5,8 @@ import DashboardDefault from './dashboardDefault';
 import Clients from './clients';
 import BirthRegister from './birthRegister';
 import DailyAttendance from './dailyAttendance';
-import Antigens from './antigens';
+import VaccineUtilization from './vaccineUtilization';
+import DeviceUtilization from './deviceUtilization';
 import DosesDiscarded from './dosesDiscarded';
 import Equipments from './equipments';
 import ReferalOut from './referalOut';
@@ -37,7 +38,8 @@ import AntenatalForm from '../Forms/antenatal';
 import TetanusDiphtherialForm from '../Forms/tetanus';
 import NutritionForm from '../Forms/nutrition';
 import OutPatientForm from '../Forms/out-patient';
-import AntigenForm from '../Forms/antigen';
+import VaccineUtilizationForm from '../Forms/vaccineUtilization';
+import DeviceUtilizationForm from '../Forms/deviceUtilization';
 import DoseDiscardedForm from '../Forms/doseDiscarded';
 import EquipmentForm from '../Forms/equipment';
 import FamilyPlanningForm from '../Forms/familyPlanning';
@@ -194,7 +196,16 @@ export default class Dashboard extends React.Component<dashboardProps> {
                 path="/facility-services"
                 component={FACILITYSERVICES}
               />
-              <Route exact path="/antigens" component={Antigens} />
+              <Route
+                exact
+                path="/vaccine-utilization"
+                component={VaccineUtilization}
+              />
+              <Route
+                exact
+                path="/device-utilization"
+                component={DeviceUtilization}
+              />
               <Route exact path="/doses-discarded" component={DosesDiscarded} />
               <Route exact path="/equipments" component={Equipments} />
 
@@ -224,7 +235,17 @@ export default class Dashboard extends React.Component<dashboardProps> {
 
               <Route exact path="/add-antenatal" component={AntenatalForm} />
 
-              <Route exact path="/add-antigen" component={AntigenForm} />
+              <Route
+                exact
+                path="/add-vaccine-utilization"
+                component={VaccineUtilizationForm}
+              />
+
+              <Route
+                exact
+                path="/add-device-utilization"
+                component={DeviceUtilizationForm}
+              />
 
               <Route
                 exact

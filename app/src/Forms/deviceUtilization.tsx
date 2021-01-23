@@ -8,27 +8,30 @@ import TextArea from '../components/textArea';
 import StepWrapper from '../components/stepWrapper';
 import StepFormWrapper from '../components/stepFormWrapper';
 import { getPHC_configSettings } from '../../realm/queries/readQueries';
-import { createVaccineUtilRecord,createDeviceRecord } from '../../realm/queries/writeQueries';
+import {
+  createVaccineUtilRecord,
+  createDeviceRecord,
+} from '../../realm/queries/writeQueries';
 import SelectCommunityLeader from '../components/selectCommunityLeader';
 import NigeriaStates from '../data/states';
 import 'toasted-notes/src/styles.css';
-import { AgeRange } from '../../realm/utils/utils';
-import moment from 'moment'
+import { AgeRange, getDaysInAMonth } from '../../realm/utils/utils';
+import moment from 'moment';
 import InputFree from '../components/component-free/input';
 
 type Props = {
   history: any;
   location: any;
 };
-class Antigen extends React.Component<Props> {
+class DeviceUtilization extends React.Component<Props> {
   state = {
     categoryOption: [],
 
     selectedForm: '',
     selectedCategory: '',
-    max_stock: "",
-    date:null,
-    min_stock: "",
+    max_stock: '',
+    date: null,
+    min_stock: '',
     day_of_month: null,
     opening_balance: null,
     received: null,
@@ -62,24 +65,29 @@ class Antigen extends React.Component<Props> {
       '5 ml syringes',
       'Safety boxes',
     ],
-    days:[],
+    days: [],
   };
 
-
-  _submit(){
-
-    let {categoryCollection,max_stock,min_stock,date,selectedCategory,selectedForm} = this.state;
-    let stringifyCategoryCollection:string[] = [];
-    categoryCollection.forEach((val)=>{
+  _submit() {
+    let {
+      categoryCollection,
+      max_stock,
+      min_stock,
+      date,
+      selectedCategory,
+      selectedForm,
+    } = this.state;
+    let stringifyCategoryCollection: string[] = [];
+    categoryCollection.forEach((val) => {
       let strValue = JSON.stringify(val);
-      stringifyCategoryCollection.push(strValue)
-    })
-    let data:any = {
-       records : stringifyCategoryCollection,
-       max_stock:parseInt(max_stock),
-       min_stock : parseInt(min_stock),
-       date : date ,
-    }
+      stringifyCategoryCollection.push(strValue);
+    });
+    let data: any = {
+      records: stringifyCategoryCollection,
+      max_stock: parseInt(max_stock),
+      min_stock: parseInt(min_stock),
+      date: date,
+    };
 
     const state = this.props.location.state;
     const isUpdate = state ? true : false;
@@ -88,50 +96,32 @@ class Antigen extends React.Component<Props> {
       data.health_facility_id = state.health_facility_id;
     }
 
-
-
-       data["vaccine"] = selectedCategory;
-
-       createVaccineUtilRecord(data, isUpdate)
-         .then((val) => {
-           if (val == 'success') {
-             this.props.history.goBack();
-             window.scrollTo(0, 0);
-           }
-         })
-         .catch((err) => {
-           console.log(err);
-         });
-
-      // data['device'] = selectedCategory;
-      // createDeviceRecord(data, isUpdate)
-      // .then((val) => {
-      //   if (val == 'success') {
-      //     this.props.history.goBack();
-      //     window.scrollTo(0, 0);
-      //   }
-      // })
-      // .catch((err) => {
-      //   console.log(err);
-      // });
-
-
+    data['device'] = selectedCategory;
+    createDeviceRecord(data, isUpdate)
+      .then((val) => {
+        if (val == 'success') {
+          this.props.history.goBack();
+          window.scrollTo(0, 0);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
-  resetSelectionsOnDeviceOrFormChanged(){
+  resetSelectionsOnDeviceOrFormChanged() {
     this.setState({
-        day_of_month: null,
-        opening_balance: null,
-        received: null,
-        doses_opened: null,
-        ending_balance: null,
-        qty_ret_lga: null,
-        categoryCollection:[],
-        max_stock:null,
-        mix_stock:null,
-    })
+      day_of_month: null,
+      opening_balance: null,
+      received: null,
+      doses_opened: null,
+      ending_balance: null,
+      qty_ret_lga: null,
+      categoryCollection: [],
+      max_stock: null,
+      mix_stock: null,
+    });
   }
-
 
   _add = () => {
     const {
@@ -154,102 +144,119 @@ class Antigen extends React.Component<Props> {
       qty_ret_lga: qty_ret_lga,
     };
 
-    let days = Object.assign([],this.state.days);
+    let days = Object.assign([], this.state.days);
     let indexOfDay = days.indexOf(parseInt(day_of_month));
-    days.splice(indexOfDay,1);
+    days.splice(indexOfDay, 1);
 
     categoryCollection.push(newObj);
 
-
-
-
     this.setState({
-       categoryCollection: categoryCollection,
-       day_of_month: null,
-       opening_balance: null,
-       received: null,
-       doses_opened: null,
-       ending_balance: null,
-       qty_ret_lga: null,
-       days:days
-       });
+      categoryCollection: categoryCollection,
+      day_of_month: null,
+      opening_balance: null,
+      received: null,
+      doses_opened: null,
+      ending_balance: null,
+      qty_ret_lga: null,
+      days: days,
+    });
   };
 
-
-  _edit = (col,index) => {
+  _edit = (col, index) => {
     let categoryCollection = Object.assign([], this.state.categoryCollection);
 
-    let editedItem =  categoryCollection.splice(index, 1);
+    let editedItem = categoryCollection.splice(index, 1);
     let day = parseInt(editedItem[0].day_of_month);
-    let days = Object.assign([],this.state.days);
+    let days = Object.assign([], this.state.days);
     days.push(day);
-    days.sort((a,b)=>{
-      return a-b;
-    })
+    days.sort((a, b) => {
+      return a - b;
+    });
 
     this.setState({
-       categoryCollection,
-       day_of_month: col.day_of_month,
-       opening_balance: col.opening_balance,
-       received: col.received,
-       doses_opened: col.doses_opened,
-       ending_balance: col.ending_balance,
-       qty_ret_lga: col.qty_ret_lga,
-       days:days
-      });
-
+      categoryCollection,
+      day_of_month: col.day_of_month,
+      opening_balance: col.opening_balance,
+      received: col.received,
+      doses_opened: col.doses_opened,
+      ending_balance: col.ending_balance,
+      qty_ret_lga: col.qty_ret_lga,
+      days: days,
+    });
   };
 
   _remove = (index) => {
     let categoryCollection = Object.assign([], this.state.categoryCollection);
 
     let deletedItem = categoryCollection.splice(index, 1);
-    console.log(deletedItem)
+    console.log(deletedItem);
     let dayOfMonth = deletedItem[0].day_of_month;
-    let days = Object.assign([],this.state.days);
+    let days = Object.assign([], this.state.days);
     days.push(parseInt(dayOfMonth));
-    days.sort((a,b)=>{
-      return a-b;
+    days.sort((a, b) => {
+      return a - b;
     });
 
-    this.setState({ categoryCollection,days:days });
+    this.setState({ categoryCollection, days: days });
   };
 
-
-
-  componentDidMount() {
+  getDays(date?: any) {
+    let _date = date ? new Date(date) : new Date();
+    let daysInMonth = getDaysInAMonth(
+      _date.getMonth() + 1,
+      _date.getFullYear()
+    );
     let days = [];
-
-    for(let i = 1; i <= 31; i++){
+    for (let i = 1; i <= daysInMonth; i++) {
       days.push(i);
     }
 
+    this.setState({ days: days });
+
+    return days;
+  }
+
+  componentDidMount() {
     const state = this.props.location.state;
 
-    let {max_stock,min_stock,date,categoryCollection,selectedCategory} = this.state;
-    if(state){
-       max_stock = state.max_stock;
-       min_stock = state.min_stock;
-       let formattDate = moment(state.date).format("L").split("/");
+    let {
+      max_stock,
+      min_stock,
+      date,
+      categoryCollection,
+      selectedCategory,
+    } = this.state;
+    if (state) {
+      let days = this.getDays(state.date);
+      max_stock = state.max_stock;
+      min_stock = state.min_stock;
+      let formattDate = moment(state.date).format('L').split('/');
 
-       date = formattDate[2] + "-" + formattDate[0] + "-" + formattDate[1];
+      date = formattDate[2] + '-' + formattDate[0] + '-' + formattDate[1];
 
-       categoryCollection = state.records;
+      categoryCollection = state.records;
 
-       state.records.forEach((val)=>{
-           let searchDate = days.indexOf(parseInt(val.day_of_month));
-           if(searchDate != -1 ){
-             days.splice(searchDate,1);
-           }
-       })
+      state.records.forEach((val) => {
+        let searchDate = days.indexOf(parseInt(val.day_of_month));
+        if (searchDate != -1) {
+          days.splice(searchDate, 1);
+        }
+      });
 
-       selectedCategory = state.vaccine;
+      selectedCategory = state.device;
 
-       this.setState({max_stock,min_stock,date,categoryCollection,selectedCategory,days:days})
-    }else{
-      this.setState({days:days});
+      this.setState({
+        max_stock,
+        min_stock,
+        date,
+        categoryCollection,
+        selectedCategory,
+        days: days,
+      });
+    } else {
+      let days = this.getDays();
+      this.setState({ days: days });
     }
-
 
     window.scrollTo(0, 0);
   }
@@ -267,28 +274,27 @@ class Antigen extends React.Component<Props> {
       ending_balance,
       qty_ret_lga,
       date,
-      selectedCategory
+      selectedCategory,
     } = this.state;
 
     let disabled = true;
-    if(
-       max_stock &&
-       min_stock &&
-       day_of_month &&
-       opening_balance &&
-       received &&
-       doses_opened &&
-       ending_balance &&
-       qty_ret_lga &&
-       date &&
-       selectedCategory
-       ){
-           disabled = false
-       }
+    if (
+      max_stock &&
+      min_stock &&
+      day_of_month &&
+      opening_balance &&
+      received &&
+      doses_opened &&
+      ending_balance &&
+      qty_ret_lga &&
+      date &&
+      selectedCategory
+    ) {
+      disabled = false;
+    }
 
-       let disabledSubmit = this.state.categoryCollection.length == 0 ? true : false;
-
-
+    let disabledSubmit =
+      this.state.categoryCollection.length == 0 ? true : false;
 
     return (
       <div
@@ -302,11 +308,10 @@ class Antigen extends React.Component<Props> {
           marginLeft: 10,
         }}
       >
-        <h5 style={{marginLeft:10,marginBottom:20,marginTop:20}}>
-          Add Vaccine Utilization
+        <h5 style={{ marginLeft: 10, marginBottom: 20, marginTop: 20 }}>
+          Add Device Utilization
         </h5>
-        <hr className="mx-3"/>
-
+        <hr className="mx-3" />
 
         <InputFree
           type="date"
@@ -316,17 +321,21 @@ class Antigen extends React.Component<Props> {
           title="Date"
           hideSubtxt={true}
           value={this.state.date}
-          onChange={(v)=>this.setState({date:v})}
+          onChange={(v) => this.setState({ date: v }, () => this.getDays(v))}
         />
 
         <SelectComponentFree
           name="category"
-          options={this.state.antigen_diluent}
+          options={this.state.devices}
           title="Category"
           disabled={state}
           value={this.state.selectedCategory}
           placeholder="Select Vaccine"
-          onSelected={(value) => this.setState({ selectedCategory: value },()=>this.resetSelectionsOnDeviceOrFormChanged())}
+          onSelected={(value) =>
+            this.setState({ selectedCategory: value }, () =>
+              this.resetSelectionsOnDeviceOrFormChanged()
+            )
+          }
           required="Please select categroy"
           state={state}
         />
@@ -352,18 +361,16 @@ class Antigen extends React.Component<Props> {
         />
 
         <div className="d-flex align-items-center justify-content-center">
-
-            <SelectComponentFree
-              name="day_of_month"
-              options={this.state.days}
-              title="Day"
-              placeholder="Select Day"
-              value={day_of_month}
-              onSelected={(value) => this.setState({ day_of_month: value })}
-              required="Please select day"
-              state={state}
-            />
-
+          <SelectComponentFree
+            name="day_of_month"
+            options={this.state.days}
+            title="Day"
+            placeholder="Select Day"
+            value={day_of_month}
+            onSelected={(value) => this.setState({ day_of_month: value })}
+            required="Please select day"
+            state={state}
+          />
 
           <InputFree
             type="number"
@@ -415,7 +422,12 @@ class Antigen extends React.Component<Props> {
             state={state}
           />
           <div className="">
-            <button type="button" disabled={disabled} onClick={() => this._add()} className="btn btn-secondary">
+            <button
+              type="button"
+              disabled={disabled}
+              onClick={() => this._add()}
+              className="btn btn-secondary"
+            >
               Add
             </button>
           </div>
@@ -424,13 +436,19 @@ class Antigen extends React.Component<Props> {
         <div>
           <table className="table table-striped table-bordered">
             <tr>
-              <td style={{fontSize:12,fontWeight:'bold'}}>Day of Month</td>
-              <td style={{fontSize:12,fontWeight:'bold'}}>Opening Balance</td>
-              <td style={{fontSize:12,fontWeight:'bold'}}>Received</td>
-              <td style={{fontSize:12,fontWeight:'bold'}}>Doses Opened</td>
-              <td style={{fontSize:12,fontWeight:'bold'}}>Ending Balance</td>
-              <td style={{fontSize:12,fontWeight:'bold'}}>Quatity Returned to LGA</td>
-              <td style={{fontSize:12,fontWeight:'bold'}}>Action</td>
+              <td style={{ fontSize: 12, fontWeight: 'bold' }}>Day of Month</td>
+              <td style={{ fontSize: 12, fontWeight: 'bold' }}>
+                Opening Balance
+              </td>
+              <td style={{ fontSize: 12, fontWeight: 'bold' }}>Received</td>
+              <td style={{ fontSize: 12, fontWeight: 'bold' }}>Doses Opened</td>
+              <td style={{ fontSize: 12, fontWeight: 'bold' }}>
+                Ending Balance
+              </td>
+              <td style={{ fontSize: 12, fontWeight: 'bold' }}>
+                Quatity Returned to LGA
+              </td>
+              <td style={{ fontSize: 12, fontWeight: 'bold' }}>Action</td>
             </tr>
             {this.state.categoryCollection.map((col, index) => (
               <tr>
@@ -448,7 +466,7 @@ class Antigen extends React.Component<Props> {
                     Remove
                   </button>
                   <button
-                    onClick={() => this._edit(col,index)}
+                    onClick={() => this._edit(col, index)}
                     className="btn btn-primary btn-sm"
                   >
                     Edit
@@ -458,12 +476,18 @@ class Antigen extends React.Component<Props> {
             ))}
           </table>
         </div>
-        <button onClick={()=>this._submit()} disabled={disabledSubmit} style={{marginTop:10,marginBottom:10,width:100}} type="button" className="btn btn-primary">
-             SUBMIT
+        <button
+          onClick={() => this._submit()}
+          disabled={disabledSubmit}
+          style={{ marginTop: 10, marginBottom: 10, width: 100 }}
+          type="button"
+          className="btn btn-primary"
+        >
+          SUBMIT
         </button>
       </div>
     );
   }
 }
 
-export default Antigen;
+export default DeviceUtilization;

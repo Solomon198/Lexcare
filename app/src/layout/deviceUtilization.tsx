@@ -16,14 +16,14 @@ import { showToast } from '../../realm/utils/utilsUI';
 type props = {
   history: any;
 };
-export default class Antigens extends React.Component<props> {
+export default class DeviceUtilization extends React.Component<props> {
   addRecord() {
-    this.props.history.push('/add-antigen');
+    this.props.history.push('/add-device-utilization');
   }
 
   edit(payload: any) {
     this.props.history.push({
-      pathname: '/add-antigen',
+      pathname: '/add-device-utilization',
       state: payload,
     });
   }
@@ -38,16 +38,16 @@ export default class Antigens extends React.Component<props> {
         <div className="content-i">
           <div className="content-box">
             <div className="element-wrapper">
-              <h6 className="element-header">Vaccine Utilization</h6>
+              <h6 className="element-header">Device Utilization</h6>
               <div className="element-box">
-                <h5 className="form-header">All Vaccine Utilization Records</h5>
+                <h5 className="form-header">All Device Utilization Records</h5>
 
                 <RenderData
                   dataField="date"
                   onlyMonth={true}
                   addRecord={() => this.addRecord()}
                   editRecord={(payload) => this.edit(payload)}
-                  SchemaName={schemas.Vaccine.name}
+                  SchemaName={schemas.Device.name}
                   tableHead={
                     <thead>
                       <tr>
@@ -62,7 +62,7 @@ export default class Antigens extends React.Component<props> {
                   }
                   properties={[
                     { key: 'date', isDate: true },
-                    { key: 'vaccine' },
+                    { key: 'device' },
                     { key: 'max_stock' },
                     { key: 'min_stock' },
                   ]}
