@@ -888,9 +888,11 @@ export async function createDosesDiscardedRecord(
   isUpdate?: boolean
 ) {
   try {
+
     const { phc_state, phc_lga } = getPHC_configSettings();
 
     let { state_id, lga_id } = getLocationIDS(phc_state, phc_lga);
+
 
     documents['state_id'] = state_id || '12';
     documents['lga_id'] = lga_id || '13';
@@ -898,6 +900,8 @@ export async function createDosesDiscardedRecord(
     let formatDate = new Date(documents.date);
 
     documents.date = new Date(formatDate);
+
+    documents.expiry = new Date(documents.expiry)
 
     if (!isUpdate) {
       documents.health_facility_id = getPHC_configSettings().phc_id;
