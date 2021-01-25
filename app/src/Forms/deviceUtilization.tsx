@@ -119,7 +119,7 @@ class DeviceUtilization extends React.Component<Props> {
       qty_ret_lga: null,
       categoryCollection: [],
       max_stock: null,
-      mix_stock: null,
+      min_stock: null,
     });
   }
 

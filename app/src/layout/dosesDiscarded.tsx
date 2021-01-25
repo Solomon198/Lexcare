@@ -46,7 +46,7 @@ export default class DosesDiscarded extends React.Component<props> {
                   dataField="date"
                   addRecord={() => this.addRecord()}
                   editRecord={(payload) => this.edit(payload)}
-                  SchemaName={schemas.DailyAttendanceSchema.name}
+                  SchemaName={schemas.DosesDiscarded.name}
                   tableHead={
                     <thead>
                       <tr>
@@ -65,11 +65,11 @@ export default class DosesDiscarded extends React.Component<props> {
                   }
                   properties={[
                     { key: 'date', isDate: true },
-                    { key: 'client_name' },
-                    { key: 'client_card_number' },
-                    { key: 'date_of_birth', isDate: true },
-                    { key: 'sex' },
-                    { key: 'first_contact_with_facility' },
+                    { key: 'antigen_diluent' },
+                    // { key: 'client_card_number' },
+                    // { key: 'date_of_birth', isDate: true },
+                    // { key: 'sex' },
+                    // { key: 'first_contact_with_facility' },
                   ]}
                 />
               </div>

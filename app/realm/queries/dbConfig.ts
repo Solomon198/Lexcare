@@ -1,165 +1,128 @@
 //
 
-
 import Realm from 'realm';
-
-
+import schemas from '../schemas/index';
 
 import Schemas from '../schemas/index';
 
-import Auth from './auth'
+import Auth from './auth';
 import { getPHC_configSettings } from './readQueries';
 
-
-
 //export app instance for global usage;
-export let  _APP_INSTANCE_ : Realm.App;
+export let _APP_INSTANCE_: Realm.App;
 
 //export synced database intance
 
-export let _DATA_BASE_INSTACE_ : Realm;
-
+export let _DATA_BASE_INSTACE_: Realm;
 
 //initializes the app
-export function initializeApplication(appName?:string){
-
-     _APP_INSTANCE_ = new Realm.App({ id: getPHC_configSettings()?.realm ?? appName });
-
-
+export function initializeApplication(appName?: string) {
+  _APP_INSTANCE_ = new Realm.App({
+    id: getPHC_configSettings()?.realm ?? appName,
+  });
 }
 
-export function reInitializApplicationConfigs(){
+export function reInitializApplicationConfigs() {
+  // renitialize app
+  initializeApplication();
 
-      // renitialize app
-      initializeApplication();
+  // openSync connection;
 
-      // openSync connection;
-
-      openSyncronizedRealm()
+  openSyncronizedRealm();
 }
 
-export function checkActiveConnection(){
+export function checkActiveConnection() {
+  if (!_APP_INSTANCE_) {
+    // renitialize app
+    initializeApplication();
+  } else if (!_DATA_BASE_INSTACE_) {
+    // openSync connection;
+    openSyncronizedRealm();
+  } else {
+    let syncStatus = _DATA_BASE_INSTACE_.syncSession?.state;
 
-  if(!_APP_INSTANCE_){
-     // renitialize app
-     initializeApplication();
-  }else if(!_DATA_BASE_INSTACE_){
+    let connectionStatus = _DATA_BASE_INSTACE_.syncSession?.connectionState;
 
-     // openSync connection;
-      openSyncronizedRealm()
-  }else{
+    if (syncStatus != 'active') {
+      reInitializApplicationConfigs();
 
+      console.log('connction not active just fired reniti');
+    } else if (connectionStatus == 'disconnected') {
+      console.log('connction disconnected just fired reniti');
 
-
-      let syncStatus = _DATA_BASE_INSTACE_.syncSession?.state;
-
-      let connectionStatus = _DATA_BASE_INSTACE_.syncSession?.connectionState;
-
-      if(syncStatus != "active"){
-
-           reInitializApplicationConfigs();
-
-           console.log("connction not active just fired reniti")
-
-      }else if(connectionStatus == "disconnected"){
-
-          console.log("connction disconnected just fired reniti")
-
-          reInitializApplicationConfigs();
-
-      }else{
-        console.log("everything ok no need for re-initializing")
-      }
+      reInitializApplicationConfigs();
+    } else {
+      console.log('everything ok no need for re-initializing');
+    }
   }
-
-
-
 }
 
+export function openSyncronizedRealm() {
+  //check if a valid user exist before making attempts to open Database
 
-export function openSyncronizedRealm(){
+  if (_APP_INSTANCE_.currentUser) {
+    _DATA_BASE_INSTACE_ = new Realm({
+      schema: [
+        Schemas.BirthRegister,
 
-    //check if a valid user exist before making attempts to open Database
+        Schemas.DailyAttendanceSchema,
 
-     if(_APP_INSTANCE_.currentUser){
+        Schemas.StaffSchema,
 
+        Schemas.ClientSchema,
 
-            _DATA_BASE_INSTACE_ = new  Realm({
+        Schemas.CommunityLeaders,
 
-            schema:[
+        Schemas.ReferalOut,
 
-                  Schemas.BirthRegister,
+        Schemas.Antenatal,
 
-                  Schemas.DailyAttendanceSchema,
+        Schemas.FamilyPlaning,
 
-                  Schemas.StaffSchema,
+        Schemas.Inpatient,
 
-                  Schemas.ClientSchema,
+        Schemas.LabourAndDelivery,
 
-                  Schemas.CommunityLeaders,
+        Schemas.PostNatal,
 
-                  Schemas.ReferalOut,
+        Schemas.Immunization,
 
-                  Schemas.Antenatal,
+        Schemas.OutPatient,
 
-                  Schemas.FamilyPlaning,
+        Schemas.Nutrition,
 
-                  Schemas.Inpatient,
+        Schemas.Tetanus,
 
-                  Schemas.LabourAndDelivery,
+        Schemas.Services,
 
-                  Schemas.PostNatal,
+        Schemas.AdministerVaccine,
 
-                  Schemas.Immunization,
+        Schemas.TetanusAdministration,
 
-                  Schemas.OutPatient,
+        Schemas.Vaccine,
 
-                  Schemas.Nutrition,
+        Schemas.Device,
 
-                  Schemas.Tetanus,
+        schemas.DosesDiscarded,
+      ],
 
-                  Schemas.Services,
+      // schemaVersion:1,
 
-                  Schemas.AdministerVaccine,
+      //  sync:{
 
-                  Schemas.TetanusAdministration,
+      //    partitionValue:getPHC_configSettings().phc_id,
 
-                  Schemas.Vaccine,
+      //    user:_APP_INSTANCE_.currentUser,
 
-                  Schemas.Device
+      //    error:(error)=>{
 
+      //      console.log(error)
 
-                ],
+      //    },
 
-            // schemaVersion:1,
-
-            //  sync:{
-
-            //    partitionValue:getPHC_configSettings().phc_id,
-
-
-            //    user:_APP_INSTANCE_.currentUser,
-
-            //    error:(error)=>{
-
-            //      console.log(error)
-
-            //    },
-
-
-            //  }
-
-          })
-
-
-
-
-
-
-
-
-
-     }else{
-        Auth.login(getPHC_configSettings().phc_realm_api_key);
-     }
+      //  }
+    });
+  } else {
+    Auth.login(getPHC_configSettings().phc_realm_api_key);
+  }
 }

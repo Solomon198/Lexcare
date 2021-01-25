@@ -9,7 +9,7 @@ import TextArea from '../components/textArea';
 import StepWrapper from '../components/stepWrapper';
 import StepFormWrapper from '../components/stepFormWrapper';
 import { getPHC_configSettings } from '../../realm/queries/readQueries';
-import { createDailyAttendance } from '../../realm/queries/writeQueries';
+import { createDosesDiscardedRecord } from '../../realm/queries/writeQueries';
 import SelectCommunityLeader from '../components/selectCommunityLeader';
 import NigeriaStates from '../data/states';
 import 'toasted-notes/src/styles.css';
@@ -22,6 +22,7 @@ type Props = {
 class DoseDiscarded extends React.Component<Props> {
   state = {
     selectedCategory: '',
+    date: null,
     expiry: null,
     breakage: null,
     vvm_change: null,
@@ -50,8 +51,22 @@ class DoseDiscarded extends React.Component<Props> {
     discardedCategory: [],
   };
 
+  resetSelectionOnAntigenDiluentChanged = () => {
+    this.setState({
+      expiry: null,
+      breakage: null,
+      vvm_change: null,
+      freezing: null,
+      label_rmvd: null,
+      other: null,
+      total: null,
+      discardedCategory: [],
+    });
+  };
+
   _add = () => {
     const {
+      selectedCategory,
       expiry,
       breakage,
       vvm_change,
@@ -73,9 +88,45 @@ class DoseDiscarded extends React.Component<Props> {
       total: total,
     };
 
+    let antigen_diluent = Object.assign([], this.state.antigen_diluent);
+    let indexOfAntigen = antigen_diluent.indexOf(selectedCategory);
+    antigen_diluent.splice(indexOfAntigen, 1);
+
     discardedCategory.push(newObj);
 
-    this.setState({ discardedCategory });
+    this.setState({
+      discardedCategory,
+      antigen_diluent,
+      date: null,
+      expiry: null,
+      breakage: null,
+      vvm_change: null,
+      freezing: null,
+      label_rmvd: null,
+      other: null,
+      total: null,
+    });
+  };
+
+  _edit = (row, index) => {
+    let discardedCategory = Object.assign([], this.state.discardedCategory);
+
+    discardedCategory.splice(index, 1);
+
+    let antigen_diluent = Object.assign([], this.state.antigen_diluent);
+    antigen_diluent.push(this.state.selectedCategory);
+
+    this.setState({
+      discardedCategory,
+      antigen_diluent,
+      expiry: row.expiry,
+      breakage: row.breakage,
+      vvm_change: row.vvm_change,
+      freezing: row.freezing,
+      label_rmvd: row.label_rmvd,
+      other: row.other,
+      total: row.total,
+    });
   };
 
   _remove = (index) => {
@@ -86,16 +137,30 @@ class DoseDiscarded extends React.Component<Props> {
     this.setState({ discardedCategory });
   };
 
-  SubmitRealm(info: any) {
+  _submit() {
+    let { discardedCategory, date, selectedCategory } = this.state;
+    let stringifyDiscardedCategory: string[] = [];
+    discardedCategory.forEach((val) => {
+      let strValue = JSON.stringify(val);
+      stringifyDiscardedCategory.push(strValue);
+    });
+    let data: any = {
+      records: stringifyDiscardedCategory,
+      date: date,
+    };
+
     const state = this.props.location.state;
     const isUpdate = state ? true : false;
     if (state) {
-      info._id = state._id;
+      data._id = state._id;
+      data.health_facility_id = state.health_facility_id;
     }
-    createDailyAttendance(info, isUpdate)
+
+    data['device'] = selectedCategory;
+    createDosesDiscardedRecord(data, isUpdate)
       .then((val) => {
         if (val == 'success') {
-          this.props.history.push('/daily-attendance');
+          this.props.history.goBack();
           window.scrollTo(0, 0);
         }
       })
@@ -113,6 +178,7 @@ class DoseDiscarded extends React.Component<Props> {
 
     const {
       selectedCategory,
+      date,
       expiry,
       breakage,
       vvm_change,
@@ -121,6 +187,25 @@ class DoseDiscarded extends React.Component<Props> {
       other,
       total,
     } = this.state;
+
+    let disabled = true;
+
+    if (
+      selectedCategory &&
+      date &&
+      expiry &&
+      breakage &&
+      vvm_change &&
+      freezing &&
+      label_rmvd &&
+      other &&
+      total
+    ) {
+      disabled = false;
+    }
+
+    let disabledSubmit =
+      this.state.discardedCategory.length === 0 ? true : false;
 
     return (
       <div
@@ -146,8 +231,8 @@ class DoseDiscarded extends React.Component<Props> {
           disabled={state}
           title="Date"
           hideSubtxt={true}
-          value={''} // value={this.state.date}
-          onChange={(v) => v} // onChange={(v) => this.setState({ date: v }, () => this.getDays(v))}
+          value={date}
+          onChange={(v) => this.setState({ date: v })}
         />
 
         {/* <DatePicker
@@ -165,9 +250,14 @@ class DoseDiscarded extends React.Component<Props> {
           placeholder="Select Antigen/Diluent"
           name="antigen_diluent"
           title="Antigen / Diluent"
+          disabled={state}
           hideSubtxt={true}
           value={selectedCategory}
-          onSelected={(value) => this.setState({ selectedCategory: value })}
+          onSelected={(value) =>
+            this.setState({ selectedCategory: value }, () =>
+              this.resetSelectionOnAntigenDiluentChanged()
+            )
+          }
           state={state}
         />
 
@@ -184,7 +274,7 @@ class DoseDiscarded extends React.Component<Props> {
             disabled={state}
             name="expiry"
             title="Expiry"
-            value={this.state.expiry}
+            value={expiry}
             onChange={(value) => this.setState({ expiry: value })}
             // state={state}
           />
@@ -194,6 +284,7 @@ class DoseDiscarded extends React.Component<Props> {
             placeholder="Enter Breakage"
             name="breakage"
             title="Breakage"
+            disabled={state}
             value={breakage}
             onChange={(value) => this.setState({ breakage: value })}
             state={state}
@@ -204,6 +295,7 @@ class DoseDiscarded extends React.Component<Props> {
             placeholder="Enter VVM Change"
             name="vvm_change"
             title="VVM Change"
+            disabled={state}
             value={vvm_change}
             onChange={(value) => this.setState({ vvm_change: value })}
             state={state}
@@ -214,6 +306,7 @@ class DoseDiscarded extends React.Component<Props> {
             placeholder="Enter Freezing"
             name="freezing"
             title="Freezing"
+            disabled={state}
             value={freezing}
             onChange={(value) => this.setState({ freezing: value })}
             state={state}
@@ -224,6 +317,7 @@ class DoseDiscarded extends React.Component<Props> {
             placeholder="Enter Label Removed"
             name="label_emoved"
             title="Label Rmvd"
+            disabled={state}
             value={label_rmvd}
             onChange={(value) => this.setState({ label_rmvd: value })}
             state={state}
@@ -234,6 +328,7 @@ class DoseDiscarded extends React.Component<Props> {
             placeholder="Enter Other"
             name="other"
             title="Other"
+            disabled={state}
             value={other}
             onChange={(value) => this.setState({ other: value })}
             state={state}
@@ -243,6 +338,7 @@ class DoseDiscarded extends React.Component<Props> {
             type="number"
             placeholder="Enter Total"
             name="total"
+            disabled={state}
             title="Total"
             value={total}
             onChange={(value) => this.setState({ total: value })}
@@ -252,7 +348,7 @@ class DoseDiscarded extends React.Component<Props> {
           <div className="">
             <button
               type="button"
-              // disabled={disabled}
+              disabled={disabled}
               onClick={() => this._add()}
               className="btn btn-secondary"
             >
@@ -291,12 +387,26 @@ class DoseDiscarded extends React.Component<Props> {
                   >
                     Remove
                   </button>
-                  <button className="btn btn-primary btn-sm">Edit</button>
+                  <button
+                    onClick={() => this._edit(row, index)}
+                    className="btn btn-primary btn-sm"
+                  >
+                    Edit
+                  </button>
                 </td>
               </tr>
             ))}
           </table>
         </div>
+        <button
+          onClick={() => this._submit()}
+          disabled={disabledSubmit}
+          style={{ marginTop: 10, marginBottom: 10, width: 100 }}
+          type="button"
+          className="btn btn-primary"
+        >
+          SUBMIT
+        </button>
       </div>
     );
   }
