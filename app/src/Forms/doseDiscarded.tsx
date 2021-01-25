@@ -64,50 +64,6 @@ class DoseDiscarded extends React.Component<Props> {
     });
   };
 
-  _add = () => {
-    const {
-      selectedCategory,
-      expiry,
-      breakage,
-      vvm_change,
-      freezing,
-      label_rmvd,
-      other,
-      total,
-    } = this.state;
-
-    let discardedCategory = Object.assign([], this.state.discardedCategory);
-
-    let newObj = {
-      expiry: expiry,
-      breakage: breakage,
-      vvm_change: vvm_change,
-      freezing: freezing,
-      label_rmvd: label_rmvd,
-      other: other,
-      total: total,
-    };
-
-    let antigen_diluent = Object.assign([], this.state.antigen_diluent);
-    let indexOfAntigen = antigen_diluent.indexOf(selectedCategory);
-    antigen_diluent.splice(indexOfAntigen, 1);
-
-    discardedCategory.push(newObj);
-
-    this.setState({
-      discardedCategory,
-      antigen_diluent,
-      date: null,
-      expiry: null,
-      breakage: null,
-      vvm_change: null,
-      freezing: null,
-      label_rmvd: null,
-      other: null,
-      total: null,
-    });
-  };
-
   _edit = (row, index) => {
     let discardedCategory = Object.assign([], this.state.discardedCategory);
 
@@ -138,14 +94,31 @@ class DoseDiscarded extends React.Component<Props> {
   };
 
   _submit() {
-    let { discardedCategory, date, selectedCategory } = this.state;
-    let stringifyDiscardedCategory: string[] = [];
-    discardedCategory.forEach((val) => {
-      let strValue = JSON.stringify(val);
-      stringifyDiscardedCategory.push(strValue);
-    });
+    let {
+      selectedCategory,
+      date,
+      expiry,
+      breakage,
+      vvm_change,
+      freezing,
+      label_rmvd,
+      other,
+      total,
+    } = this.state;
+    // let stringifyCategoryCollection: string[] = [];
+    // categoryCollection.forEach((val) => {
+    //   let strValue = JSON.stringify(val);
+    //   stringifyCategoryCollection.push(strValue);
+    // });
     let data: any = {
-      records: stringifyDiscardedCategory,
+      // records: stringifyCategoryCollection,
+      expiry: date,
+      breakage: parseInt(breakage),
+      vvm_change: parseInt(vvm_change),
+      freezing: parseInt(freezing),
+      label_rmvd: parseInt(label_rmvd),
+      other: parseInt(other),
+      total: parseInt(total),
       date: date,
     };
 
@@ -156,7 +129,7 @@ class DoseDiscarded extends React.Component<Props> {
       data.health_facility_id = state.health_facility_id;
     }
 
-    data['device'] = selectedCategory;
+    data['antigen_diluent'] = selectedCategory;
     createDosesDiscardedRecord(data, isUpdate)
       .then((val) => {
         if (val == 'success') {
@@ -188,24 +161,22 @@ class DoseDiscarded extends React.Component<Props> {
       total,
     } = this.state;
 
-    let disabled = true;
+    // let disabledSubmit = false;
+    // if (
+    //   selectedCategory != '' &&
+    //   date != null &&
+    //   expiry != null &&
+    //   breakage != null &&
+    //   vvm_change != null &&
+    //   freezing != null &&
+    //   label_rmvd != null &&
+    //   other != null &&
+    //   total != null
+    // ) {
+    //   disabledSubmit = true;
+    // }
 
-    if (
-      selectedCategory &&
-      date &&
-      expiry &&
-      breakage &&
-      vvm_change &&
-      freezing &&
-      label_rmvd &&
-      other &&
-      total
-    ) {
-      disabled = false;
-    }
-
-    let disabledSubmit =
-      this.state.discardedCategory.length === 0 ? true : false;
+    // this.state.discardedCategory.length === 0 ? false : true;
 
     return (
       <div
@@ -235,16 +206,6 @@ class DoseDiscarded extends React.Component<Props> {
           onChange={(v) => this.setState({ date: v })}
         />
 
-        {/* <DatePicker
-            type="date"
-            placeholder="Select registration date Y-m-d"
-            name="date"
-            isAttendance={true}
-            state={state}
-            title="Date"
-            required="please select date"
-          /> */}
-
         <SelectComponentFree
           options={this.state.antigen_diluent}
           placeholder="Select Antigen/Diluent"
@@ -262,12 +223,7 @@ class DoseDiscarded extends React.Component<Props> {
         />
 
         <h4>Quantity (doses) Discarded Due To:</h4>
-        <div
-          className="
-          d-flex
-          align-items-center
-          justify-content-center"
-        >
+        <div>
           <InputFree
             type="date"
             placeholder="Enter Expiry Date"
@@ -344,63 +300,11 @@ class DoseDiscarded extends React.Component<Props> {
             onChange={(value) => this.setState({ total: value })}
             state={state}
           />
-
-          <div className="">
-            <button
-              type="button"
-              disabled={disabled}
-              onClick={() => this._add()}
-              className="btn btn-secondary"
-            >
-              Add
-            </button>
-          </div>
         </div>
 
-        <div>
-          <table className="table table-striped table-bordered">
-            <tr>
-              <td style={{ fontSize: 12, fontWeight: 'bold' }}>Expiry</td>
-              <td style={{ fontSize: 12, fontWeight: 'bold' }}>Breakage</td>
-              <td style={{ fontSize: 12, fontWeight: 'bold' }}>VVM Change</td>
-              <td style={{ fontSize: 12, fontWeight: 'bold' }}>Freezing</td>
-              <td style={{ fontSize: 12, fontWeight: 'bold' }}>
-                Label Removed
-              </td>
-              <td style={{ fontSize: 12, fontWeight: 'bold' }}>Other</td>
-              <td style={{ fontSize: 12, fontWeight: 'bold' }}>Total</td>
-              <td style={{ fontSize: 12, fontWeight: 'bold' }}>Action</td>
-            </tr>
-            {this.state.discardedCategory.map((row, index) => (
-              <tr>
-                <td>{row.expiry}</td>
-                <td>{row.breakage}</td>
-                <td>{row.vvm_change}</td>
-                <td>{row.freezing}</td>
-                <td>{row.label_rmvd}</td>
-                <td>{row.other}</td>
-                <td>{row.total}</td>
-                <td>
-                  <button
-                    onClick={() => this._remove(index)}
-                    className="btn btn-danger btn-sm mr-1"
-                  >
-                    Remove
-                  </button>
-                  <button
-                    onClick={() => this._edit(row, index)}
-                    className="btn btn-primary btn-sm"
-                  >
-                    Edit
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </table>
-        </div>
         <button
           onClick={() => this._submit()}
-          disabled={disabledSubmit}
+          // disabled={disabledSubmit}
           style={{ marginTop: 10, marginBottom: 10, width: 100 }}
           type="button"
           className="btn btn-primary"

@@ -9,7 +9,19 @@ type DosesDiscardedProperties = {
 
   date: string;
 
-  records: any;
+  expiry: string;
+
+  breakage: string;
+
+  vvm_change: string;
+
+  freezing: string;
+
+  label_rmvd: string;
+
+  other: string;
+
+  total: string;
 
   state_id: string;
 

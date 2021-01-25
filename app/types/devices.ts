@@ -1,36 +1,31 @@
 /* eslint-disable prettier/prettier */
 
-
 type DeviceProperties = {
+  _id: string;
 
-  _id : string,
+  health_facility_id: string;
 
-  health_facility_id: string,
+  device: string;
 
-  device: string,
+  max_stock: string;
 
-  max_stock: string,
+  date: string;
 
-  date:string,
+  min_stock: string;
 
-  min_stock: string,
+  records: any;
 
-  records: any,
+  state_id: string;
 
-  state_id: string,
-
-  lga_id: string
-
+  lga_id: string;
 };
 
 export type DeviceTYpes = {
+  name: string;
 
-  name :string
+  primaryKey: string;
 
-  primaryKey :string
+  partitionKey: string;
 
-  partitionKey:string
-
-  properties : DeviceProperties
-
-}
+  properties: DeviceProperties;
+};

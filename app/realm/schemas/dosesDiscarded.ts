@@ -18,7 +18,19 @@ const DosesDiscardedSchema: DosesDiscardedTypes = {
 
     date: 'date?',
 
-    records: 'string[]',
+    expiry: 'date?',
+
+    breakage: 'int?',
+
+    vvm_change: 'int?',
+
+    freezing: 'int?',
+
+    label_rmvd: 'int?',
+
+    other: 'int?',
+
+    total: 'int?',
 
     state_id: 'string?',
 

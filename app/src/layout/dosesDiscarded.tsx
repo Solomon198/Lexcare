@@ -66,10 +66,12 @@ export default class DosesDiscarded extends React.Component<props> {
                   properties={[
                     { key: 'date', isDate: true },
                     { key: 'antigen_diluent' },
-                    // { key: 'client_card_number' },
-                    // { key: 'date_of_birth', isDate: true },
-                    // { key: 'sex' },
-                    // { key: 'first_contact_with_facility' },
+                    { key: 'expiry', isDate: true },
+                    { key: 'breakage' },
+                    { key: 'vvm_change' },
+                    { key: 'freezing' },
+                    { key: 'label_rmvd' },
+                    { key: 'total' },
                   ]}
                 />
               </div>
