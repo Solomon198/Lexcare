@@ -14,6 +14,7 @@ import SelectCommunityLeader from '../components/selectCommunityLeader';
 import NigeriaStates from '../data/states';
 import 'toasted-notes/src/styles.css';
 import { AgeRange } from '../../realm/utils/utils';
+import moment from 'moment';
 
 type Props = {
   history: any;
@@ -133,6 +134,14 @@ class DoseDiscarded extends React.Component<Props> {
     createDosesDiscardedRecord(data, isUpdate)
       .then((val) => {
         if (val == 'success') {
+          // console.log('Expiry', data['expiry']);
+          // console.log('Breakage: ', data['breakage']);
+          // console.log('VVM Change: ', data['vvm_change']);
+          // console.log('Freezing: ', data['freezing']);
+          // console.log('Label Removed: ', data['label_rmvd']);
+          // console.log('Other: ', data['other']);
+          // console.log('Total: ', data['total']);
+          // console.log('Date: ', data['date']);
           this.props.history.goBack();
           window.scrollTo(0, 0);
         }
@@ -143,6 +152,62 @@ class DoseDiscarded extends React.Component<Props> {
   }
 
   componentDidMount() {
+    const state = this.props.location.state;
+
+    let {
+      selectedCategory,
+      date,
+      expiry,
+      breakage,
+      vvm_change,
+      freezing,
+      label_rmvd,
+      other,
+      total,
+    } = this.state;
+
+    if (state) {
+      breakage = state.breakage;
+      vvm_change = state.vvm_change;
+      freezing = state.freezing;
+      label_rmvd = state.label_rmvd;
+      other = state.other;
+      total = state.total;
+      let formattDate = moment(state.date).format('L').split('/');
+      let formateExpiry = moment(state.expiry).format('L').split('/');
+
+      date = formattDate[2] + '-' + formattDate[0] + '-' + formattDate[1];
+      expiry =
+        formateExpiry[2] + '-' + formateExpiry[0] + '-' + formateExpiry[1];
+
+      // categoryCollection = state.records;
+
+      // state.records.forEach((val) => {
+      //   let searchDate = days.indexOf(parseInt(val.day_of_month));
+      //   if (searchDate != -1) {
+      //     days.splice(searchDate, 1);
+      //   }
+      // });
+
+      selectedCategory = state.antigen_diluent;
+
+      this.setState({
+        selectedCategory,
+        date,
+        expiry,
+        breakage,
+        vvm_change,
+        freezing,
+        label_rmvd,
+        other,
+        total,
+      });
+    }
+    // else {
+    //   let days = this.getDays();
+    //   this.setState({ days: days });
+    // }
+
     window.scrollTo(0, 0);
   }
 
@@ -227,7 +292,7 @@ class DoseDiscarded extends React.Component<Props> {
           <InputFree
             type="date"
             placeholder="Enter Expiry Date"
-            disabled={state}
+            // disabled={state}
             name="expiry"
             title="Expiry"
             value={expiry}
@@ -240,7 +305,7 @@ class DoseDiscarded extends React.Component<Props> {
             placeholder="Enter Breakage"
             name="breakage"
             title="Breakage"
-            disabled={state}
+            // disabled={state}
             value={breakage}
             onChange={(value) => this.setState({ breakage: value })}
             state={state}
@@ -251,7 +316,7 @@ class DoseDiscarded extends React.Component<Props> {
             placeholder="Enter VVM Change"
             name="vvm_change"
             title="VVM Change"
-            disabled={state}
+            // disabled={state}
             value={vvm_change}
             onChange={(value) => this.setState({ vvm_change: value })}
             state={state}
@@ -262,7 +327,7 @@ class DoseDiscarded extends React.Component<Props> {
             placeholder="Enter Freezing"
             name="freezing"
             title="Freezing"
-            disabled={state}
+            // disabled={state}
             value={freezing}
             onChange={(value) => this.setState({ freezing: value })}
             state={state}
@@ -273,7 +338,7 @@ class DoseDiscarded extends React.Component<Props> {
             placeholder="Enter Label Removed"
             name="label_emoved"
             title="Label Rmvd"
-            disabled={state}
+            // disabled={state}
             value={label_rmvd}
             onChange={(value) => this.setState({ label_rmvd: value })}
             state={state}
@@ -284,7 +349,7 @@ class DoseDiscarded extends React.Component<Props> {
             placeholder="Enter Other"
             name="other"
             title="Other"
-            disabled={state}
+            // disabled={state}
             value={other}
             onChange={(value) => this.setState({ other: value })}
             state={state}
@@ -294,7 +359,7 @@ class DoseDiscarded extends React.Component<Props> {
             type="number"
             placeholder="Enter Total"
             name="total"
-            disabled={state}
+            // disabled={state}
             title="Total"
             value={total}
             onChange={(value) => this.setState({ total: value })}

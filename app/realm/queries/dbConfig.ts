@@ -104,6 +104,8 @@ export function openSyncronizedRealm() {
         Schemas.Device,
 
         schemas.DosesDiscarded,
+
+        schemas.Equipments,
       ],
 
       // schemaVersion:1,

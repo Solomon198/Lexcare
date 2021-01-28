@@ -1,19 +1,29 @@
 import React from 'react';
+
+import { getDocuments } from '../../realm/queries/readQueries';
+
 import RenderData from '../components/pagination';
+
+import DatePicker from '../components/component-free/datePicker';
+
+import { dailyAttendanceProperties } from '../../types/dailyAttendance';
+
+import moment from 'moment';
+
 import schemas from '../../realm/schemas';
+import { showToast } from '../../realm/utils/utilsUI';
 
 type props = {
   history: any;
 };
-
 export default class Equipments extends React.Component<props> {
-  addServices() {
+  addRecord() {
     this.props.history.push('/add-equipment');
   }
 
   edit(payload: any) {
     this.props.history.push({
-      pathname: '/add-services',
+      pathname: '/add-equipment',
       state: payload,
     });
   }
@@ -28,31 +38,29 @@ export default class Equipments extends React.Component<props> {
         <div className="content-i">
           <div className="content-box">
             <div className="element-wrapper">
-              <h6 className="element-header">Equipments</h6>
+              <h6 className="element-header">Equipment</h6>
               <div className="element-box">
-                <h5 className="form-header">All Equipments</h5>
+                <h5 className="form-header">All Equipment Records</h5>
 
                 <RenderData
+                  dataField="date"
+                  onlyMonth={true}
+                  addRecord={() => this.addRecord()}
                   editRecord={(payload) => this.edit(payload)}
-                  addRecord={() => this.addServices()}
-                  SchemaName={schemas.Services.name}
-                  ignoreFilter
+                  SchemaName={schemas.Equipments.name}
                   tableHead={
                     <thead>
                       <tr>
                         <th>#</th>
-                        <th>Date of Month</th>
+                        <th>Month / Year</th>
                         <th>Device</th>
-                        <th>Quantity</th>
-                        <th>Number Functional</th>
-                        <th>Number Non-functional</th>
                         <th>Action</th>
                       </tr>
                     </thead>
                   }
                   properties={[
-                    { key: 'service_name' },
-                    { key: 'service_description' },
+                    { key: 'date', isDate: true },
+                    { key: 'device' },
                   ]}
                 />
               </div>

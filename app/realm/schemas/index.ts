@@ -19,6 +19,7 @@ import AdministerVaccine from './administerVaccine';
 import Vaccine from './vacinnes';
 import Device from './devices';
 import DosesDiscarded from './dosesDiscarded';
+import Equipments from './equipments';
 
 export default {
   DailyAttendanceSchema,
@@ -42,4 +43,5 @@ export default {
   Vaccine,
   Device,
   DosesDiscarded,
+  Equipments,
 };

@@ -7,7 +7,10 @@ import SelectComponent from '../components/select';
 import SelectComponentFree from '../components/component-free/select';
 import StepWrapper from '../components/stepWrapper';
 import StepFormWrapper from '../components/stepFormWrapper';
+import { createEquipmentRecord } from '../../realm/queries/writeQueries';
 import { createFacilityService } from '../../realm/queries/writeQueries';
+import { AgeRange, getDaysInAMonth } from '../../realm/utils/utils';
+import moment from 'moment';
 
 type Props = {
   history: any;
@@ -20,7 +23,9 @@ class Equipment extends React.Component<Props> {
     qty: null,
     num_func: null,
     num_nonfunc: null,
+    date: null,
     selectedDevice: '',
+    days: [],
     deviceCollection: [],
     devices: [
       'Ice packs (0.3/0.4L)',
@@ -49,7 +54,54 @@ class Equipment extends React.Component<Props> {
       });
   }
 
+  getDays(date?: any) {
+    let _date = date ? new Date(date) : new Date();
+    let daysInMonth = getDaysInAMonth(
+      _date.getMonth() + 1,
+      _date.getFullYear()
+    );
+    let days = [];
+    for (let i = 1; i <= daysInMonth; i++) {
+      days.push(i);
+    }
+
+    this.setState({ days: days });
+
+    return days;
+  }
+
   componentDidMount() {
+    const state = this.props.location.state;
+
+    let { date, deviceCollection, selectedDevice } = this.state;
+    if (state) {
+      let days = this.getDays(state.date);
+      let formattDate = moment(state.date).format('L').split('/');
+
+      date = formattDate[2] + '-' + formattDate[0] + '-' + formattDate[1];
+
+      deviceCollection = state.records;
+
+      state.records.forEach((val) => {
+        let searchDate = days.indexOf(parseInt(val.day_of_month));
+        if (searchDate != -1) {
+          days.splice(searchDate, 1);
+        }
+      });
+
+      selectedDevice = state.device;
+
+      this.setState({
+        date,
+        deviceCollection,
+        selectedDevice,
+        days: days,
+      });
+    } else {
+      let days = this.getDays();
+      this.setState({ days: days });
+    }
+
     window.scrollTo(0, 0);
   }
 
@@ -70,6 +122,14 @@ class Equipment extends React.Component<Props> {
               showHideNonfunc: true,
               showHideQty: false,
             });
+
+        this.setState({
+          day_of_month: null,
+          qty: null,
+          num_func: null,
+          num_nonfunc: null,
+          deviceCollection: [],
+        });
       }
     );
   };
@@ -86,9 +146,41 @@ class Equipment extends React.Component<Props> {
       num_nonfunc: num_nonfunc,
     };
 
+    let days = Object.assign([], this.state.days);
+    let indexOfDay = days.indexOf(parseInt(day_of_month));
+    days.splice(indexOfDay, 1);
+
     deviceCollection.push(newObj);
 
-    this.setState({ deviceCollection: deviceCollection });
+    this.setState({
+      deviceCollection: deviceCollection,
+      day_of_month: null,
+      qty: null,
+      num_func: null,
+      num_nonfunc: null,
+      days: days,
+    });
+  };
+
+  _edit = (val, index) => {
+    let deviceCollection = Object.assign([], this.state.deviceCollection);
+
+    let editedItem = deviceCollection.splice(index, 1);
+    let day = parseInt(editedItem[0].day_of_month);
+    let days = Object.assign([], this.state.days);
+    days.push(day);
+    days.sort((a, b) => {
+      return a - b;
+    });
+
+    this.setState({
+      deviceCollection,
+      day_of_month: val.day_of_month,
+      qty: val.qty,
+      num_func: val.num_func,
+      num_nonfunc: val.num_nonfunc,
+      days: days,
+    });
   };
 
   _remove = (index) => {
@@ -96,6 +188,38 @@ class Equipment extends React.Component<Props> {
     deviceCollection.splice(index, 1);
     this.setState({ deviceCollection });
   };
+
+  _submit() {
+    let { deviceCollection, date, selectedDevice } = this.state;
+    let stringifyDeviceCollection: string[] = [];
+    deviceCollection.forEach((val) => {
+      let strValue = JSON.stringify(val);
+      stringifyDeviceCollection.push(strValue);
+    });
+    let data: any = {
+      records: stringifyDeviceCollection,
+      date: date,
+    };
+
+    const state = this.props.location.state;
+    const isUpdate = state ? true : false;
+    if (state) {
+      data._id = state._id;
+      data.health_facility_id = state.health_facility_id;
+    }
+
+    data['device'] = selectedDevice;
+    createEquipmentRecord(data, isUpdate)
+      .then((val) => {
+        if (val == 'success') {
+          this.props.history.goBack();
+          window.scrollTo(0, 0);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   render() {
     const state = this.props.location.state;
@@ -127,14 +251,19 @@ class Equipment extends React.Component<Props> {
           type="date"
           placeholder="Enter date"
           name="date"
+          disabled={state}
           title="Date"
           hideSubtxt={true}
+          value={this.state.date}
+          onChange={(v) => this.setState({ date: v }, () => this.getDays(v))}
         />
 
         <SelectComponentFree
           name="device"
           options={this.state.devices}
           title="Device"
+          disabled={state}
+          value={this.state.selectedDevice}
           onSelected={(value) => this.handleDeviceSelected(value)}
           placeholder="Select Device"
           required="Please select device"
@@ -142,7 +271,18 @@ class Equipment extends React.Component<Props> {
         />
 
         <div className="d-flex align-items-center justify-content-start">
-          <InputFree
+          <SelectComponentFree
+            name="day_of_month"
+            options={this.state.days}
+            title="Day of Month"
+            placeholder="Select Day of Month"
+            value={day_of_month}
+            onSelected={(value) => this.setState({ day_of_month: value })}
+            required="Please select day"
+            state={state}
+          />
+
+          {/* <InputFree
             hideSubtxt={true}
             state={state}
             type="number"
@@ -151,7 +291,7 @@ class Equipment extends React.Component<Props> {
             title="Day of month"
             value={day_of_month}
             onChange={(value) => this.setState({ day_of_month: value })}
-          />
+          /> */}
 
           {showHideQty && (
             <InputFree
@@ -206,7 +346,7 @@ class Equipment extends React.Component<Props> {
               <th>Quantity</th>
               <th>Number Functional</th>
               <th>Number Non-functional</th>
-              <th>Action</th>
+              <th colSpan="2">Action</th>
             </tr>
 
             {this.state.deviceCollection.map((val, index) => (
@@ -223,10 +363,28 @@ class Equipment extends React.Component<Props> {
                     Remove
                   </button>
                 </td>
+                <td>
+                  <button
+                    onClick={() => this._edit(val, index)}
+                    className="btn btn-primary btn-sm"
+                  >
+                    Edit
+                  </button>
+                </td>
               </tr>
             ))}
           </table>
         </div>
+
+        <button
+          onClick={() => this._submit()}
+          // disabled={disabledSubmit}
+          style={{ marginTop: 10, marginBottom: 10, width: 100 }}
+          type="button"
+          className="btn btn-primary"
+        >
+          SUBMIT
+        </button>
       </div>
     );
   }
