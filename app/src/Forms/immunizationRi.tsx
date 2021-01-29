@@ -33,7 +33,7 @@ class ImmunizationRi extends React.Component<Props> {
     conducted: null,
     planned2: null,
     conducted2: null,
-    nationality: null,
+    national: null,
     ri_state: null,
     lga: null,
     amount_received: null,
@@ -81,7 +81,7 @@ class ImmunizationRi extends React.Component<Props> {
       conducted,
       planned2,
       conducted2,
-      nationality,
+      national,
       ri_state,
       lga,
       amount_received,
@@ -118,7 +118,7 @@ class ImmunizationRi extends React.Component<Props> {
         <SelectComponentFree
           name="facility"
           options={['YES', 'NO']}
-          title="Facility has updated ***********"
+          title="Facility has updated REW Microplan"
           // disabled={state}
           hideSubtxt={true}
           value={selectedFacility}
@@ -183,7 +183,7 @@ class ImmunizationRi extends React.Component<Props> {
         <SelectComponentFree
           name="meeting_conducted"
           options={['YES', 'NO']}
-          title="Facility has updated ***********"
+          title="Facility staff received RI supportive"
           // disabled={state}
           hideSubtxt={true}
           value={selectedFacilityStaff}
@@ -196,18 +196,18 @@ class ImmunizationRi extends React.Component<Props> {
         />
 
         <h5 style={{ marginLeft: 10, marginBottom: 20, marginTop: 20 }}>
-          Level of Supportive ***************
+          Level of supportive supervision
         </h5>
 
         <div className="d-flex align-items-center justify-content-start">
           <InputFree
             type="number"
-            placeholder="Enter Nationality"
-            name="nationality"
-            title="Nationality"
+            placeholder="Enter National"
+            name="national"
+            title="National"
             hideSubtxt={true}
-            value={nationality}
-            onChange={(value) => this.setState({ nationality: value })}
+            value={national}
+            onChange={(value) => this.setState({ national: value })}
           />
 
           <InputFree
