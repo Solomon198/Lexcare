@@ -8,6 +8,8 @@ import DailyAttendance from './dailyAttendance';
 import VaccineUtilization from './vaccineUtilization';
 import DeviceUtilization from './deviceUtilization';
 import DosesDiscarded from './dosesDiscarded';
+import ImmunizationRi from './immunizationRi';
+import ImmunizationAefi from './immunizationAefi';
 import Equipments from './equipments';
 import ReferalOut from './referalOut';
 import PhcStaff from './phcStaff';
@@ -42,6 +44,8 @@ import VaccineUtilizationForm from '../Forms/vaccineUtilization';
 import DeviceUtilizationForm from '../Forms/deviceUtilization';
 import DoseDiscardedForm from '../Forms/doseDiscarded';
 import EquipmentForm from '../Forms/equipment';
+import ImmunizationRiForm from '../Forms/immunizationRi';
+import ImmunizationAefiForm from '../Forms/immunizationAefi';
 import FamilyPlanningForm from '../Forms/familyPlanning';
 import InPatientForm from '../Forms/inPatient';
 import LabourAndDeliveryForm from '../Forms/labourAndDelivery';
@@ -208,6 +212,12 @@ export default class Dashboard extends React.Component<dashboardProps> {
               />
               <Route exact path="/doses-discarded" component={DosesDiscarded} />
               <Route exact path="/equipments" component={Equipments} />
+              <Route exact path="/immunizationRi" component={ImmunizationRi} />
+              <Route
+                exact
+                path="/immunizationAefi"
+                component={ImmunizationAefi}
+              />
 
               {/* FORMS ROUTES */}
 
@@ -253,6 +263,16 @@ export default class Dashboard extends React.Component<dashboardProps> {
                 component={DoseDiscardedForm}
               />
               <Route path="/add-equipment" component={EquipmentForm} />
+              <Route
+                exact
+                path="/add-immunization-ri"
+                component={ImmunizationRiForm}
+              />
+              <Route
+                exact
+                path="/add-immunization-aefi"
+                component={ImmunizationAefiForm}
+              />
 
               <Route
                 exact

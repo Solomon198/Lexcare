@@ -177,6 +177,26 @@ const SideBar = (props) => (
           </Link>
         </li>
 
+        <li className="selected ">
+          <Link to="immunizationRi">
+            <div className="icon-w">
+              <div className="os-icon os-icon-file-text" />
+            </div>
+
+            <span>Immunization RI</span>
+          </Link>
+        </li>
+
+        <li className="selected ">
+          <Link to="immunizationAefi">
+            <div className="icon-w">
+              <div className="os-icon os-icon-file-text" />
+            </div>
+
+            <span>Immunization AEFI</span>
+          </Link>
+        </li>
+
         <li className="sub-header">
           <span>Others</span>
         </li>
