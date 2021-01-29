@@ -9,10 +9,7 @@ import TextArea from '../components/textArea';
 import StepWrapper from '../components/stepWrapper';
 import StepFormWrapper from '../components/stepFormWrapper';
 import { getPHC_configSettings } from '../../realm/queries/readQueries';
-import {
-  createVaccineUtilRecord,
-  createDeviceRecord,
-} from '../../realm/queries/writeQueries';
+import { createImmunizationRiRecord } from '../../realm/queries/writeQueries';
 import SelectCommunityLeader from '../components/selectCommunityLeader';
 import NigeriaStates from '../data/states';
 import 'toasted-notes/src/styles.css';
@@ -39,7 +36,75 @@ class ImmunizationRi extends React.Component<Props> {
     amount_received: null,
   };
 
-  _submit() {}
+  _submit() {
+    let {
+      date,
+      selectedFacility,
+      selectedFacilityStaff,
+      selectedMeetingConducted,
+      planned,
+      conducted,
+      planned2,
+      conducted2,
+      national,
+      ri_state,
+      lga,
+      amount_received,
+    } = this.state;
+    // let stringifyCategoryCollection: string[] = [];
+    // categoryCollection.forEach((val) => {
+    //   let strValue = JSON.stringify(val);
+    //   stringifyCategoryCollection.push(strValue);
+    // });
+    let data: any = {
+      // records: stringifyCategoryCollection,
+      planned: parseInt(planned),
+      conducted: parseInt(conducted),
+      planned2: parseInt(planned2),
+      conducted2: parseInt(conducted2),
+      national: parseInt(national),
+      ri_state: parseInt(ri_state),
+      lga: parseInt(lga),
+      amount_received: parseInt(amount_received),
+      date: date,
+    };
+
+    const state = this.props.location.state;
+    const isUpdate = state ? true : false;
+    if (state) {
+      data._id = state._id;
+      data.health_facility_id = state.health_facility_id;
+    }
+
+    data['selectedFacility'] = selectedFacility;
+    data['selectedFacilityStaff'] = selectedFacilityStaff;
+    data['selectedMeetingConducted'] = selectedMeetingConducted;
+    createImmunizationRiRecord(data, isUpdate)
+      .then((val) => {
+        if (val == 'success') {
+          // console.log('Select Fac', data['selectedFacility']);
+          // console.log('Select Fac Staff', data['selectedFacilityStaff']);
+          // console.log(
+          //   'Select Meeting Conducted Inv',
+          //   data['selectedMeetingConducted']
+          // );
+          // console.log('planned', data['planned']);
+          // console.log('conducted', data['conducted']);
+          // console.log('planned2', data['planned2']);
+          // console.log('conducted2', data['conducted2']);
+          // console.log('national', data['national']);
+          // console.log('ri_state', data['ri_state']);
+          // console.log('lga', data['lga']);
+          // console.log('amount_received', data['amount_received']);
+          // console.log('Date', data['date']);
+          this.props.history.goBack();
+          window.scrollTo(0, 0);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   // resetSelectionsOnDeviceOrFormChanged() {}
 
@@ -66,6 +131,69 @@ class ImmunizationRi extends React.Component<Props> {
   }
 
   componentDidMount() {
+    const state = this.props.location.state;
+
+    let {
+      date,
+      selectedFacility,
+      selectedFacilityStaff,
+      selectedMeetingConducted,
+      planned,
+      conducted,
+      planned2,
+      conducted2,
+      national,
+      ri_state,
+      lga,
+      amount_received,
+    } = this.state;
+
+    if (state) {
+      planned = state.planned;
+      conducted = state.conducted;
+      planned2 = state.planned2;
+      conducted2 = state.conducted2;
+      national = state.national;
+      ri_state = state.ri_state;
+      lga = state.lga;
+      amount_received = state.amount_received;
+      let formattDate = moment(state.date).format('L').split('/');
+
+      date = formattDate[2] + '-' + formattDate[0] + '-' + formattDate[1];
+
+      // categoryCollection = state.records;
+
+      // state.records.forEach((val) => {
+      //   let searchDate = days.indexOf(parseInt(val.day_of_month));
+      //   if (searchDate != -1) {
+      //     days.splice(searchDate, 1);
+      //   }
+      // });
+
+      selectedFacility = state.selectedFacility;
+      selectedFacilityStaff = state.selectedFacilityStaff;
+      selectedMeetingConducted = state.selectedMeetingConducted;
+
+      this.setState({
+        date,
+        selectedFacility,
+        selectedFacilityStaff,
+        selectedMeetingConducted,
+        planned,
+        conducted,
+        planned2,
+        conducted2,
+        national,
+        ri_state,
+        lga,
+        amount_received,
+      });
+    }
+    // else {
+    //   let days = this.getDays();
+    //   this.setState({ days: days });
+    // }
+
     window.scrollTo(0, 0);
   }
 
@@ -86,6 +214,22 @@ class ImmunizationRi extends React.Component<Props> {
       lga,
       amount_received,
     } = this.state;
+
+    let disabledSubmit = true;
+    if(date &&
+      selectedFacility &&
+      selectedFacilityStaff &&
+      selectedMeetingConducted &&
+      planned &&
+      conducted &&
+      planned2 &&
+      conducted2 &&
+      national &&
+      ri_state &&
+      lga &&
+      amount_received &&){
+        disabledSubmit = false;
+      }
 
     return (
       <div
@@ -315,7 +459,7 @@ class ImmunizationRi extends React.Component<Props> {
         </div> */}
         <button
           onClick={() => this._submit()}
-          // disabled={disabledSubmit}
+          disabled={disabledSubmit}
           style={{ marginTop: 10, marginBottom: 10, width: 100 }}
           type="button"
           className="btn btn-primary"

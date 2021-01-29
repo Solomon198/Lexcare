@@ -47,24 +47,34 @@ export default class ImmunizationRi extends React.Component<props> {
                   onlyMonth={true}
                   addRecord={() => this.addRecord()}
                   editRecord={(payload) => this.edit(payload)}
-                  SchemaName={schemas.Device.name}
+                  SchemaName={schemas.ImmunizationRi.name}
                   tableHead={
                     <thead>
                       <tr>
                         <th>#</th>
                         <th>Month / Year</th>
-                        <th>Vaccine</th>
-                        <th>MAX Stock</th>
-                        <th>MIN Stock</th>
+                        <th>Fixed planned sessions</th>
+                        <th>Fixed conducted sessions</th>
+                        <th>Outreached planned sessions</th>
+                        <th>Outreached conducted sessions</th>
+                        <th>National</th>
+                        <th>State</th>
+                        <th>LGA</th>
+                        <th>Amount Received (Naira)</th>
                         <th>Action</th>
                       </tr>
                     </thead>
                   }
                   properties={[
                     { key: 'date', isDate: true },
-                    { key: 'device' },
-                    { key: 'max_stock' },
-                    { key: 'min_stock' },
+                    { key: 'planned' },
+                    { key: 'conducted' },
+                    { key: 'planned2' },
+                    { key: 'conducted2' },
+                    { key: 'national' },
+                    { key: 'state' },
+                    { key: 'lga' },
+                    { key: 'amount_received' },
                   ]}
                 />
               </div>

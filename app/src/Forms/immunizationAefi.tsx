@@ -9,10 +9,7 @@ import TextArea from '../components/textArea';
 import StepWrapper from '../components/stepWrapper';
 import StepFormWrapper from '../components/stepFormWrapper';
 import { getPHC_configSettings } from '../../realm/queries/readQueries';
-import {
-  createVaccineUtilRecord,
-  createDeviceRecord,
-} from '../../realm/queries/writeQueries';
+import { createImmunizationAefiRecord } from '../../realm/queries/writeQueries';
 import SelectCommunityLeader from '../components/selectCommunityLeader';
 import NigeriaStates from '../data/states';
 import 'toasted-notes/src/styles.css';
@@ -33,11 +30,57 @@ class ImmunizationAefi extends React.Component<Props> {
     dead: null,
   };
 
-  _submit() {}
+  _submit() {
+    let {
+      date,
+      non_serious,
+      serious,
+      seri_cases_invtg,
+      alive,
+      dead,
+    } = this.state;
+    // let stringifyCategoryCollection: string[] = [];
+    // categoryCollection.forEach((val) => {
+    //   let strValue = JSON.stringify(val);
+    //   stringifyCategoryCollection.push(strValue);
+    // });
+    let data: any = {
+      // records: stringifyCategoryCollection,
+      non_serious: parseInt(non_serious),
+      serious: parseInt(serious),
+      seri_cases_invtg: parseInt(seri_cases_invtg),
+      alive: parseInt(alive),
+      dead: parseInt(dead),
+      date: date,
+    };
+
+    const state = this.props.location.state;
+    const isUpdate = state ? true : false;
+    if (state) {
+      data._id = state._id;
+      data.health_facility_id = state.health_facility_id;
+    }
+
+    // data['antigen_diluent'] = selectedCategory;
+    createImmunizationAefiRecord(data, isUpdate)
+      .then((val) => {
+        if (val == 'success') {
+          // console.log('Non serious', data['non_serious']);
+          // console.log('serious', data['serious']);
+          // console.log('Serious Inv', data['seri_cases_invtg']);
+          // console.log('Alive', data['alive']);
+          // console.log('dead', data['dead']);
+          // console.log('Date', data['date']);
+          this.props.history.goBack();
+          window.scrollTo(0, 0);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   // resetSelectionsOnDeviceOrFormChanged() {}
-
-  _add = () => {};
 
   // _edit = (col, index) => {};
 
@@ -60,29 +103,72 @@ class ImmunizationAefi extends React.Component<Props> {
   }
 
   componentDidMount() {
+    const state = this.props.location.state;
+
+    let {
+      date,
+      non_serious,
+      serious,
+      seri_cases_invtg,
+      alive,
+      dead,
+    } = this.state;
+
+    if (state) {
+      non_serious = state.non_serious;
+      serious = state.serious;
+      seri_cases_invtg = state.seri_cases_invtg;
+      alive = state.alive;
+      dead = state.dead;
+
+      let formattDate = moment(state.date).format('L').split('/');
+
+      date = formattDate[2] + '-' + formattDate[0] + '-' + formattDate[1];
+
+      // categoryCollection = state.records;
+
+      // state.records.forEach((val) => {
+      //   let searchDate = days.indexOf(parseInt(val.day_of_month));
+      //   if (searchDate != -1) {
+      //     days.splice(searchDate, 1);
+      //   }
+      // });
+
+      // selectedCategory = state.antigen_diluent;
+
+      this.setState({
+        date,
+        non_serious,
+        serious,
+        seri_cases_invtg,
+        alive,
+        dead,
+      });
+    }
+    // else {
+    //   let days = this.getDays();
+    //   this.setState({ days: days });
+    // }
+
     window.scrollTo(0, 0);
   }
 
   render() {
     const state = this.props.location.state;
 
-    const { non_serious, serious, seri_cases_invtg, alive, dead } = this.state;
+    const {
+      date,
+      non_serious,
+      serious,
+      seri_cases_invtg,
+      alive,
+      dead,
+    } = this.state;
 
-    // let disabled = true;
-    // if (
-    //   max_stock &&
-    //   min_stock &&
-    //   day_of_month &&
-    //   opening_balance &&
-    //   received &&
-    //   doses_opened &&
-    //   ending_balance &&
-    //   qty_ret_lga &&
-    //   date &&
-    //   selectedCategory
-    // ) {
-    //   disabled = false;
-    // }
+    let disabledSubmit = true;
+    if (non_serious && serious && seri_cases_invtg && alive && dead && date) {
+      disabledSubmit = false;
+    }
 
     // let disabledSubmit =
     //   this.state.categoryCollection.length == 0 ? true : false;
@@ -261,7 +347,7 @@ class ImmunizationAefi extends React.Component<Props> {
         </div> */}
         <button
           onClick={() => this._submit()}
-          // disabled={disabledSubmit}
+          disabled={disabledSubmit}
           style={{ marginTop: 10, marginBottom: 10, width: 100 }}
           type="button"
           className="btn btn-primary"

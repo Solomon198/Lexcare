@@ -962,3 +962,81 @@ export async function createEquipmentRecord(
     return e;
   }
 }
+
+export async function createImmunizationAefiRecord(
+  documents: any,
+  isUpdate?: boolean
+) {
+  try {
+    const { phc_state, phc_lga } = getPHC_configSettings();
+
+    let { state_id, lga_id } = getLocationIDS(phc_state, phc_lga);
+
+    documents['state_id'] = state_id || '12';
+    documents['lga_id'] = lga_id || '13';
+
+    let formatDate = new Date(documents.date);
+
+    documents.date = new Date(formatDate);
+
+    if (!isUpdate) {
+      documents.health_facility_id = getPHC_configSettings().phc_id;
+
+      documents._id = getObjectId();
+    }
+
+    const realm = _DATA_BASE_INSTACE_;
+
+    realm.write(() => {
+      if (!isUpdate) {
+        realm.create(Schemas.ImmunizationAefi.name, documents);
+      } else {
+        realm.create(Schemas.ImmunizationAefi.name, documents, true);
+      }
+    });
+
+    return 'success';
+  } catch (e) {
+    console.log(e);
+    return e;
+  }
+}
+
+export async function createImmunizationRiRecord(
+  documents: any,
+  isUpdate?: boolean
+) {
+  try {
+    const { phc_state, phc_lga } = getPHC_configSettings();
+
+    let { state_id, lga_id } = getLocationIDS(phc_state, phc_lga);
+
+    documents['state_id'] = state_id || '12';
+    documents['lga_id'] = lga_id || '13';
+
+    let formatDate = new Date(documents.date);
+
+    documents.date = new Date(formatDate);
+
+    if (!isUpdate) {
+      documents.health_facility_id = getPHC_configSettings().phc_id;
+
+      documents._id = getObjectId();
+    }
+
+    const realm = _DATA_BASE_INSTACE_;
+
+    realm.write(() => {
+      if (!isUpdate) {
+        realm.create(Schemas.ImmunizationRi.name, documents);
+      } else {
+        realm.create(Schemas.ImmunizationRi.name, documents, true);
+      }
+    });
+
+    return 'success';
+  } catch (e) {
+    console.log(e);
+    return e;
+  }
+}

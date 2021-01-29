@@ -44,27 +44,30 @@ export default class ImmunizationAefi extends React.Component<props> {
 
                 <RenderData
                   dataField="date"
-                  onlyMonth={true}
                   addRecord={() => this.addRecord()}
                   editRecord={(payload) => this.edit(payload)}
-                  SchemaName={schemas.Device.name}
+                  SchemaName={schemas.ImmunizationAefi.name}
                   tableHead={
                     <thead>
                       <tr>
                         <th>#</th>
-                        <th>Month / Year</th>
-                        <th>Vaccine</th>
-                        <th>MAX Stock</th>
-                        <th>MIN Stock</th>
+                        <th>Date</th>
+                        <th>Non Serious</th>
+                        <th>Serious</th>
+                        <th>Serious Cases Investigated</th>
+                        <th>Alive</th>
+                        <th>Dead</th>
                         <th>Action</th>
                       </tr>
                     </thead>
                   }
                   properties={[
                     { key: 'date', isDate: true },
-                    { key: 'device' },
-                    { key: 'max_stock' },
-                    { key: 'min_stock' },
+                    { key: 'non_serious' },
+                    { key: 'serious' },
+                    { key: 'seri_cases_invtg' },
+                    { key: 'alive' },
+                    { key: 'dead' },
                   ]}
                 />
               </div>

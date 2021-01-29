@@ -106,6 +106,10 @@ export function openSyncronizedRealm() {
         schemas.DosesDiscarded,
 
         schemas.Equipments,
+
+        schemas.ImmunizationAefi,
+
+        schemas.ImmunizationRi,
       ],
 
       // schemaVersion:1,
