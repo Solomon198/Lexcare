@@ -1,28 +1,40 @@
 import React from 'react';
-import Input from '../components/input';
-import DatePicker from '../components/datePicker';
-import SelectComponent from '../components/select';
 import SelectComponentFree from '../components/component-free/select';
-import Auth from '../../realm/queries/auth';
-import TextArea from '../components/textArea';
-import StepWrapper from '../components/stepWrapper';
-import StepFormWrapper from '../components/stepFormWrapper';
-import { getPHC_configSettings } from '../../realm/queries/readQueries';
 import {
   createVaccineUtilRecord,
-  createDeviceRecord,
 } from '../../realm/queries/writeQueries';
-import SelectCommunityLeader from '../components/selectCommunityLeader';
-import NigeriaStates from '../data/states';
 import 'toasted-notes/src/styles.css';
-import { AgeRange } from '../../realm/utils/utils';
 import moment from 'moment';
 import InputFree from '../components/component-free/input';
+import  {getDocuments} from '../../realm/queries/readQueries'
+import Schemas from '../../realm/schemas/index'
 
 type Props = {
   history: any;
   location: any;
 };
+
+
+const antigenDiluent = [
+  'BCG Vaccine',
+  'BCG Diluent',
+  'Hep B vaccine',
+  'OPV Vaccine',
+  'PENTA Vaccine',
+  'PCV',
+  'IPV',
+  'Rotavirus vaccine',
+  'Measles Vaccine',
+  'Measles Diluent',
+  'Yellow fever vaccine',
+  'Yellow fever diluent',
+  'CSM Vaccine',
+  'CSM Diluent',
+  'Tetanus Dipteria Toxoid',
+  'HPV',
+];
+
+
 class VaccineUtilization extends React.Component<Props> {
   state = {
     categoryOption: [],
@@ -40,33 +52,36 @@ class VaccineUtilization extends React.Component<Props> {
     qty_ret_lga: null,
     categoryCollection: [],
 
-    antigen_diluent: [
-      'BCG Vaccine',
-      'BCG Diluent',
-      'Hep B vaccine',
-      'OPV Vaccine',
-      'PENTA Vaccine',
-      'PCV',
-      'IPV',
-      'Rotavirus vaccine',
-      'Measles Vaccine',
-      'Measles Diluent',
-      'Yellow fever vaccine',
-      'Yellow fever diluent',
-      'CSM Vaccine',
-      'CSM Diluent',
-      'Tetanus Dipteria Toxoid',
-      'HPV',
-    ],
-    devices: [
-      'BCG Syrines',
-      'AD Syringes',
-      '2 ml syringes',
-      '5 ml syringes',
-      'Safety boxes',
-    ],
+    antigen_diluent: Object.assign([],antigenDiluent),
+
     days: [],
   };
+
+
+  onDateSelected(date:string){
+    let docs:any[] = getDocuments(
+      Schemas.Vaccine.name,
+      "date",
+       date,
+       date,
+       false,
+       null,
+       true
+      );
+
+      console.log(docs)
+     let antigens = Object.assign([],antigenDiluent);
+      docs.forEach((val:any)=>{
+         let currentAntigen = val.vaccine;
+         let search = antigens.indexOf(currentAntigen);
+         if(search != -1){
+           antigens.splice(search,1);
+         }
+      })
+
+      this.setState({antigen_diluent:antigens})
+
+}
 
   _submit() {
     let {
@@ -322,14 +337,14 @@ class VaccineUtilization extends React.Component<Props> {
           title="Date"
           hideSubtxt={true}
           value={this.state.date}
-          onChange={(v) => this.setState({ date: v })}
+          onChange={(v) => this.setState({ date: v },()=>this.onDateSelected(v))}
         />
 
         <SelectComponentFree
           name="category"
           options={this.state.antigen_diluent}
           title="Category"
-          disabled={state}
+          disabled={!date || state}
           value={this.state.selectedCategory}
           placeholder="Select Vaccine"
           onSelected={(value) =>
@@ -338,7 +353,6 @@ class VaccineUtilization extends React.Component<Props> {
             )
           }
           required="Please select categroy"
-          state={state}
         />
 
         <InputFree

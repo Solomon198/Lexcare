@@ -1,25 +1,36 @@
 import React from 'react';
-import Input from '../components/input';
-import DatePicker from '../components/datePicker';
-import SelectComponent from '../components/select';
 import SelectComponentFree from '../components/component-free/select';
 import InputFree from '../components/component-free/input';
-import Auth from '../../realm/queries/auth';
-import TextArea from '../components/textArea';
-import StepWrapper from '../components/stepWrapper';
-import StepFormWrapper from '../components/stepFormWrapper';
-import { getPHC_configSettings } from '../../realm/queries/readQueries';
 import { createDosesDiscardedRecord } from '../../realm/queries/writeQueries';
-import SelectCommunityLeader from '../components/selectCommunityLeader';
-import NigeriaStates from '../data/states';
 import 'toasted-notes/src/styles.css';
-import { AgeRange } from '../../realm/utils/utils';
 import moment from 'moment';
+import  {getDocuments} from '../../realm/queries/readQueries'
+import Schemas from '../../realm/schemas/index'
 
 type Props = {
   history: any;
   location: any;
 };
+
+const antigenDiluent = [
+  'BCG Vaccine',
+  'BCG Diluent',
+  'Hep B vaccine',
+  'OPV Vaccine',
+  'PENTA Vaccine',
+  'PCV',
+  'IPV',
+  'Rotavirus vaccine',
+  'Measles Vaccine',
+  'Measles Diluent',
+  'Yellow fever vaccine',
+  'Yellow fever diluent',
+  'CSM Vaccine',
+  'CSM Diluent',
+  'Tetanus Dipteria Toxoid',
+  'HPV',
+];
+
 class DoseDiscarded extends React.Component<Props> {
   state = {
     selectedCategory: '',
@@ -31,24 +42,7 @@ class DoseDiscarded extends React.Component<Props> {
     label_rmvd: null,
     other: null,
     total: null,
-    antigen_diluent: [
-      'BCG Vaccine',
-      'BCG Diluent',
-      'Hep B vaccine',
-      'OPV Vaccine',
-      'PENTA Vaccine',
-      'PCV',
-      'IPV',
-      'Rotavirus vaccine',
-      'Measles Vaccine',
-      'Measles Diluent',
-      'Yellow fever vaccine',
-      'Yellow fever diluent',
-      'CSM Vaccine',
-      'CSM Diluent',
-      'Tetanus Dipteria Toxoid',
-      'HPV',
-    ],
+    antigen_diluent: Object.assign([],antigenDiluent),
     discardedCategory: [],
   };
 
@@ -64,6 +58,34 @@ class DoseDiscarded extends React.Component<Props> {
       discardedCategory: [],
     });
   };
+
+
+  onDateSelected(date:string){
+       let docs:any[] = getDocuments(
+         Schemas.DosesDiscarded.name,
+         "date",
+          date,
+          date,
+          false,
+          null,
+          true
+         );
+
+         console.log(docs)
+        let antigens = Object.assign([],antigenDiluent);
+         docs.forEach((val:any)=>{
+            let currentAntigen = val.antigen_diluent;
+            let search = antigens.indexOf(currentAntigen);
+            if(search != -1){
+              antigens.splice(search,1);
+            }
+         })
+
+         this.setState({antigen_diluent:antigens})
+
+
+
+  }
 
   _edit = (row, index) => {
     let discardedCategory = Object.assign([], this.state.discardedCategory);
@@ -113,7 +135,7 @@ class DoseDiscarded extends React.Component<Props> {
     // });
     let data: any = {
       // records: stringifyCategoryCollection,
-      expiry: date,
+      expiry: expiry,
       breakage: parseInt(breakage),
       vvm_change: parseInt(vvm_change),
       freezing: parseInt(freezing),
@@ -226,20 +248,20 @@ class DoseDiscarded extends React.Component<Props> {
       total,
     } = this.state;
 
-    // let disabledSubmit = false;
-    // if (
-    //   selectedCategory != '' &&
-    //   date != null &&
-    //   expiry != null &&
-    //   breakage != null &&
-    //   vvm_change != null &&
-    //   freezing != null &&
-    //   label_rmvd != null &&
-    //   other != null &&
-    //   total != null
-    // ) {
-    //   disabledSubmit = true;
-    // }
+    let disabledSubmit = false;
+    if (
+      !selectedCategory||
+      !date ||
+      !expiry ||
+      !breakage ||
+      !vvm_change ||
+      !freezing ||
+      !label_rmvd ||
+      !other ||
+      !total
+    ) {
+      disabledSubmit = true;
+    }
 
     // this.state.discardedCategory.length === 0 ? false : true;
 
@@ -268,7 +290,7 @@ class DoseDiscarded extends React.Component<Props> {
           title="Date"
           hideSubtxt={true}
           value={date}
-          onChange={(v) => this.setState({ date: v })}
+          onChange={(v) => this.setState({ date: v },()=>this.onDateSelected(v))}
         />
 
         <SelectComponentFree
@@ -276,7 +298,7 @@ class DoseDiscarded extends React.Component<Props> {
           placeholder="Select Antigen/Diluent"
           name="antigen_diluent"
           title="Antigen / Diluent"
-          disabled={state}
+          disabled={!date || state}
           hideSubtxt={true}
           value={selectedCategory}
           onSelected={(value) =>
@@ -369,7 +391,7 @@ class DoseDiscarded extends React.Component<Props> {
 
         <button
           onClick={() => this._submit()}
-          // disabled={disabledSubmit}
+          disabled={disabledSubmit}
           style={{ marginTop: 10, marginBottom: 10, width: 100 }}
           type="button"
           className="btn btn-primary"

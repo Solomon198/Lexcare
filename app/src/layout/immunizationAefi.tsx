@@ -38,12 +38,13 @@ export default class ImmunizationAefi extends React.Component<props> {
         <div className="content-i">
           <div className="content-box">
             <div className="element-wrapper">
-              <h6 className="element-header">Immunization AEFI</h6>
+              <h6 className="element-header">Immunization ( Adverse Events Following immunization )</h6>
               <div className="element-box">
-                <h5 className="form-header">All Immunization AEFI Records</h5>
+                <h5 className="form-header">All Immunization ( Adverse Events Following immunization ) Records</h5>
 
                 <RenderData
                   dataField="date"
+                  onlyYear
                   addRecord={() => this.addRecord()}
                   editRecord={(payload) => this.edit(payload)}
                   SchemaName={schemas.ImmunizationAefi.name}

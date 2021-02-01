@@ -38,15 +38,15 @@ export default class ImmunizationRi extends React.Component<props> {
         <div className="content-i">
           <div className="content-box">
             <div className="element-wrapper">
-              <h6 className="element-header">Immunization RI</h6>
+              <h6 className="element-header">Immunization ( Routine Immunization Strategy And Operational Fund )</h6>
               <div className="element-box">
-                <h5 className="form-header">All Immunization RI Records</h5>
+                <h5 className="form-header">All Immunization ( Routine Immunization Strategy And Operational Fund ) Records</h5>
 
                 <RenderData
                   dataField="date"
-                  onlyMonth={true}
                   addRecord={() => this.addRecord()}
                   editRecord={(payload) => this.edit(payload)}
+                  onlyYear
                   SchemaName={schemas.ImmunizationRi.name}
                   tableHead={
                     <thead>

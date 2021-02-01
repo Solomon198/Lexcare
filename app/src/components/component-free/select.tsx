@@ -17,6 +17,8 @@ type SelectComponentProps = {
 
 const SelectComponent = (props: SelectComponentProps) => {
   const handleChange = (v: any) => {
+
+    if(v === "-select option-") return false;
     props.onSelected(v);
   };
 

@@ -1,20 +1,14 @@
 import React from 'react';
-import Input from '../components/input';
-import DatePicker from '../components/datePicker';
-import SelectComponent from '../components/select';
+
 import SelectComponentFree from '../components/component-free/select';
 import InputFree from '../components/component-free/input';
-import Auth from '../../realm/queries/auth';
-import TextArea from '../components/textArea';
-import StepWrapper from '../components/stepWrapper';
-import StepFormWrapper from '../components/stepFormWrapper';
-import { getPHC_configSettings } from '../../realm/queries/readQueries';
+
 import { createImmunizationRiRecord } from '../../realm/queries/writeQueries';
-import SelectCommunityLeader from '../components/selectCommunityLeader';
-import NigeriaStates from '../data/states';
 import 'toasted-notes/src/styles.css';
-import { AgeRange, getDaysInAMonth } from '../../realm/utils/utils';
+import { getDaysInAMonth } from '../../realm/utils/utils';
 import moment from 'moment';
+import  {getDocuments} from '../../realm/queries/readQueries'
+import Schemas from '../../realm/schemas/index'
 
 type Props = {
   history: any;
@@ -34,7 +28,43 @@ class ImmunizationRi extends React.Component<Props> {
     ri_state: null,
     lga: null,
     amount_received: null,
+    isRecordExist : false,
+    recordExistDate : "",
+    state:null,
+    editExistingRecord : false
   };
+
+
+  onDateSelected(date:string){
+    let {isRecordExist,recordExistDate,state} = this.state;
+    let docs:any[] = getDocuments(
+      Schemas.ImmunizationRi.name,
+      "date",
+       date,
+       date,
+       false,
+       null,
+       true,
+      );
+
+    if(docs.length > 0){
+      let existDate:string;
+      existDate = moment(date).format("LL").split(' ')[0] + "/";
+      existDate += moment(date).format("LL").split(' ')[2];
+      isRecordExist = true;
+      recordExistDate = existDate
+      state = docs[0]
+    }else{
+      isRecordExist = false;
+
+    }
+
+    this.setState({isRecordExist,recordExistDate,state});
+
+    return isRecordExist
+
+
+}
 
   _submit() {
     let {
@@ -69,7 +99,7 @@ class ImmunizationRi extends React.Component<Props> {
       date: date,
     };
 
-    const state = this.props.location.state;
+    const state = this.props.location.state || this.state.state;
     const isUpdate = state ? true : false;
     if (state) {
       data._id = state._id;
@@ -130,8 +160,7 @@ class ImmunizationRi extends React.Component<Props> {
     return days;
   }
 
-  componentDidMount() {
-    const state = this.props.location.state;
+  initialize(state){
 
     let {
       date,
@@ -189,6 +218,12 @@ class ImmunizationRi extends React.Component<Props> {
         amount_received,
       });
     }
+  }
+
+  componentDidMount() {
+    const state = this.props.location.state;
+
+    this.initialize(state);
     // else {
     //   let days = this.getDays();
     //   this.setState({ days: days });
@@ -198,7 +233,7 @@ class ImmunizationRi extends React.Component<Props> {
   }
 
   render() {
-    const state = this.props.location.state;
+    const state = this.props.location.state || this.state.state;
 
     const {
       selectedFacility,
@@ -227,7 +262,7 @@ class ImmunizationRi extends React.Component<Props> {
       national &&
       ri_state &&
       lga &&
-      amount_received &&){
+      amount_received){
         disabledSubmit = false;
       }
 
@@ -244,10 +279,25 @@ class ImmunizationRi extends React.Component<Props> {
         }}
       >
         <h5 style={{ marginLeft: 10, marginBottom: 20, marginTop: 20 }}>
-          Add Immunization RI
+          Add Immunization ( Routine Immunization Strategy And Operational Fund )
         </h5>
         <hr className="mx-3" />
 
+         {
+           this.state.isRecordExist && (
+            <div className="ml-3">
+            <span className="text-danger ml-3">
+            A record of Immunization ( Routine Immunization Strategy And Operational Fund ) has aleady been entered for the month of {this.state.recordExistDate}. Do you want to edit Record ?
+            </span>
+
+              <button onClick={()=>this.setState({editExistingRecord:true,isRecordExist:false},()=>{
+                this.initialize(state);
+              })} className="btn btn-primary ml-2">
+                Edit Record
+              </button>
+            </div>
+           )
+         }
         <InputFree
           type="date"
           placeholder="Enter date"
@@ -256,7 +306,12 @@ class ImmunizationRi extends React.Component<Props> {
           title="Date"
           hideSubtxt={true}
           value={date}
-          onChange={(v) => this.setState({ date: v }, () => this.getDays(v))}
+          onChange={(v) =>{
+             if(!this.onDateSelected(v)){
+              this.setState({ date: v }, () => this.getDays(v));
+             }
+
+          }}
         />
 
         <SelectComponentFree

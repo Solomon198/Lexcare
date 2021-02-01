@@ -1,28 +1,30 @@
 import React from 'react';
-import Input from '../components/input';
-import DatePicker from '../components/datePicker';
-import SelectComponent from '../components/select';
 import SelectComponentFree from '../components/component-free/select';
 import InputFree from '../components/component-free/input';
-import Auth from '../../realm/queries/auth';
-import TextArea from '../components/textArea';
-import StepWrapper from '../components/stepWrapper';
-import StepFormWrapper from '../components/stepFormWrapper';
-import { getPHC_configSettings } from '../../realm/queries/readQueries';
 import {
-  createVaccineUtilRecord,
   createDeviceRecord,
 } from '../../realm/queries/writeQueries';
-import SelectCommunityLeader from '../components/selectCommunityLeader';
-import NigeriaStates from '../data/states';
 import 'toasted-notes/src/styles.css';
-import { AgeRange, getDaysInAMonth } from '../../realm/utils/utils';
+import {  getDaysInAMonth } from '../../realm/utils/utils';
 import moment from 'moment';
+import  {getDocuments} from '../../realm/queries/readQueries'
+import Schemas from '../../realm/schemas/index'
+
+
 
 type Props = {
   history: any;
   location: any;
 };
+
+const Devices = [
+  'BCG Syrines',
+  'AD Syringes',
+  '2 ml syringes',
+  '5 ml syringes',
+  'Safety boxes',
+];
+
 class DeviceUtilization extends React.Component<Props> {
   state = {
     categoryOption: [],
@@ -39,34 +41,38 @@ class DeviceUtilization extends React.Component<Props> {
     ending_balance: null,
     qty_ret_lga: null,
     categoryCollection: [],
-
-    antigen_diluent: [
-      'BCG Vaccine',
-      'BCG Diluent',
-      'Hep B vaccine',
-      'OPV Vaccine',
-      'PENTA Vaccine',
-      'PCV',
-      'IPV',
-      'Rotavirus vaccine',
-      'Measles Vaccine',
-      'Measles Diluent',
-      'Yellow fever vaccine',
-      'Yellow fever diluent',
-      'CSM Vaccine',
-      'CSM Diluent',
-      'Tetanus Dipteria Toxoid',
-      'HPV',
-    ],
-    devices: [
-      'BCG Syrines',
-      'AD Syringes',
-      '2 ml syringes',
-      '5 ml syringes',
-      'Safety boxes',
-    ],
+    devices: Object.assign([],Devices),
     days: [],
   };
+
+
+
+  onDateSelected(date:string){
+    let docs:any[] = getDocuments(
+      Schemas.Device.name,
+      "date",
+       date,
+       date,
+       false,
+       null,
+       true
+      );
+
+      console.log(docs)
+     let devices = Object.assign([],Devices);
+      docs.forEach((val:any)=>{
+         let currentDevice = val.device;
+         let search = devices.indexOf(currentDevice);
+         if(search != -1){
+           devices.splice(search,1);
+         }
+      })
+
+      this.setState({devices:devices})
+
+
+
+}
 
   _submit() {
     let {
@@ -321,14 +327,17 @@ class DeviceUtilization extends React.Component<Props> {
           title="Date"
           hideSubtxt={true}
           value={this.state.date}
-          onChange={(v) => this.setState({ date: v }, () => this.getDays(v))}
+          onChange={(v) => this.setState({ date: v }, () => {
+            this.getDays(v);
+            this.onDateSelected(v);
+          })}
         />
 
         <SelectComponentFree
           name="category"
           options={this.state.devices}
           title="Category"
-          disabled={state}
+          disabled={!date || state}
           value={this.state.selectedCategory}
           placeholder="Select Vaccine"
           onSelected={(value) =>

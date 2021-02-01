@@ -177,13 +177,19 @@ const SideBar = (props) => (
           </Link>
         </li>
 
-        <li className="selected ">
+        <li className="selected my-2">
           <Link to="immunizationRi">
             <div className="icon-w">
               <div className="os-icon os-icon-file-text" />
             </div>
 
-            <span>Immunization RI</span>
+            <div style={{display:"block"}}>
+            <span style={{padding:0}}>Immunization (RI)</span>
+            <span className="text-danger" style={{fontSize:9,padding:0}}>
+               Routine Immunization Strategy And Operational Fund
+            </span>
+            </div>
+
           </Link>
         </li>
 
@@ -193,7 +199,12 @@ const SideBar = (props) => (
               <div className="os-icon os-icon-file-text" />
             </div>
 
-            <span>Immunization AEFI</span>
+            <div style={{display:"block"}}>
+            <span style={{padding:0}}>Immunization (AEFI)</span>
+            <span className="text-danger" style={{fontSize:9,padding:0}}>
+              Adverse Events Following immunization
+            </span>
+            </div>
           </Link>
         </li>
 

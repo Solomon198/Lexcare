@@ -112,21 +112,21 @@ export function openSyncronizedRealm() {
         schemas.ImmunizationRi,
       ],
 
-      // schemaVersion:1,
+      schemaVersion:1,
 
-      //  sync:{
+       sync:{
 
-      //    partitionValue:getPHC_configSettings().phc_id,
+         partitionValue:getPHC_configSettings().phc_id,
 
-      //    user:_APP_INSTANCE_.currentUser,
+         user:_APP_INSTANCE_.currentUser,
 
-      //    error:(error)=>{
+         error:(error)=>{
 
-      //      console.log(error)
+           console.log(error)
 
-      //    },
+         },
 
-      //  }
+       }
     });
   } else {
     Auth.login(getPHC_configSettings().phc_realm_api_key);

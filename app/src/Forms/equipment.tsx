@@ -1,21 +1,24 @@
 import React from 'react';
-import Input from '../components/input';
 import InputFree from '../components/component-free/input';
-import TextArea from '../components/textArea';
-import DatePicker from '../components/datePicker';
-import SelectComponent from '../components/select';
 import SelectComponentFree from '../components/component-free/select';
-import StepWrapper from '../components/stepWrapper';
-import StepFormWrapper from '../components/stepFormWrapper';
 import { createEquipmentRecord } from '../../realm/queries/writeQueries';
 import { createFacilityService } from '../../realm/queries/writeQueries';
-import { AgeRange, getDaysInAMonth } from '../../realm/utils/utils';
+import {  getDaysInAMonth } from '../../realm/utils/utils';
 import moment from 'moment';
+import  {getDocuments} from '../../realm/queries/readQueries'
+import Schemas from '../../realm/schemas/index'
 
 type Props = {
   history: any;
   location: any;
 };
+
+const Devices =  [
+  'Ice packs (0.3/0.4L)',
+  'Vacince Carrier',
+  'Cold boxes',
+  'Vaccine fridges',
+]
 
 class Equipment extends React.Component<Props> {
   state = {
@@ -27,17 +30,42 @@ class Equipment extends React.Component<Props> {
     selectedDevice: '',
     days: [],
     deviceCollection: [],
-    devices: [
-      'Ice packs (0.3/0.4L)',
-      'Vacince Carrier',
-      'Cold boxes',
-      'Vaccine fridges',
-    ],
-
+    devices: Object.assign([],Devices),
     showHideQty: false,
     showHideFunc: false,
     showHideNonfunc: false,
   };
+
+
+
+
+  onDateSelected(date:string){
+    let docs:any[] = getDocuments(
+      Schemas.Equipments.name,
+      "date",
+       date,
+       date,
+       false,
+       null,
+       true
+      );
+
+     let devices = Object.assign([],Devices);
+      docs.forEach((val:any)=>{
+         let currentDevice = val.device;
+         let search = devices.indexOf(currentDevice);
+         if(search != -1){
+           devices.splice(search,1);
+         }
+      })
+
+      this.setState({devices:devices})
+
+
+
+}
+
+
 
   async CreateFacilityService(info: any) {
     const state = this.props.location.state;
@@ -73,8 +101,20 @@ class Equipment extends React.Component<Props> {
   componentDidMount() {
     const state = this.props.location.state;
 
-    let { date, deviceCollection, selectedDevice } = this.state;
+    let { date, deviceCollection, selectedDevice,showHideFunc,showHideQty,showHideNonfunc } = this.state;
+
+
     if (state) {
+
+      if(state.records[0].qty){
+        showHideQty = true;
+      }else{
+        showHideFunc = true;
+        showHideNonfunc = true;
+      }
+
+
+
       let days = this.getDays(state.date);
       let formattDate = moment(state.date).format('L').split('/');
 
@@ -96,6 +136,9 @@ class Equipment extends React.Component<Props> {
         deviceCollection,
         selectedDevice,
         days: days,
+        showHideFunc:showHideFunc,
+        showHideQty : showHideQty,
+        showHideNonfunc : showHideNonfunc
       });
     } else {
       let days = this.getDays();
@@ -232,7 +275,36 @@ class Equipment extends React.Component<Props> {
       showHideQty,
       showHideFunc,
       showHideNonfunc,
+      date,
+      selectedDevice,
+      deviceCollection
     } = this.state;
+
+    let disableAdd = false;
+    let disableSubmit = false;
+    if(!day_of_month || !date || !selectedDevice  ){
+      disableAdd = true;
+    }
+
+    if(showHideFunc){
+      if(!num_func || !num_nonfunc){
+        disableAdd = true;
+      }
+    }
+
+    if(showHideQty){
+      if(!qty){
+        disableAdd =true;
+      }
+    }
+
+    if(!date || !selectedDevice || deviceCollection.length == 0 ){
+        disableSubmit = true;
+    }
+
+
+
+
 
     return (
       <div
@@ -255,14 +327,17 @@ class Equipment extends React.Component<Props> {
           title="Date"
           hideSubtxt={true}
           value={this.state.date}
-          onChange={(v) => this.setState({ date: v }, () => this.getDays(v))}
+          onChange={(v) => this.setState({ date: v }, () => {
+            this.getDays(v);
+            this.onDateSelected(v);
+          })}
         />
 
         <SelectComponentFree
           name="device"
           options={this.state.devices}
           title="Device"
-          disabled={state}
+          disabled={!date || state}
           value={this.state.selectedDevice}
           onSelected={(value) => this.handleDeviceSelected(value)}
           placeholder="Select Device"
@@ -310,7 +385,7 @@ class Equipment extends React.Component<Props> {
             <InputFree
               hideSubtxt={true}
               state={state}
-              type="num"
+              type="number"
               placeholder="Enter Numb Func"
               name="num_func"
               title="Number Functional"
@@ -323,7 +398,7 @@ class Equipment extends React.Component<Props> {
             <InputFree
               hideSubtxt={true}
               state={state}
-              type="num"
+              type="number"
               placeholder="Enter Numb Non-func"
               name="num_nonfunc"
               title="Number Non-functional"
@@ -333,7 +408,8 @@ class Equipment extends React.Component<Props> {
           )}
           <button
             onClick={() => this._add()}
-            className="btn btn-primary btn-sm"
+            disabled={disableAdd}
+            className="btn btn-primary"
           >
             Add
           </button>
@@ -343,18 +419,18 @@ class Equipment extends React.Component<Props> {
           <table className="table table-striped table-borderd">
             <tr>
               <th>Day of Month</th>
-              <th>Quantity</th>
-              <th>Number Functional</th>
-              <th>Number Non-functional</th>
+              {showHideQty && <th>Quantity</th>}
+              {showHideFunc && <th>Number Functional</th>}
+              {showHideNonfunc && <th>Number Non-functional</th>}
               <th colSpan="2">Action</th>
             </tr>
 
             {this.state.deviceCollection.map((val, index) => (
               <tr>
                 <td>{val.day_of_month}</td>
-                <td>{val.qty}</td>
-                <td>{val.num_func}</td>
-                <td>{val.num_nonfunc}</td>
+                {showHideQty && <td>{val.qty}</td>}
+                {showHideFunc && <td>{val.num_func}</td>}
+                {showHideNonfunc && <td>{val.num_nonfunc}</td>}
                 <td>
                   <button
                     onClick={() => this._remove(index)}
@@ -378,7 +454,7 @@ class Equipment extends React.Component<Props> {
 
         <button
           onClick={() => this._submit()}
-          // disabled={disabledSubmit}
+          disabled={disableSubmit}
           style={{ marginTop: 10, marginBottom: 10, width: 100 }}
           type="button"
           className="btn btn-primary"

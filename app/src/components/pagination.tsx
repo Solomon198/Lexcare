@@ -20,6 +20,7 @@ type paginationProps = {
   administerTD?: (client: any) => void;
   isImmunization?: boolean;
   administerVaccine?: (client: any) => void;
+  onlyYear?: boolean
 };
 
 export default function PaginationComponent(props: paginationProps) {
@@ -50,7 +51,8 @@ export default function PaginationComponent(props: paginationProps) {
           end,
           props.ignoreFilter ? true : false,
           '',
-          props.onlyMonth
+          props.onlyMonth,
+          props.onlyYear
         )
       );
       handleSetActive(active);
@@ -176,15 +178,21 @@ export default function PaginationComponent(props: paginationProps) {
                     Note: only month and year is used.
                   </span>
                 ) : null}
+
+                {props.onlyYear ? (
+                  <span style={{ fontSize: 12 }} className="text-danger">
+                    Note: only year is used.
+                  </span>
+                ) : null}
               </td>
               <td>
-                {!props.onlyMonth ? (
+                {!props.onlyMonth && !props.onlyYear && (
                   <DatePicker
                     disabled={!holdStart ? true : false}
                     placeholder="Select end date (Optional)"
                     onChange={(value) => setHoldEnd(value)}
                   />
-                ) : null}
+                )}
               </td>
               <td>
                 <button onClick={() => searchDoc()} className="btn btn-info">
@@ -219,7 +227,7 @@ export default function PaginationComponent(props: paginationProps) {
                 {properties.map((objKey: any, indexx: any) => (
                   <td>
                     {objKey.isDate
-                      ? props.onlyMonth
+                      ? props.onlyMonth || props.onlyYear
                         ? moment(valz[objKey.key]).format('LL').split(' ')[0] +
                           '/' +
                           moment(valz[objKey.key]).format('LL').split(' ')[2]

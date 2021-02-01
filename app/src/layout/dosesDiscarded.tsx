@@ -45,6 +45,7 @@ export default class DosesDiscarded extends React.Component<props> {
                 <RenderData
                   dataField="date"
                   addRecord={() => this.addRecord()}
+                  onlyMonth
                   editRecord={(payload) => this.edit(payload)}
                   SchemaName={schemas.DosesDiscarded.name}
                   tableHead={

@@ -1,6 +1,6 @@
 import { _DATA_BASE_INSTACE_, reInitializApplicationConfigs } from './dbConfig';
 
-import { startOfDay, endOfDay, startOfMonth, endOfMonth } from 'date-fns';
+import { startOfDay, endOfDay, startOfMonth, endOfMonth,startOfYear,endOfYear } from 'date-fns';
 
 import { getRealmObjectCollection, _unwrapJson } from '../utils/utils';
 
@@ -88,7 +88,8 @@ export function getDocuments(
   endDate?: string,
   ignoreFilter?: boolean,
   searchValue?: any,
-  onlyMonth?: boolean
+  onlyMonth?: boolean,
+  onlyYear ?: boolean,
 ) {
   if (!_DATA_BASE_INSTACE_) {
     reInitializApplicationConfigs(app_connect, partition);
@@ -109,11 +110,18 @@ export function getDocuments(
         ? startOfDay(new Date(startDate))
         : startOfDay(new Date());
       end = endDate ? endOfDay(new Date(endDate)) : startOfDay(defaultEndDate);
-    } else {
+    } else if(onlyMonth) {
       start = startDate
         ? startOfMonth(new Date(startDate))
         : startOfMonth(new Date());
-      end = endDate ? endOfMonth(new Date(startDate)) : endOfMonth(new Date());
+      end = startDate ? endOfMonth(new Date(startDate)) : endOfMonth(new Date());
+    }
+
+    if(onlyYear){
+      start = startDate
+      ? startOfYear(new Date(startDate))
+      : startOfYear(new Date());
+      end = startDate ? endOfYear(new Date(startDate)) : endOfYear(new Date());
     }
 
     if (!searchValue) {
@@ -124,8 +132,9 @@ export function getDocuments(
             .filtered(`${dateField} >= $0 && ${dateField} < $1`, start, end);
 
       let documents = getRealmObjectCollection(obj);
-
-      if (onlyMonth) {
+      let documentLen = documents.length > 0;
+      let checkIfRecordsFieldExist = documentLen  ? documents[0].records : false;
+      if (onlyMonth && checkIfRecordsFieldExist) {
         documents.forEach((doc) => {
           let docArr = [];
           doc.records.forEach((recordVal) => {

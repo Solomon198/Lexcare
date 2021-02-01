@@ -15,6 +15,9 @@ import NigeriaStates from '../data/states';
 import 'toasted-notes/src/styles.css';
 import { AgeRange, getDaysInAMonth } from '../../realm/utils/utils';
 import moment from 'moment';
+import  {getDocuments} from '../../realm/queries/readQueries'
+import Schemas from '../../realm/schemas/index'
+
 
 type Props = {
   history: any;
@@ -28,6 +31,10 @@ class ImmunizationAefi extends React.Component<Props> {
     seri_cases_invtg: null,
     alive: null,
     dead: null,
+    isRecordExist : false,
+    recordExistDate : "",
+    state : null,
+    editExistingRecord:false,
   };
 
   _submit() {
@@ -54,7 +61,7 @@ class ImmunizationAefi extends React.Component<Props> {
       date: date,
     };
 
-    const state = this.props.location.state;
+    const state = this.props.location.state || this.state.state;
     const isUpdate = state ? true : false;
     if (state) {
       data._id = state._id;
@@ -102,9 +109,40 @@ class ImmunizationAefi extends React.Component<Props> {
     return days;
   }
 
-  componentDidMount() {
-    const state = this.props.location.state;
 
+
+
+  onDateSelected(date:string){
+    let {isRecordExist,recordExistDate,state} = this.state;
+    let docs:any[] = getDocuments(
+      Schemas.ImmunizationAefi.name,
+      "date",
+       date,
+       date,
+       false,
+       null,
+       true,
+      );
+
+    if(docs.length > 0){
+      let existDate:string;
+      existDate = moment(date).format("LL").split(' ')[0] + "/";
+      existDate += moment(date).format("LL").split(' ')[2];
+      isRecordExist = true;
+      recordExistDate = existDate
+      state = docs[0]
+    }else{
+      isRecordExist = false;
+
+    }
+
+    this.setState({isRecordExist,recordExistDate,state});
+
+    return isRecordExist
+}
+
+
+  initialize(state){
     let {
       date,
       non_serious,
@@ -145,6 +183,12 @@ class ImmunizationAefi extends React.Component<Props> {
         dead,
       });
     }
+  }
+
+  componentDidMount() {
+    const state = this.props.location.state
+
+    this.initialize(state)
     // else {
     //   let days = this.getDays();
     //   this.setState({ days: days });
@@ -154,7 +198,8 @@ class ImmunizationAefi extends React.Component<Props> {
   }
 
   render() {
-    const state = this.props.location.state;
+
+    const state = this.props.location.state || this.state.state;
 
     const {
       date,
@@ -186,9 +231,25 @@ class ImmunizationAefi extends React.Component<Props> {
         }}
       >
         <h5 style={{ marginLeft: 10, marginBottom: 20, marginTop: 20 }}>
-          Add Immunization AEFI
+          Add Immunization ( Adverse Events Following immunization )
         </h5>
         <hr className="mx-3" />
+
+
+        {
+           this.state.isRecordExist && (
+            <div className="ml-3">
+            <span className="text-danger ml-3">
+              A record of Immunization ( Adverse Events Following immunization ) has aleady been entered for the month of {this.state.recordExistDate}. Do you want to Edit Record ?
+            </span>
+              <button onClick={()=>this.setState({editExistingRecord:true,isRecordExist:false},()=>{
+                this.initialize(state);
+              })} className="btn btn-primary ml-2">
+                Edit Record
+              </button>
+            </div>
+           )
+         }
 
         <InputFree
           type="date"
@@ -198,7 +259,12 @@ class ImmunizationAefi extends React.Component<Props> {
           title="Date"
           hideSubtxt={true}
           value={this.state.date}
-          onChange={(v) => this.setState({ date: v }, () => this.getDays(v))}
+          onChange={(v) =>{
+            if(!this.onDateSelected(v)){
+             this.setState({ date: v }, () => this.getDays(v));
+            }
+
+         }}
         />
 
         {/* <SelectComponentFree
