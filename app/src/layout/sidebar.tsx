@@ -173,7 +173,7 @@ const SideBar = (props) => (
               <div className="os-icon os-icon-file-text" />
             </div>
 
-            <span>Equipments</span>
+            <span>Devices Status Report Form</span>
           </Link>
         </li>
 
@@ -212,25 +212,7 @@ const SideBar = (props) => (
           <span>Others</span>
         </li>
 
-        {/* <li className="selected ">
-              <Link to="all-users">
-                <div className="icon-w">
-                  <div className="os-icon os-icon-file-text" />
-                </div>
 
-                <span>All Users</span>
-              </Link>
-            </li> */}
-
-        {/* <li className="selected ">
-              <Link to="covid-19">
-                <div className="icon-w">
-                  <div className="os-icon os-icon-file-text" />
-                </div>
-
-                <span>Covid-19</span>
-              </Link>
-            </li> */}
 
         {props.isAdmin ? (
           <li className="selected ">

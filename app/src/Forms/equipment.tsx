@@ -318,7 +318,7 @@ class Equipment extends React.Component<Props> {
           marginLeft: 10,
         }}
       >
-        <h3>Add Equipment</h3>
+        <h3>Devices Status Report Form</h3>
         <InputFree
           type="date"
           placeholder="Enter date"
@@ -357,16 +357,7 @@ class Equipment extends React.Component<Props> {
             state={state}
           />
 
-          {/* <InputFree
-            hideSubtxt={true}
-            state={state}
-            type="number"
-            placeholder="Enter Day of Month"
-            name="day_of_month"
-            title="Day of month"
-            value={day_of_month}
-            onChange={(value) => this.setState({ day_of_month: value })}
-          /> */}
+
 
           {showHideQty && (
             <InputFree

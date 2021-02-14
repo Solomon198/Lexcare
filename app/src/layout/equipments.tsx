@@ -38,9 +38,11 @@ export default class Equipments extends React.Component<props> {
         <div className="content-i">
           <div className="content-box">
             <div className="element-wrapper">
-              <h6 className="element-header">Equipment</h6>
+              <h6 className="element-header">
+                 Devices Status Report Form
+              </h6>
               <div className="element-box">
-                <h5 className="form-header">All Equipment Records</h5>
+                <h5 className="form-header">Devices Status Report Form</h5>
 
                 <RenderData
                   dataField="date"

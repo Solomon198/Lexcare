@@ -58,7 +58,6 @@ class DeviceUtilization extends React.Component<Props> {
        true
       );
 
-      console.log(docs)
      let devices = Object.assign([],Devices);
       docs.forEach((val:any)=>{
          let currentDevice = val.device;
